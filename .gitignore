@@ -1,0 +1,10 @@
+SDL/
+.vscode/
+libft/libft.a
+objs/
+doom-nukem
+*.swp
+.DS_STORE
+SDL/build
+archives
+resources/tmp
