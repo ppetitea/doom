@@ -1,0 +1,190 @@
+"4":{
+	"type":"ui",
+	"name":"button_next_map",
+	"status":{"display":0,"hoverable":0,"selectable":0,"draggable":0},
+	"textures":{
+		"anchor":{"x":400,"y":480},
+		"animation":"stop",
+		"normal":{
+			"1":{"key":"arrow_next_dark","size":{"x":370,"y":120}},
+			"2":{"key":"arrow_next_dark","size":{"x":370,"y":120},"delay_ms":100}
+		},
+		"hover":{
+			"1":{"key":"arrow_next_light","size":{"x":370,"y":120}}
+		}
+	}
+},
+"4":{
+	"type":"ui",
+	"name":"button_edit_map",
+	"status":{"display":0,"hoverable":0,"selectable":0,"draggable":0},
+	"textures":{
+		"anchor":{"x":400,"y":480},
+		"animation":"stop",
+		"normal":{
+			"1":{"key":"hand_edit_dark","size":{"x":350,"y":200}},
+			"2":{"key":"hand_edit_dark","size":{"x":350,"y":200},"delay_ms":100}
+		},
+		"hover":{
+			"1":{"key":"hand_edit_light","size":{"x":350,"y":200}}
+		}
+	}
+},
+"4":{
+	"type":"ui",
+	"name":"button_play",
+	"status":{"display":0,"hoverable":0,"selectable":0,"draggable":0},
+	"textures":{
+		"anchor":{"x":400,"y":480},
+		"animation":"stop",
+		"normal":{
+			"1":{"key":"skull_play_dark","size":{"x":350,"y":170}},
+			"2":{"key":"skull_play_dark","size":{"x":350,"y":170},"delay_ms":100}
+		},
+		"hover":{
+			"1":{"key":"skull_play_light","size":{"x":350,"y":170}}
+		}
+	}
+},
+"entity":{
+	"type":"ui",
+	"name":"button_down",
+	"status":{"display":0,"hoverable":0,"selectable":0,"draggable":0},
+	"textures":{
+		"animation":"stop",
+		"normal":{
+			"1":{"key":"down_blood","size":{"x":65,"y":100}},
+			"2":{"key":"down_blood","size":{"x":65,"y":100},"delay_ms":100}
+		},
+		"hover":{
+			"1":{"key":"down_blood","size":{"x":65,"y":100}}
+		}
+	}
+},
+"entity":{
+	"type":"ui",
+	"name":"button_up",
+	"status":{"display":0,"hoverable":0,"selectable":0,"draggable":0},
+	"textures":{
+		"animation":"stop",
+		"normal":{
+			"1":{"key":"up_blood","size":{"x":65,"y":100}},
+			"2":{"key":"up_blood","size":{"x":65,"y":100},"delay_ms":100}
+		},
+		"hover":{
+			"1":{"key":"up_blood","size":{"x":65,"y":100}}
+		}
+	}
+},
+"entity":{
+	"type":"ui",
+	"name":"button_color_map",
+	"status":{"display":0,"hoverable":0,"selectable":0,"draggable":0},
+	"textures":{
+		"animation":"stop",
+		"normal":{
+			"1":{"key":"button_color_map_dark","size":{"x":50,"y":50}}
+		},
+		"hover":{
+			"1":{"key":"button_color_map_light","size":{"x":50,"y":50}}
+		}
+	}
+},
+"entity":{
+	"type":"ui",
+	"name":"button_height_map",
+	"status":{"display":0,"hoverable":0,"selectable":0,"draggable":0},
+	"textures":{
+		"animation":"stop",
+		"normal":{
+			"1":{"key":"button_height_map_dark","size":{"x":50,"y":50}}
+		},
+		"hover":{
+			"1":{"key":"button_height_map_light","size":{"x":50,"y":50}}
+		}
+	}
+},
+"entity":{
+	"type":"ui",
+	"name":"button_drop_map",
+	"status":{"display":0,"hoverable":0,"selectable":0,"draggable":0},
+	"textures":{
+		"animation":"stop",
+		"normal":{
+			"1":{"key":"button_drop_map_dark","size":{"x":50,"y":50}}
+		},
+		"hover":{
+			"1":{"key":"button_drop_map_light","size":{"x":50,"y":50}}
+		}
+	}
+},
+"entity":{
+	"type":"ui",
+	"name":"button_render_map",
+	"status":{"display":0,"hoverable":0,"selectable":0,"draggable":0},
+	"textures":{
+		"animation":"stop",
+		"normal":{
+			"1":{"key":"button_render_map_dark","size":{"x":50,"y":50}}
+		},
+		"hover":{
+			"1":{"key":"button_render_map_light","size":{"x":50,"y":50}}
+		}
+	}
+},
+"entity":{
+	"type":"ui",
+	"name":"button_color_map_fake",
+	"status":{"display":0,"hoverable":0,"selectable":0,"draggable":0},
+	"textures":{
+		"animation":"stop",
+		"normal":{
+			"1":{"key":"button_color_map_light","size":{"x":50,"y":50}}
+		},
+		"hover":{
+			"1":{"key":"button_color_map_light","size":{"x":50,"y":50}}
+		}
+	}
+},
+"entity":{
+	"type":"ui",
+	"name":"button_height_map_fake",
+	"status":{"display":0,"hoverable":0,"selectable":0,"draggable":0},
+	"textures":{
+		"animation":"stop",
+		"normal":{
+			"1":{"key":"button_height_map_light","size":{"x":50,"y":50}}
+		},
+		"hover":{
+			"1":{"key":"button_height_map_light","size":{"x":50,"y":50}}
+		}
+	}
+},
+"entity":{
+	"type":"ui",
+	"name":"button_drop_map_fake",
+	"status":{"display":0,"hoverable":0,"selectable":0,"draggable":0},
+	"textures":{
+		"animation":"stop",
+		"normal":{
+			"1":{"key":"button_drop_map_light","size":{"x":50,"y":50}}
+		},
+		"hover":{
+			"1":{"key":"button_drop_map_light","size":{"x":50,"y":50}}
+		}
+	}
+},
+"entity":{
+	"type":"ui",
+	"name":"button_render_map_fake",
+	"status":{"display":0,"hoverable":0,"selectable":0,"draggable":0},
+	"textures":{
+		"animation":"stop",
+		"normal":{
+			"1":{"key":"button_render_map_light","size":{"x":50,"y":50}}
+		},
+		"hover":{
+			"1":{"key":"button_render_map_light","size":{"x":50,"y":50}}
+		}
+	}
+},

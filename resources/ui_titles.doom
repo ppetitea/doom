@@ -1,0 +1,16 @@
+"3":{
+	"type":"ui",
+	"name":"title",
+	"status":{"display":0,"hoverable":0,"selectable":0,"draggable":0},
+	"textures":{
+		"anchor":{"x":400,"y":480},
+		"animation":"stop",
+		"normal":{
+			"1":{"key":"doum_doum_doum","size":{"x":900,"y":120}},
+			"2":{"key":"doum_doum_doum","size":{"x":900,"y":120},"delay_ms":100}
+		},
+		"hover":{
+			"1":{"key":"doum_doum_doum","size":{"x":900,"y":120}}
+		}
+	}
+}

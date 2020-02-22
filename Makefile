@@ -6,7 +6,7 @@
 #    By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/08 21:27:29 by lbenard           #+#    #+#              #
-#    Updated: 2020/02/22 14:10:03 by ppetitea         ###   ########.fr        #
+#    Updated: 2020/02/22 22:09:57 by ppetitea         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -80,8 +80,22 @@ SRCS_LIST	=	main.c														\
 				utils/parser/parser.c										\
 				utils/parser/to_object.c									\
 																			\
-				renderer/animations/animation_init.c						\
-				renderer/textures/texture_init.c							\
+				build.c														\
+				loop.c														\
+				resources/game/game_init.c									\
+				resources/images/load_bmp.c									\
+																			\
+				events/handle.c												\
+				events/mouse/mouse_handle.c									\
+				events/keyboard/keyboard_handle.c							\
+																			\
+				interface/screen/screen_init.c								\
+				interface/screen/screen_reset.c								\
+				interface/sdl/sdl_init.c									\
+				interface/sdl/sdl_destroy.c									\
+																			\
+				graphic/animations/animation_init.c							\
+				graphic/textures/texture_init.c								\
 
 SRCS_FOLDER	=	./srcs/
 SRCS		=	$(addprefix $(SRCS_FOLDER), $(SRCS_LIST))
