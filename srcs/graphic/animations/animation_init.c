@@ -6,16 +6,17 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/22 12:57:38 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/02/22 19:05:40 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/02/23 01:19:47 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <sys/time.h>
 #include "containers/list.h"
 #include "graphic/animation.h"
+#include "events/observer.h"
 #include "utils/error.h"
 
-t_result	init_collide_observer(t_collide_observer *self)
+t_result	init_mouse_collide_observer(t_mouse_collide_observer *self)
 {
 	if (self == NULL)
 		return (throw_error("init_observer", "NULL pointer provided"));
@@ -23,24 +24,24 @@ t_result	init_collide_observer(t_collide_observer *self)
 	self->offset = NULL;
 	self->size = NULL;
 	self->suscribe_list = NULL;
-	self->activable = FALSE;
-	self->active = FALSE;
+	self->is_subscribed = FALSE;
+	self->is_active = FALSE;
 	return (OK);
 }
 
-t_result	init_collide(t_collide *self)
+t_result	init_mouse_collide(t_mouse_collide *self)
 {
 	if (self == NULL)
 		return (throw_error("init_collide", "NULL pointer provided"));
 	self->offset = ft_pos2i(0, 0);
 	self->size = ft_pos2i(1, 1);
-	init_collide_observer(&self->hover);
+	init_mouse_collide_observer(&self->hover);
 	self->hover.offset = &self->offset;
 	self->hover.size = &self->size;
-	init_collide_observer(&self->select);
+	init_mouse_collide_observer(&self->select);
 	self->select.offset = &self->offset;
 	self->select.size = &self->size;
-	init_collide_observer(&self->drag);
+	init_mouse_collide_observer(&self->drag);
 	self->drag.offset = &self->offset;
 	self->drag.size = &self->size;
 	return (OK);
@@ -55,7 +56,7 @@ t_result	init_animation(t_animation *self)
 	self->curr = NULL;
 	init_list_head(&self->textures);
 	self->anchor = ft_pos2i(0, 0);
-	init_collide(&self->collide);
+	init_mouse_collide(&self->collide);
 	return (OK);
 }
 

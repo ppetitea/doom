@@ -1,32 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map.h                                              :+:      :+:    :+:   */
+/*   mob.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/22 17:16:02 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/02/23 03:19:41 by ppetitea         ###   ########.fr       */
+/*   Created: 2020/02/22 22:57:02 by ppetitea          #+#    #+#             */
+/*   Updated: 2020/02/23 03:12:40 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MAP_H
-# define MAP_H
+#ifndef MOB_H
+# define MOB_H
 
+# include "graphic/animation.h"
 # include "resources/player.h"
 
-typedef struct	s_map
+typedef struct		s_movable
 {
-	t_list_head		node;
-	char			*name;
-	t_player		player;
-	t_list_head		mobs;
-	t_list_head		objects;
-	t_animation		sky;
-	t_animation		color_map;
-	t_animation		height_map;
-}				t_map;
+	t_list_head			node;
+	float				velocity;
+	t_pos2f				pos;
+	t_vec2f				dir;
+	t_pos2f				*target;
+}					t_movable;
 
-t_map		*init_new_map();
+typedef struct		s_mob
+{
+	t_list_head				node;
+	t_animation				map_icon;
+	t_destructible			state;
+	t_animation				attack;
+	t_movable				move;
+	t_oriented_animations	o_anim;
+}					t_mob;
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/22 11:39:15 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/02/22 23:13:17 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/02/23 02:33:41 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,15 @@ typedef enum	e_animation_status
 
 typedef struct			s_animation
 {
+	t_list_head			node;
 	t_animation_status	state;
 	struct timeval		last;
 	t_texture			*curr;
 	t_list_head			textures;
 	t_vec2i				anchor;
-	t_collide			collide;
+	t_list_head			*render_list;
+	t_bool				is_render;
+	t_mouse_collide		collide;
 }						t_animation;
 t_result				init_animation(t_animation *self);
 
