@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/22 21:50:06 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/02/22 22:13:53 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/02/24 11:04:22 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,9 @@ typedef struct 		s_bitmap_header
 
 #pragma pack(pop)  // restore the previous pack setting
 
+/*
+** parser
+*/
 typedef struct		s_bitmap
 {
     t_bitmap_header head;
@@ -58,8 +61,10 @@ typedef struct		s_bitmap
 }					t_bitmap;
 
 t_bitmap		*load_bmp(char *path);
-void			render_bmp(t_vec2i offset, t_screen screen, t_bitmap bmp);
 
+/*
+** list
+*/
 typedef struct	s_image_node
 {
 	t_list_head		node;
@@ -68,6 +73,10 @@ typedef struct	s_image_node
 }				t_image_node;
 
 t_result		resources_load_images(t_list_head *images, char *path);
-t_bitmap		*get_image_by_name(t_list_head *images, char *name);
+
+/*
+** getter
+*/
+t_bitmap		*get_image(char *name);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/22 12:57:38 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/02/23 01:19:47 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/02/23 21:01:31 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ t_result	init_mouse_collide_observer(t_mouse_collide_observer *self)
 	self->suscribe_list = NULL;
 	self->is_subscribed = FALSE;
 	self->is_active = FALSE;
+	init_list_head(&self->start);
+	init_list_head(&self->stop);
 	return (OK);
 }
 
@@ -51,11 +53,14 @@ t_result	init_animation(t_animation *self)
 {
 	if (self == NULL)
 		return (throw_error("init_animation", "NULL pointer provided"));
+	init_list_head(&self->node);
 	self->state = STOP;
 	gettimeofday(&self->last, NULL);
 	self->curr = NULL;
 	init_list_head(&self->textures);
 	self->anchor = ft_pos2i(0, 0);
+	self->render_list = NULL;
+	self->is_render = FALSE;
 	init_mouse_collide(&self->collide);
 	return (OK);
 }

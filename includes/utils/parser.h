@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/23 12:00:05 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/02/06 19:44:26 by lbenard          ###   ########.fr       */
+/*   Updated: 2020/02/24 09:48:11 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,10 @@ t_result		init_usize_with_obj(t_usize *self, t_dnon_object *size_obj);
 t_result		init_vec2i_with_obj(t_vec2i *self, t_dnon_object *vec2i_obj);
 t_result		init_vec2f_with_obj(t_vec2f *self, t_dnon_object *vec2f_obj);
 t_bool			strcmp_obj(char *key, char *value, t_dnon_object *obj);
+t_vec2i			get_vec2i(t_dnon_object *vec2i_obj, int default_x,
+					int default_y);
+t_vec2f			get_vec2f(t_dnon_object *vec2f_obj, float default_x,
+					float default_y);
 
 /*
 **	object creation
@@ -100,7 +104,7 @@ float			get_float_value_by_key(t_dnon_object *tree,
 char			*get_string_value_by_key(t_dnon_object *tree,
 					char *key,
 					char *by_default);
-t_dnon_object	*get_child_list_object_by_key(t_dnon_object *tree, char *key);
+t_dnon_object	*get_child_list(t_dnon_object *tree, char *key);
 t_dnon_object	*get_child_object_by_key(t_dnon_object *tree, char *key);
 
 /*

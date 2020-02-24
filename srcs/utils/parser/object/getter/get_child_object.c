@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/03 20:45:31 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/02/08 04:19:13 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/02/24 09:43:41 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "utils/error.h"
 #include "utils/parser.h"
 
-t_dnon_object	*get_child_list_object_by_key(t_dnon_object *tree, char *key)
+t_dnon_object	*get_child_list(t_dnon_object *tree, char *key)
 {
 	t_list_head		*pos;
 	t_list_head		*next;

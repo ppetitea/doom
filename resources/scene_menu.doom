@@ -1,11 +1,12 @@
-"name":"menu",
-"current":1,
 "background":{
-	"1":{"key":"background_blood","filter":"circular_shadow","size":{"x":1080,"y":720}}
+	"animation":{
+		"textures":{
+			"background_blood":{"vmin":1.0,"filter":"circular_shadow"}
+		}
+	}
 },
 "key_bindings":{
-	"1":{
-		"define":"ESCAPE",
+	"ESCAPE":{
 		"SDL_Keycode":27,
 		"hold":1,
 		"action":"stop_game",
@@ -15,132 +16,65 @@
 "map_config":{
 	"color_map":{
 		"display":1,
+		"offset":{"x":40,"y":200},
 		"size":{"x":640,"y":480},
-		"anchor":{"x":40,"y":200},
-		"display_e_oriented":1,
-		"display_e_oriented_storage":0,
-		"display_e_static":1,
-		"display_e_static_storage":0,
-		"character_size":{"x":25,"y":20}
-	},
-	"character":{"entity":{"listener":{"draggable":0}}}
+		"icon_size":{"x":25,"y":20}
+	}
 },
-"entities":{
-	"1":{
-		"key":"title",
-		"entity":{
-			"texture":{
-				"anchor":{"x":100,"y":50}
-			},
-			"listener":{"display":1}
+"user_interface":{
+	"title_doom":{
+		"animation":{
+			"display":1,
+			"anchor":{"x":100,"y":50}
 		}
 	},
-	"1":{
-		"key":"button_edit_map",
-		"entity":{
-			"texture":{
-				"anchor":{"x":720,"y":320},
-				"offset":{"x":0,"y":0}
-			},
-			"listener":{
-				"display":1,
-				"selectable":1,
+	"button_edit_map":{
+		"animation":{
+			"display":1,
+			"anchor":{"x":720,"y":320},
+			"collide":{
+				"hover":{
+					"subscribe":1,
+					"start":{"update_animation":{"args":{"state":"final"}}},
+					"stop":{"update_animation":{"args":{"reset":1}}}
+				},
 				"select":{
-					"1":{
-						"action":"swap_scene",
-						"resource":"game",
-						"args":{
-							"scene_name":"color_map_editor"
-						}
-					}
-				},
-				"hoverable":1,
-				"hover_start":{
-					"1":{
-						"action":"update_entity_texture",
-						"resource":"entity",
-						"args":{"hover":1}
-					}
-				},
-				"hover_end":{
-					"1":{
-						"action":"update_entity_texture",
-						"resource":"entity",
-						"args":{"normal":1}
-					}
+					"subscribe":1,
+					"start":{"swap_scene":{"args":{"key":"map_editor"}}}
 				}
 			}
 		}
 	},
-	"2":{
-		"key":"button_play",
-		"entity":{
-			"texture":{
-				"anchor":{"x":720,"y":520}
-			},
-			"listener":{
-				"display":1,
-				"selectable":1,
+	"button_play":{
+		"animation":{
+			"display":1,
+			"anchor":{"x":720,"y":520},
+			"collide":{
+				"hover":{
+					"subscribe":1,
+					"start":{"update_animation":{"args":{"state":"final"}}},
+					"stop":{"update_animation":{"args":{"reset":1}}}
+				},
 				"select":{
-					"1":{
-						"action":"swap_scene",
-						"resource":"game",
-						"args":{
-							"scene_name":"render3d"
-						}
-					}
-				},
-				"hoverable":1,
-				"hover_start":{
-					"1":{
-						"action":"update_entity_texture",
-						"resource":"entity",
-						"args":{"hover":1}
-					}
-				},
-				"hover_end":{
-					"1":{
-						"action":"update_entity_texture",
-						"resource":"entity",
-						"args":{"normal":1}
-					}
+					"subscribe":1,
+					"start":{"swap_scene":{"args":{"key":"game"}}}
 				}
 			}
 		}
 	},
-	"3":{
-		"key":"button_next_map",
-		"entity":{
-			"texture":{
-				"anchor":{"x":700,"y":170},
-				"offset":{"x":0,"y":0}
-			},
-			"listener":{
-				"display":1,
-				"selectable":1,
+	"button_next_map":{
+		"animation":{
+			"display":1,
+			"anchor":{"x":700,"y":170},
+			"collide":{
+				"hover":{
+					"subscribe":1,
+					"start":{"update_animation":{"args":{"state":"final"}}},
+					"stop":{"update_animation":{"args":{"reset":1}}}
+				},
 				"select":{
-					"1":{
-						"action":"swap_map",
-						"resource":"game",
-						"args":{
-							"side":"next"
-						}
-					}
-				},
-				"hoverable":1,
-				"hover_start":{
-					"1":{
-						"action":"update_entity_texture",
-						"resource":"entity",
-						"args":{"hover":1}
-					}
-				},
-				"hover_end":{
-					"1":{
-						"action":"update_entity_texture",
-						"resource":"entity",
-						"args":{"normal":1}
-					}
+					"subscribe":1,
+					"start":{"swap_map":{"args":{"side":"next"}}}
 				}
 			}
 		}

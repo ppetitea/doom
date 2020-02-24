@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/21 23:02:10 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/02/08 05:28:04 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/02/24 09:47:28 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,20 @@ t_result	init_vec2f_with_obj(t_vec2f *self, t_dnon_object *vec2f_obj)
 	// if (vec2f_obj == NULL)
 	// 	return (throw_warning_ok("init_vec2f_with_obj", "no size", 4));
 	return (OK);
+}
+
+t_vec2i	get_vec2i(t_dnon_object *vec2i_obj, int default_x, int default_y)
+{
+	t_vec2i	ret;
+	ret.x = get_float_value_by_key(vec2i_obj, "x", default_x);
+	ret.y = get_float_value_by_key(vec2i_obj, "y", default_y);
+	return (ret);
+}
+
+t_vec2f	get_vec2f(t_dnon_object *vec2f_obj, float default_x, float default_y)
+{
+	t_vec2f	ret;
+	ret.x = get_float_value_by_key(vec2f_obj, "x", default_x);
+	ret.y = get_float_value_by_key(vec2f_obj, "y", default_y);
+	return (ret);
 }

@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/22 17:56:55 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/02/23 01:46:23 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/02/23 14:13:37 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ typedef struct		s_mouse_collide_observer
 	t_bool			is_subscribed;
 	t_bool			is_active;
 	t_list_head		start;
-	t_list_head		end;
+	t_list_head		stop;
 }					t_mouse_collide_observer;
 t_result			init_mouse_collide_observer(t_mouse_collide_observer *self);
 
