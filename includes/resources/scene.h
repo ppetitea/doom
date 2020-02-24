@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 16:27:20 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/02/23 03:31:16 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/02/24 15:37:53 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,9 +85,9 @@ typedef struct			s_scene
 	char				*name;
 	t_scene_interface	interface;
 	t_animation			background;
+	t_animation			title;
 	t_list_head			render_list;
 	t_list_head			buttons;
-	t_list_head			titles;
 	t_map_config		map_config;
 }						t_scene;
 

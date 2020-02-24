@@ -1,0 +1,32 @@
+refact:
+
+- sound:
+	Qui joue le son ?
+	Ou sont stocker les sons ?
+	De quoi est compose la struct sound ?
+	Comment jouer un son ?
+
+- textures:
+	Qui rend les textures ?
+	Ou est-ce qu'on stocke les textures ?
+	De quoi est composer la struct texture ?
+	Comment rendre une texture ?
+
+- events:
+	Qui gere les events ?
+	Ou est-ce qu'ils sont stocke ?
+	Comment on gere un event ?
+
+- map:
+	Qui affiche la map ?
+	Ou est-elle stocke ?
+	Comment on change de map ?
+	Comment on rend la map ?
+	Comment on interagit avec la map ?
+
+- scene:
+	Qui affiche la scene ?
+	Ou est-elle stocke ?
+	Comment on change de scene ?
+	Comment on rend la scene ?
+

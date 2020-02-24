@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 15:18:54 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/02/24 12:55:04 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/02/24 15:22:35 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@
 
 #include <stdio.h>
 
-
 t_game	*build()
 {
 	t_game_resources	*r;
@@ -52,12 +51,12 @@ t_game	*build()
 
 	window = ft_usize(1080, 720);
 	if (!(game = init_new_game(window)))
-		return (throw_null("build_game", "init_new_game failed"));
+		return (throw_null("build_game", "Fail to init_new_game"));
 	r = &game->resources;
 	if (!resources_load_images(&r->images, "resources/path_textures.doom"))
-		return (throw_null("build_game", "failed to load images"));
+		return (throw_null("build_game", "Fail to load images"));
 	if (!build_new_buttons(&r->buttons, "resources/ui_buttons.doom"))
-		return (throw_null("build_game", "failed to load buttons"));
+		return (throw_null("build_game", "Fail to load buttons"));
 	// printf("list len %ld\n", list_lenght(&game->resources.images));
 	// if (!build_game_resources(game, obj))
 	// 	return (throw_null("build_game", "build_resources failed"));
