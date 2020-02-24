@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/22 22:57:02 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/02/24 11:28:18 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/02/24 12:19:31 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,6 @@ t_button			*init_new_button();
 /*
 ** build
 */
-t_result	build_new_buttons(t_list_head *buttons, char *path);
+t_result			build_new_buttons(t_list_head *buttons, char *path);
 
 #endif

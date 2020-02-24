@@ -6,12 +6,14 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/24 11:01:18 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/02/24 11:04:16 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/02/24 12:04:29 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "resources/game.h"
 #include "resources/images.h"
+#include "utils/error.h"
+#include "ft/str.h"
 
 t_bitmap	*get_image(char *name)
 {

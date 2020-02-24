@@ -6,7 +6,7 @@
 #    By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/08 21:27:29 by lbenard           #+#    #+#              #
-#    Updated: 2020/02/22 22:09:57 by ppetitea         ###   ########.fr        #
+#    Updated: 2020/02/24 11:59:46 by ppetitea         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -83,7 +83,10 @@ SRCS_LIST	=	main.c														\
 				build.c														\
 				loop.c														\
 				resources/game/game_init.c									\
-				resources/images/load_bmp.c									\
+				resources/buttons/button_build.c							\
+				resources/buttons/button_init.c								\
+				resources/images/image_get.c								\
+				resources/images/image_load.c								\
 																			\
 				events/handle.c												\
 				events/mouse/mouse_handle.c									\
@@ -94,7 +97,10 @@ SRCS_LIST	=	main.c														\
 				interface/sdl/sdl_init.c									\
 				interface/sdl/sdl_destroy.c									\
 																			\
+				graphic/animations/animation_build.c						\
 				graphic/animations/animation_init.c							\
+				graphic/textures/texture_build.c							\
+				graphic/textures/texture_filter.c							\
 				graphic/textures/texture_init.c								\
 
 SRCS_FOLDER	=	./srcs/

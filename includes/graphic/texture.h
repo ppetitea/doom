@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/22 11:39:15 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/02/24 11:36:00 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/02/24 12:22:56 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ t_result			filter_texture(t_texture *text, t_filter_type filter);
 /*
 ** build
 */
-t_result			build_new_texture(t_dnon_object *texture_obj);
+t_texture			*build_new_texture(t_dnon_object *texture_obj);
 t_result			build_textures(t_list_head *textures,
 						t_dnon_object *textures_obj);
 

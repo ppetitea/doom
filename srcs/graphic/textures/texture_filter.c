@@ -6,12 +6,13 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/24 10:57:37 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/02/24 10:59:34 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/02/24 12:23:40 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "graphic/texture.h"
 #include "utils/color.h"
+#include "utils/error.h"
 
 static t_result	filter_color_with_circular_shadow(t_texture *text, t_vec2i i)
 {

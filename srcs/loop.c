@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 22:34:54 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/02/22 22:31:14 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/02/24 12:53:17 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	loop(t_game *game, t_screen *screen, t_sdl *sdl)
 		if (SDL_RenderClear(sdl->renderer) == SDL_ERROR)
 			return (throw_void("loop", "SDL_RenderClear failed"));
 		spf = get_wall_time() - last_time;
-		// printf("fps: %f\n", 1.0f / spf);
+		printf("fps: %f\n", 1.0f / spf);
 		set_delta(spf);
 	}
 	destroy_sdl(&game->interface.sdl);
