@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/22 17:56:55 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/02/23 14:13:37 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/02/25 15:02:23 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ typedef struct		s_mouse_collide
 	t_mouse_collide_observer	drag;
 }					t_mouse_collide;
 t_result			init_mouse_collide(t_mouse_collide *self);
+
 
 
 #endif
