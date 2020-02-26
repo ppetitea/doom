@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/22 17:16:02 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/02/25 13:20:00 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/02/26 16:35:10 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,92 +15,53 @@
 
 # include "resources/player.h"
 
-// typedef struct	s_color_map
-// {
-// 	t_animation	*map;
-// 	t_bool		display;
-// 	t_vec2i		offset;
-// 	t_vec2i		size;
-// }				t_color_map;
-
-// typedef struct	s_height_map
-// {
-// 	t_bool		display;
-// 	t_animation	*map;
-// 	t_vec2i		offset;
-// 	t_vec2i		size;
-// }				t_height_map;
-
-// typedef struct	s_drop_map
-// {
-// 	t_bool		display;
-// 	t_list_head	*render_list;
-// 	t_list_head	*collide_list;
-// 	t_animation	*map;
-// 	t_vec2i		offset;
-// 	t_vec2i		size;
-// 	t_vec2i		icon_size;
-// }				t_drop_map;
-
-// typedef struct	s_render3d
-// {
-// 	t_bool		display;
-// 	t_list_head	*render_list;
-// 	t_animation	*sky;
-// 	t_animation	*color;
-// 	t_animation	*height;
-// 	t_vec2i		offset;
-// 	t_vec2i		size;
-// }				t_render3d;
-
-// typedef struct	s_map_render
-// {
-// 	t_render3d		render3d;
-// 	t_color_map		color;
-// 	t_height_map	height;
-// 	t_drop_map		drop;
-// }				t_map_render;
-
-typedef struct	s_mouse_collider
-{
-	t_vec2i		mouse;
-	t_list_head	hover;
-	t_list_head	select;
-	t_list_head	drag;
-}				t_mouse_collider;
-
-typedef struct	s_map_icons
-{
-	t_mouse_collider	collide;
-	t_list_head			visibles;
-	t_list_head			hiddens;
-}				t_map_icons;
-
-typedef struct	s_map_sprites
-{
-	t_list_head		visibles;
-	t_list_head		hiddens;
-	t_list_head		destructibles;
-	t_player		player;
-	t_list_head		mobs;
-	t_list_head		objects;
-}				t_map_sprites;
-
 typedef struct	s_map_context
 {
 	t_animation		sky;
+	t_result		(*render_skybox)(t_animation*, float);
 	t_animation		color;
 	t_animation		height;
 }				t_map_context;
+
+typedef struct	s_map2d
+{
+	t_bool					display;
+	t_box					render_box;
+	t_vec2i					icon_size;
+	t_mouse_observable		observable;
+	t_animation				*map;
+	t_result				(*render_map)(t_animation*, t_box);
+	t_list_head				icons;
+	t_result				(*render_icons)(t_list_head*, t_vec2i, t_box);
+}				t_map2d;
+
+typedef struct	s_map_sprites
+{
+	t_player		player;
+	t_list_head		mobs;
+	t_list_head		objects;
+	t_list_head		destructibles;
+}				t_map_sprites;
+
+typedef struct	s_map3d
+{
+	t_bool			display;
+	t_box			render_box;
+	t_list_head		sprites_list;
+	t_result		(*render_world)(t_map_context*, t_list_head*, t_box);
+	t_result		(*render_player)(t_player*, t_box);
+}				t_map3d;
 
 typedef struct	s_map
 {
 	t_list_head		node;
 	char			*name;
-	t_map_icons		icons;
-	t_map_sprites	sprites;
 	t_map_context	context;
-	// t_map_renderer	renderer;
+	t_map_sprites	sprites;
+	t_map2d			drop;
+	t_map2d			color;
+	t_map2d			height;
+	t_map3d			render3d;
 }				t_map;
 t_map			*init_new_map();
 
