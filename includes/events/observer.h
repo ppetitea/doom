@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/22 17:56:55 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/02/27 13:20:45 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/02/27 19:15:45 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,10 @@ t_result			init_mouse_observer(t_mouse_observer *self);
 
 typedef struct		s_mouse_followers
 {
-	t_list_head		drag;
 	t_list_head		hover;
 	t_list_head		select;
+	t_list_head		drag;
+	t_list_head		draw;
 }					t_mouse_followers;
 t_result			init_mouse_followers(t_mouse_followers *self);
 

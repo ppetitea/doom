@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/28 15:33:22 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/01/24 00:50:38 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/02/27 16:15:08 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,45 +14,45 @@
 #include "utils/error.h"
 #include <stdlib.h>
 
-t_dnon_object	*new_dnon_object()
+t_obj	*new_obj()
 {
-	t_dnon_object	*ret;
+	t_obj	*ret;
 
-	if (!(ret = (t_dnon_object*)malloc(sizeof(t_dnon_object))))
-		return (throw_null("new_dnon_object", "malloc failed"));
+	if (!(ret = (t_obj*)malloc(sizeof(t_obj))))
+		return (throw_null("new_obj", "malloc failed"));
 	init_list_head(&ret->node);
 	return (ret);
 }
 
-t_dnon_object	*create_dnon_object(char *key, t_dnon_value_type type)
+t_obj	*create_obj(char *key, t_dnon_value_type type)
 {
-	t_dnon_object	*ret;
+	t_obj	*ret;
 
-	if (!(ret = new_dnon_object()))
-		return (throw_null("create_dnon_object", "obj creation failed"));
+	if (!(ret = new_obj()))
+		return (throw_null("create_obj", "obj creation failed"));
 	ret->key = key;
 	ret->type = type;
 	if (type == LIST)
 	{
 		if (!(ret->value = (t_list_head*)malloc(sizeof(t_list_head))))
-			return (throw_null("create_dnon_object", "malloc failed")); 
+			return (throw_null("create_obj", "malloc failed")); 
 		init_list_head((t_list_head*)ret->value);
 	}
 	return (ret);
 }
 
-t_dnon_object	*create_dnon_object_with_data(char *data)
+t_obj	*create_obj_with_data(char *data)
 {
-	t_dnon_object	*object;
+	t_obj	*object;
 
 	if (data == NULL)
-		return (throw_null("create_dnon_object_with_data", "data is null"));
-	if ((object = new_dnon_object()) == NULL)
-		return (throw_null("create_dnon_object_with_data", "obj creation failed"));
+		return (throw_null("create_obj_with_data", "data is null"));
+	if ((object = new_obj()) == NULL)
+		return (throw_null("create_obj_with_data", "obj creation failed"));
 	if ((object->key = get_object_key(data)) == NULL)
-		return (throw_null("create_dnon_object_with_data", "failed to find key"));
+		return (throw_null("create_obj_with_data", "failed to find key"));
 	if ((object->type = get_object_value_type(data)) == UNKNOW)
-		return (throw_null("create_dnon_object_with_data", "failed to find type"));
+		return (throw_null("create_obj_with_data", "failed to find type"));
 	if (object->type == LIST)
 	{
 		if (!(object->value = (t_list_head*)malloc(sizeof(t_list_head))))

@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/23 12:00:05 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/02/24 09:48:11 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/02/27 16:20:05 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,19 +26,19 @@ typedef	enum	e_dnon_value_type
 	UNKNOW
 }				t_dnon_value_type;
 
-typedef struct	s_dnon_object
+typedef struct	s_obj
 {
 	t_list_head					node;
 	char						*key;
 	t_dnon_value_type			type;
 	void						*value;
-}				t_dnon_object;
+}				t_obj;
 
 /*
 **	parsing
 */
-t_dnon_object	*parse_dnon_file(char *path);
-t_result		to_object(char *data, t_dnon_object *parent);
+t_obj			*parse_dnon_file(char *path);
+t_result		to_object(char *data, t_obj *parent);
 
 /*
 **	read file
@@ -71,51 +71,51 @@ char			*get_object_key(char *data);
 char			*get_value_offset(char *data);
 void			*get_object_value(char *data, t_dnon_value_type type);
 int				get_object_value_type(char *data);
-t_result		init_usize_with_obj(t_usize *self, t_dnon_object *size_obj);
-t_result		init_vec2i_with_obj(t_vec2i *self, t_dnon_object *vec2i_obj);
-t_result		init_vec2f_with_obj(t_vec2f *self, t_dnon_object *vec2f_obj);
-t_bool			strcmp_obj(char *key, char *value, t_dnon_object *obj);
-t_vec2i			get_vec2i(t_dnon_object *vec2i_obj, int default_x,
+t_result		init_usize_with_obj(t_usize *self, t_obj *size_obj);
+t_result		init_vec2i_with_obj(t_vec2i *self, t_obj *vec2i_obj);
+t_result		init_vec2f_with_obj(t_vec2f *self, t_obj *vec2f_obj);
+t_bool			strcmp_obj(char *key, char *value, t_obj *obj);
+t_vec2i			get_vec2i(t_obj *vec2i_obj, int default_x,
 					int default_y);
-t_vec2f			get_vec2f(t_dnon_object *vec2f_obj, float default_x,
+t_vec2f			get_vec2f(t_obj *vec2f_obj, float default_x,
 					float default_y);
 
 /*
 **	object creation
 */
-t_dnon_object	*new_dnon_object();
-t_dnon_object	*create_dnon_object(char *key, t_dnon_value_type type);
-t_dnon_object	*create_dnon_object_with_data(char *data);
+t_obj	*new_obj();
+t_obj	*create_obj(char *key, t_dnon_value_type type);
+t_obj	*create_obj_with_data(char *data);
 
 /*
 **	object free
 */
-t_iterator_callback		free_object(t_dnon_object *obj);
+t_iterator_callback		free_object(t_obj *obj);
 
 /*
 **	getters
 */
-int				get_int_value_by_key(t_dnon_object *tree,
+int				get_int_child(t_obj *tree,
 					char *key,
 					int by_default);
-float			get_float_value_by_key(t_dnon_object *tree,
+float			get_float_child(t_obj *tree,
 					char *key,
 					float by_default);
-char			*get_string_value_by_key(t_dnon_object *tree,
+char			*get_string_child(t_obj *tree,
 					char *key,
 					char *by_default);
-t_dnon_object	*get_child_list(t_dnon_object *tree, char *key);
-t_dnon_object	*get_child_object_by_key(t_dnon_object *tree, char *key);
+t_obj	*get_child_list(t_obj *tree, char *key);
+t_obj	*get_child_object_by_key(t_obj *tree, char *key);
 
 /*
 ** setters
 */
-t_result		set_int_value_by_key(t_dnon_object *obj, char *key, int set);
+t_result		set_int_value_by_key(t_obj *obj, char *key, int set);
 
 /*
 **	debug
 */
-t_iterator_callback		debug_object(t_dnon_object *obj);
+t_iterator_callback		debug_object(t_obj *obj);
 void					debug_split(char **datas);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/22 17:16:02 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/02/27 13:07:16 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/02/27 14:55:50 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,5 +76,58 @@ typedef struct	s_map
 	t_result		(*render)(struct s_map*);
 }				t_map;
 t_map			*init_new_map();
+
+/*
+**	configuration
+*/
+typedef struct	s_map2d_config
+{
+	t_bool		display;
+	t_box		render_box;
+	t_vec2i		icon_size;
+}				t_map2d_config;
+t_result		init_map2d_config(t_map2d_config *self);
+
+typedef struct	s_render_slide
+{
+	float	dist_to_slide;
+	float	dist_ratio;
+	float	slide_width;
+	float	slide_half;
+	float	slide_delta;
+}				t_render_slide;
+
+typedef struct	s_rangei
+{
+	int	min;
+	int	max;
+}				t_rangei;
+
+typedef struct	s_pre_render3d
+{
+	t_render_slide	*slides;
+	size_t			slides_amount;
+	t_rangei		index;
+	t_u32			*columns_height;
+	t_vec2f			delta_dir;
+}				t_pre_render3d;
+
+typedef struct	s_map3d_config
+{
+	t_bool				display;
+	t_box				render_box;
+	t_pre_render3d		pre_render;
+}						t_map3d_config;
+t_result		init_map3d_config(t_map3d_config *self);
+
+typedef struct	s_map_config
+{
+	t_map2d_config		color;
+	t_map2d_config		height;
+	t_map2d_config		drop;
+	t_map3d_config		world3d;
+}				t_map_config;
+t_result	init_map_config(t_map_config *self)
+
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 15:18:54 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/02/24 15:22:35 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/02/27 16:15:08 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@
 #include "libft.h"
 
 // t_result	build_game_resources(t_game *game,
-// 				t_dnon_object *game_obj)
+// 				t_obj *game_obj)
 // {
-// 	t_dnon_object *resources_obj;
+// 	t_obj *resources_obj;
 
 // 	if (game == NULL || game_obj == NULL)
 // 		return (throw_error("build_resources", "NULL pointer provided"));

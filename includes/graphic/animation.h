@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/22 11:39:15 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/02/27 13:18:33 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/02/27 19:15:04 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ typedef struct	s_animation_collide
 	t_mouse_observer	drag;
 	t_mouse_observer	draw;
 }				t_animation_collide;
-t_result		init_animation_collide(t_animation_collide *self);
 
 /*
 ** init
@@ -52,6 +51,9 @@ typedef struct	s_animation_box
 	t_pos2i		offset;
 	t_box		render_box;
 }				t_animation_box;
+t_result		init_animation_box(t_animation_box *self);
+t_result		init_animation_collide(t_animation_collide *self,
+					t_animation_box *box);
 
 typedef struct	s_animation
 {
@@ -98,6 +100,18 @@ t_result		init_oriented_animations(t_oriented_animations *self);
 /*
 ** build
 */
-t_result		build_animation(t_animation *self, t_dnon_object *anim_obj);
+t_result		build_animation(t_animation *self, t_obj *anim_obj);
+
+/*
+** copy
+*/
+t_result		copy_animation(t_animation *dest, t_animation *src);
+
+/*
+** overwrite
+*/
+t_result		overwrite_animation(t_animation *self, t_obj *anim_obj,
+					t_mouse_observable *mouse);
+
 
 #endif

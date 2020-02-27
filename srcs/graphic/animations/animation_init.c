@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/22 12:57:38 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/02/24 12:28:39 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/02/27 18:25:41 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,36 +16,47 @@
 #include "events/observer.h"
 #include "utils/error.h"
 
-t_result	init_mouse_collide_observer(t_mouse_collide_observer *self)
+t_result		init_mouse_observer(t_mouse_observer *self)
 {
 	if (self == NULL)
 		return (throw_error("init_observer", "NULL pointer provided"));
 	init_list_head(&self->node);
-	self->offset = NULL;
-	self->size = NULL;
-	self->suscribe_list = NULL;
-	self->is_subscribed = FALSE;
-	self->is_active = FALSE;
-	init_list_head(&self->start);
-	init_list_head(&self->stop);
+	self->render_box = NULL;
+	self->list = NULL;
+	self->suscribe = NULL;
+	self->unsuscribe = NULL;
+	self->suscribed = FALSE;
+	self->active = FALSE;
+	init_list_head(&self->start_actions);
+	init_list_head(&self->stop_actions);
 	return (OK);
 }
 
-t_result	init_mouse_collide(t_mouse_collide *self)
+t_result	init_animation_collide(t_animation_collide *self,
+				t_animation_box *box)
+{
+	if (self == NULL || box == NULL)
+		return (throw_error("init_collide", "NULL pointer provided"));
+	init_mouse_observer(&self->hover);
+	self->hover.render_box = &box->render_box;
+	init_mouse_observer(&self->select);
+	self->select.render_box = &box->render_box;
+	init_mouse_observer(&self->drag);
+	self->drag.render_box = &box->render_box;
+	init_mouse_observer(&self->draw);
+	self->draw.render_box = &box->render_box;
+	return (OK);
+}
+
+t_result		init_animation_box(t_animation_box *self)
 {
 	if (self == NULL)
-		return (throw_error("init_collide", "NULL pointer provided"));
+		return (throw_error("init_animation_box", "NULL pointer provided"));
+	self->parent_box = NULL;
+	self->anchor = ft_pos2i(0, 0);
 	self->offset = ft_pos2i(0, 0);
-	self->size = ft_pos2i(1, 1);
-	init_mouse_collide_observer(&self->hover);
-	self->hover.offset = &self->offset;
-	self->hover.size = &self->size;
-	init_mouse_collide_observer(&self->select);
-	self->select.offset = &self->offset;
-	self->select.size = &self->size;
-	init_mouse_collide_observer(&self->drag);
-	self->drag.offset = &self->offset;
-	self->drag.size = &self->size;
+	self->render_box.offset = ft_pos2i(0, 0);
+	self->render_box.size = ft_vec2i(1, 1);
 	return (OK);
 }
 
@@ -56,12 +67,14 @@ t_result	init_animation(t_animation *self)
 	init_list_head(&self->node);
 	self->state = STOP;
 	gettimeofday(&self->last, NULL);
+	init_animation_box(&self->box);
+	init_animation_collide(&self->collide, &self->box);
 	self->curr = NULL;
 	init_list_head(&self->textures);
-	self->anchor = ft_pos2i(0, 0);
-	self->render_list = NULL;
-	self->is_render = FALSE;
-	init_mouse_collide(&self->collide);
+	self->list = NULL;
+	self->suscribe = NULL;
+	self->unsuscribe = NULL;
+	self->suscribed = FALSE;
 	return (OK);
 }
 

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   load_bmp.c                                         :+:      :+:    :+:   */
+/*   image_load.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:36:31 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/02/22 22:13:49 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/02/27 16:15:08 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,9 +90,9 @@ t_result	resources_load_images(t_list_head *images, char *path)
 {
 	t_list_head			*pos;
 	t_list_head			*next;
-	t_dnon_object		*child;
+	t_obj		*child;
 	t_bitmap			*bmp;
-	t_dnon_object		*images_obj;
+	t_obj		*images_obj;
 
 	if (images == NULL || path == NULL)
 		return (throw_error("resources_load_images", "NULL pointer provided"));
@@ -105,7 +105,7 @@ t_result	resources_load_images(t_list_head *images, char *path)
 	while ((pos = next) != (t_list_head*)images_obj->value)
 	{
 		next = next->next;
-		child = (t_dnon_object*)pos;
+		child = (t_obj*)pos;
 		if (child->type != STRING)
 			return (throw_error("resources_load_images", "isn't string"));
 		if (!(bmp = load_bmp(child->value)))

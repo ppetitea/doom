@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/25 14:20:50 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/01/21 02:20:17 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/02/27 16:15:08 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	debug_split(char **datas)
 	}
 }
 
-t_iterator_callback	debug_object(t_dnon_object *obj)
+t_iterator_callback	debug_object(t_obj *obj)
 {
 	static int	deep = 0;
 

@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/22 22:57:02 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/02/24 15:05:13 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/02/27 19:12:16 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,22 @@ t_button			*init_new_button();
 ** build
 */
 t_result			build_new_buttons(t_list_head *buttons, char *path);
+
+/*
+**	getter
+*/
+t_list_head			*get_resource_button_list();
+t_button			*get_button(char *name);
+
+/*
+**	duplicate
+*/
+t_button			*duplicate_button(char *name);
+
+/*
+**	overwrite
+*/
+t_button			*overwrite_button(t_button *self, t_obj *button_obj,
+						t_mouse_observable *mouse);
 
 #endif

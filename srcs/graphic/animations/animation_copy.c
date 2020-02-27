@@ -1,34 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   animation_copy.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/12/28 15:33:22 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/02/27 16:15:08 by ppetitea         ###   ########.fr       */
+/*   Created: 2020/02/24 10:53:50 by ppetitea          #+#    #+#             */
+/*   Updated: 2020/02/27 18:41:35 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "graphic/animation.h"
+#include "utils/error.h"
 #include "utils/parser.h"
-#include <stdlib.h>
 
-static void		free_object_recursively(t_obj *obj)
+t_result	copy_animation(t_animation *dest, t_animation *src)
 {
-	if (obj->key != NULL)
-		free(obj->key);
-	if (obj->type != LIST && obj->value != NULL)
-		free(obj->value);
-	else
-	{
-		list_foreach((t_list_head*)obj->value, 0, free_object);
-		free(obj->value);
-	}
-}
-
-t_iterator_callback		free_object(t_obj *obj)
-{
-	free_object_recursively(obj);
-	free(obj);
-	return (CONTINUE);
+	if (dest == NULL || src == NULL)
+		return (throw_error("copy_animation", "NULL pointer provided"));
+	dest->state = src->state;
+	dest->suscribe = src->suscribe;
+	dest->unsuscribe = src->unsuscribe;
+	copy_texture_list(&dest->list, &src->list);
+	return (OK);
 }

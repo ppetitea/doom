@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/03 20:45:31 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/01/24 20:02:29 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/02/27 16:20:04 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 #include "utils/parser.h"
 #include "utils/error.h"
 
-float		get_float_value_by_key(t_dnon_object *tree, char *key, float by_default)
+float		get_float_child(t_obj *tree, char *key, float by_default)
 {
 	t_list_head		*pos;
 	t_list_head		*next;
-	t_dnon_object	*child;
+	t_obj	*child;
 
 	if (tree == NULL || key == NULL)
 	{
@@ -32,7 +32,7 @@ float		get_float_value_by_key(t_dnon_object *tree, char *key, float by_default)
 	while ((pos = next) != (t_list_head*)tree->value)
 	{
 		next = next->next;
-		child = (t_dnon_object*)pos;
+		child = (t_obj*)pos;
 		if (!ft_strcmp(child->key, key) && child->type == NUMBER)
 			return (*(float*)child->value);
 	}

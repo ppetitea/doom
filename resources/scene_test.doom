@@ -1,4 +1,3 @@
-
 "key_bindings":{
 	"ESCAPE":{
 		"SDL_Keycode":27,
@@ -8,24 +7,22 @@
 	}
 },
 "map_config":{
-	"2d":{
+	"color":{
 		"display":1,
 		"offset":{"x":40,"y":200},
 		"size":{"x":640,"y":480},
 		"icon_size":{"x":25,"y":20}
 	}
 },
-"images":{
-	"background":{
-		"animation":{
-			"textures":{"background_blood":{"screen_ratio":1.0,"filter":"circular_shadow"}}
-		}
-	},
-	"title":{
-		"animation":{
-			"anchor":{"x":400,"y":480},
-			"textures":{"doum_doum_doum":{"img_ratio":1.0}}
-		}
+"background":{
+	"animation":{
+		"textures":{"background_blood":{"screen_ratio":1.0,"filter":"circular_shadow"}}
+	}
+},
+"title":{
+	"animation":{
+		"anchor":{"x":400,"y":480},
+		"textures":{"doum_doum_doum":{"img_ratio":1.0}}
 	}
 },
 "buttons":{

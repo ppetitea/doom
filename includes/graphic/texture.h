@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/22 11:39:15 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/02/24 12:22:56 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/02/27 18:24:50 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ typedef struct		s_texture
 	t_u32		delay_ms;
 }					t_texture;
 t_result			init_texture(t_texture *self);
-t_texture			*init_new_texture(t_vec2i size);
+t_texture			*init_new_texture();
+t_texture			*init_new_texture_with_size(t_vec2i size);
 
 /*
 ** filter
@@ -46,8 +47,13 @@ t_result			filter_texture(t_texture *text, t_filter_type filter);
 /*
 ** build
 */
-t_texture			*build_new_texture(t_dnon_object *texture_obj);
+t_texture			*build_new_texture(t_obj *texture_obj);
 t_result			build_textures(t_list_head *textures,
-						t_dnon_object *textures_obj);
+						t_obj *textures_obj);
+
+/*
+**	copy
+*/
+t_result			copy_texture_list(t_list_head *dest, t_list_head *src);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/24 11:25:52 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/02/24 14:50:09 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/02/27 16:42:31 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "utils/error.h"
 #include "ft/str.h"
 
-static t_button	*build_new_button(t_dnon_object *button_obj)
+static t_button	*build_new_button(t_obj *button_obj)
 {
 	t_button	*self;
 
@@ -33,8 +33,8 @@ static t_button	*build_new_button(t_dnon_object *button_obj)
 
 t_result	build_new_buttons(t_list_head *buttons, char *path)
 {
-	t_dnon_object	*buttons_obj;
-	t_dnon_object	*button_obj;
+	t_obj	*buttons_obj;
+	t_obj	*button_obj;
 	t_button		*button;
 	t_list_head		*pos;
 
@@ -47,7 +47,7 @@ t_result	build_new_buttons(t_list_head *buttons, char *path)
 	pos = (t_list_head*)buttons_obj->value;
 	while ((pos = pos->next) != (t_list_head*)buttons_obj->value)
 	{
-		button_obj = (t_dnon_object*)pos;
+		button_obj = (t_obj*)pos;
 		if ((button = build_new_button(button_obj)))
 			list_add_entry(&button->node, buttons);
 	}
