@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/22 11:39:15 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/02/26 15:13:20 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/02/27 13:18:33 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef struct	s_animation_collide
 	t_mouse_observer	hover;
 	t_mouse_observer	select;
 	t_mouse_observer	drag;
+	t_mouse_observer	draw;
 }				t_animation_collide;
 t_result		init_animation_collide(t_animation_collide *self);
 

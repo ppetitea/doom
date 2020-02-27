@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/22 22:57:02 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/02/24 14:30:53 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/02/26 16:51:09 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ typedef	struct	s_camera
 	float			rotation_delta;
 	float			translation_delta;
 	float			velocity;
+	int				horizon_height;
+	int				horizon_dist;
 }				t_camera;
 
 typedef struct		s_player
