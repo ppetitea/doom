@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/22 17:16:02 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/02/27 14:55:50 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/02/28 18:12:26 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,6 @@ typedef struct	s_map_config
 	t_map2d_config		drop;
 	t_map3d_config		world3d;
 }				t_map_config;
-t_result	init_map_config(t_map_config *self)
-
+t_result		init_map_config(t_map_config *self);
 
 #endif

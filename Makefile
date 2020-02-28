@@ -6,7 +6,7 @@
 #    By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/08 21:27:29 by lbenard           #+#    #+#              #
-#    Updated: 2020/02/24 11:59:46 by ppetitea         ###   ########.fr        #
+#    Updated: 2020/02/28 18:29:38 by ppetitea         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -81,16 +81,24 @@ SRCS_LIST	=	main.c														\
 				utils/parser/to_object.c									\
 																			\
 				build.c														\
+				build/scenes/test/play_button.c								\
+				build/scenes/test/test_scene.c								\
+																			\
 				loop.c														\
 				resources/game/game_init.c									\
-				resources/buttons/button_build.c							\
-				resources/buttons/button_init.c								\
 				resources/images/image_get.c								\
 				resources/images/image_load.c								\
+				resources/buttons/button_init.c								\
+				resources/scenes/scene_init.c								\
 																			\
 				events/handle.c												\
+				events/actions/action_add.c									\
+				events/actions/action_init.c								\
 				events/mouse/mouse_handle.c									\
 				events/keyboard/keyboard_handle.c							\
+				events/observer/observable_init.c							\
+				events/observer/observer_init.c								\
+				events/observer/observer_sub.c								\
 																			\
 				interface/screen/screen_init.c								\
 				interface/screen/screen_reset.c								\
@@ -98,8 +106,14 @@ SRCS_LIST	=	main.c														\
 				interface/sdl/sdl_destroy.c									\
 																			\
 				graphic/animations/animation_build.c						\
+				graphic/animations/animation_collide.c						\
+				graphic/animations/animation_copy.c							\
 				graphic/animations/animation_init.c							\
+				graphic/animations/animation_overwrite.c					\
+				graphic/animations/animation_sub.c							\
+				graphic/textures/texture_add.c								\
 				graphic/textures/texture_build.c							\
+				graphic/textures/texture_copy.c								\
 				graphic/textures/texture_filter.c							\
 				graphic/textures/texture_init.c								\
 

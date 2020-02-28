@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 14:03:50 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/02/27 16:12:44 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/02/28 18:24:09 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,6 @@ t_scene		*init_new_scene()
 	self->name = NULL;
 	init_scene_gui(&self->gui);
 	init_scene_events(&self->events);
-	init_scene_map_config(&self->map_config);
+	init_map_config(&self->map_config);
 	return (self);
 }

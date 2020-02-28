@@ -6,10 +6,11 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 19:21:28 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/02/28 01:16:04 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/02/28 18:14:11 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
 #include "events/action.h"
 #include "utils/error.h"
 
@@ -20,6 +21,7 @@ t_action_node	*add_new_basic_action(t_list_head *actions, t_result (*fn)())
 	if (!(action = init_new_action()))
 		return (throw_null("add_new_basic_action", "init_new_action failed"));
 	action->fn = fn;
+	list_add_entry(&action->node, actions);
 	return (action);
 }
 
@@ -42,7 +44,6 @@ t_action_node	*add_new_action(t_list_head *actions, t_result (*fn)(),
 					t_arg arg, t_arg_type type)
 {
 	t_action_node	*action;
-	t_arg_node		*arg;
 	
 	if (actions == NULL || fn == NULL)
 		return (throw_null("add_new_action", "NULL pointer provided"));

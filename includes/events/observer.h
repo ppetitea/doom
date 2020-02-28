@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/22 17:56:55 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/02/28 01:14:01 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/02/28 17:54:17 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ typedef struct		s_mouse_observer
 	t_list_head		node;
 	t_box			*render_box;
 	t_list_head		*list;
-	t_result		(*suscribe)(struct s_mouse_observer*, t_list_head*);
+	t_result		(*suscribe)(struct s_mouse_observer*);
 	t_result		(*unsuscribe)(struct s_mouse_observer*);
 	t_bool			suscribed;
 	t_bool			active;
@@ -77,5 +77,12 @@ typedef struct		s_keyboard_observable
 	t_list_head		hold;
 }					t_keyboard_observable;
 t_result			init_keyboard_observable(t_keyboard_observable *self);
+
+/*
+** sub
+*/
+t_result			mouse_observer_subscribe(t_mouse_observer *self);
+t_result			mouse_observer_unsubscribe(t_mouse_observer *self);
+
 
 #endif

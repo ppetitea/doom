@@ -1,22 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   animation_sub.c                                    :+:      :+:    :+:   */
+/*   observer_sub.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/28 12:32:28 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/02/28 18:05:59 by ppetitea         ###   ########.fr       */
+/*   Created: 2020/02/28 17:03:48 by ppetitea          #+#    #+#             */
+/*   Updated: 2020/02/28 18:03:59 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "graphic/animation.h"
+#include "events/observer.h"
 #include "utils/error.h"
 
-t_result	animation_subscribe(t_animation *self)
+t_result	mouse_observer_subscribe(t_mouse_observer *self)
 {
 	if (self == NULL || self->list == NULL)
-		return (throw_error("animation_sub", "NULL pointer provided"));
+		return (throw_error("mouse_observer_sub", "NULL pointer provided"));
 	if (self->suscribed == FALSE)
 	{
 		self->suscribed = TRUE;
@@ -25,10 +25,10 @@ t_result	animation_subscribe(t_animation *self)
 	return (OK);
 }
 
-t_result	animation_unsubscribe(t_animation *self)
+t_result	mouse_observer_unsubscribe(t_mouse_observer *self)
 {
 	if (self == NULL || self->list == NULL)
-		return (throw_error("animation_unsub", "NULL pointer provided"));
+		return (throw_error("mouse_observer_unsub", "NULL pointer provided"));
 	if (self->suscribed == TRUE)
 	{
 		self->suscribed = FALSE;

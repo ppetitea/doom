@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/22 12:57:38 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/02/28 12:57:59 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/02/28 18:20:36 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,6 @@
 #include "events/observer.h"
 #include "utils/error.h"
 
-t_result		init_mouse_observer(t_mouse_observer *self)
-{
-	if (self == NULL)
-		return (throw_error("init_observer", "NULL pointer provided"));
-	init_list_head(&self->node);
-	self->render_box = NULL;
-	self->list = NULL;
-	self->suscribe = NULL;
-	self->unsuscribe = NULL;
-	self->suscribed = FALSE;
-	self->active = FALSE;
-	init_list_head(&self->start_actions);
-	init_list_head(&self->stop_actions);
-	return (OK);
-}
 
 t_result	init_animation_collide(t_animation_collide *self,
 				t_animation_box *box)

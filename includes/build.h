@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/22 19:19:39 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/02/23 12:52:18 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/02/28 17:48:53 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,5 +17,15 @@
 
 t_game	*build();
 
+/*
+** test scene
+*/
+t_result	add_test_scene(t_list_head *scenes);
+t_result	add_play_button(t_list_head *buttons, t_list_head *render_list,
+				t_mouse_followers *followers);
+
+/*
+** other scene
+*/
 
 #endif
