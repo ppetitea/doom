@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 01:39:57 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/02/28 00:26:39 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/02/28 01:15:36 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 
 typedef enum	e_arg_type
 {
-	TYPE_NONE,
 	TYPE_INT,
 	TYPE_FLOAT,
 	TYPE_CHAR,
@@ -44,10 +43,20 @@ t_result		init_new_arg(t_arg arg, t_arg_type type);
 typedef struct	s_action_node
 {
 	t_list_head		node;
-	t_result		(*action)();
+	t_result		(*fn)(); //Checker si la norminette autorise ca
 	t_list_head		args;
 }				t_action_node;
-t_result		init_new_action();
+t_action_node	*init_new_action();
+
+/*
+**	add
+*/
+t_action_node	*add_new_basic_action(t_list_head*, t_result (*fn)());
+t_action_node	*add_new_action(t_list_head*, t_result (*fn)(), t_arg arg,
+					t_arg_type type);
+t_arg_node		*add_new_arg(t_list_head *args, t_arg arg, t_arg_type type);
+t_result		add_action_arg(t_action_node *action, t_arg arg,
+					t_arg_type type);
 
 /*
 INIT:
@@ -58,7 +67,7 @@ INIT:
 
 USAGE:
 	Sans arguments:
-		add_new_action(action_list, (*fn));
+		add_new_simple_action(action_list, (*fn));
 	
 	Avec 1 seul argument:
 		add_new_action_with_arg(action_list, (*fn), arg, ARG_TYPE);

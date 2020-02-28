@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/24 10:53:50 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/02/27 19:24:34 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/02/28 01:18:15 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,9 @@ t_result	update_animation_collide(t_animation_collide *collide,
 	{
 		if ((action = init_new_action()))
 		{
-			
+			// build_action_fn()
+			// build_action_args()
+			// list_add_entry(&action->node, &mouse->followers.hover);
 		}
 	}
 	return (OK);
