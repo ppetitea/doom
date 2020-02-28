@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/22 11:39:15 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/02/27 18:24:50 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/02/28 12:19:22 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,5 +55,11 @@ t_result			build_textures(t_list_head *textures,
 **	copy
 */
 t_result			copy_texture_list(t_list_head *dest, t_list_head *src);
+
+/*
+**	add
+*/
+t_texture			*add_new_texture(t_list_head *textures, char *name,
+						t_vec2i size, t_filter_type filter);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/22 12:57:38 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/02/27 18:25:41 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/02/28 12:57:59 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,8 @@ t_result	init_animation(t_animation *self)
 	self->curr = NULL;
 	init_list_head(&self->textures);
 	self->list = NULL;
-	self->suscribe = NULL;
-	self->unsuscribe = NULL;
+	self->subscribe = animation_subscribe;
+	self->unsubscribe = animation_unsubscribe;
 	self->suscribed = FALSE;
 	return (OK);
 }

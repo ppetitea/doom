@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 01:39:57 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/02/28 01:15:36 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/02/28 13:12:07 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,13 @@ typedef struct	s_action_node
 	t_result		(*fn)(); //Checker si la norminette autorise ca
 	t_list_head		args;
 }				t_action_node;
+
+// typedef struct	s_action_node
+// {
+// 	t_list_head		node;
+// 	t_result		(*fn)(t_list_head*);
+// 	t_list_head		args;
+// }				t_action_node;
 t_action_node	*init_new_action();
 
 /*

@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 16:12:54 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/02/27 19:06:46 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/02/28 11:54:31 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,16 @@ t_result	build_scene_gui(t_scene_gui *gui, t_scene_events *events,
 		return (throw_error("build_scene_gui", "build_background failed"));
 	buttons_obj = get_child_list(scene_obj, "buttons");
 	
+	/*
+	1 -> build les senes depuis un fichier descriptif
+			-> Je ne peux pas utiliser de pointeur de fonctions generique
+			->	bah si, simplement je dois faire davantage que juste assosicer
+				la bonne fonction il faut test aussi le sarguments
+	2 -> build les senes en dur dans le code
+			-> Je peux utiliser des pointeurs de fonctions generiques
+	*/
+
+
 	/*
 	1 -> build les buttons directement dans la scene
 	2 -> build les buttons puis les overwrite dans la scene

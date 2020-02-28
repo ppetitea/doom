@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/22 11:39:15 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/02/27 19:15:04 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/02/28 12:59:55 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ t_result		init_animation_collide(t_animation_collide *self,
 typedef struct	s_animation
 {
 	t_list_head				node;
+	int						z_index;
 	t_animation_status		state;
 	struct timeval			last;
 	t_animation_box			box;
@@ -65,8 +66,8 @@ typedef struct	s_animation
 	t_texture				*curr;
 	t_list_head				textures;
 	t_list_head				*list;
-	t_result				(*suscribe)(struct s_animation*, t_list_head*);
-	t_result				(*unsuscribe)(struct s_animation*);
+	t_result				(*subscribe)(struct s_animation*);
+	t_result				(*unsubscribe)(struct s_animation*);
 	t_bool					suscribed;
 }				t_animation;
 t_result		init_animation(t_animation *self);
@@ -112,6 +113,18 @@ t_result		copy_animation(t_animation *dest, t_animation *src);
 */
 t_result		overwrite_animation(t_animation *self, t_obj *anim_obj,
 					t_mouse_observable *mouse);
+
+/*
+** subscription
+*/
+t_result		animation_subscribe(t_animation *self);
+t_result		animation_unsubscribe(t_animation *self);
+
+/*
+** add
+*/
+t_result		add_animation_collide_lists(t_animation *anim,
+					t_mouse_followers *followers);
 
 
 #endif
