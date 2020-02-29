@@ -6,14 +6,14 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 14:03:50 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/02/28 18:12:39 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/02/29 12:18:30 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "resources/map.h"
 #include "utils/error.h"
 
-static t_result	init_map2d_config(t_map2d_config *self)
+t_result	init_map2d_config(t_map2d_config *self)
 {
 	if (self == NULL)
 		return (throw_error("init_map2d_config", "NULL pointer provided"));
@@ -24,7 +24,7 @@ static t_result	init_map2d_config(t_map2d_config *self)
 	return (OK);
 }
 
-static t_result	init_map3d_config(t_map3d_config *self)
+t_result	init_map3d_config(t_map3d_config *self)
 {
 	if (self == NULL)
 		return (throw_error("init_map3d_config", "NULL pointer provided"));

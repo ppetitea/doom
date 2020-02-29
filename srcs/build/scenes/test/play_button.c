@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/28 17:15:00 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/02/28 18:11:10 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/02/29 17:47:40 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,13 @@
 #include "ft/str.h"
 
 #include <stdio.h>
-t_result	debug_test(void *texture)
+t_result	debug_test(int n)
 {
-	if (texture == NULL)
-		return (throw_error("debug_test", "texture is NULL"));
-	printf("texture width %d\n", ((t_texture*)texture)->size.x);
-	printf("texture height %d\n", ((t_texture*)texture)->size.y);
+	printf("number %d\n", n);
+	// if (texture == NULL)
+	// 	return (throw_error("debug_test", "texture is NULL"));
+	// printf("texture width %d\n", ((t_texture*)texture)->size.x);
+	// printf("texture height %d\n", ((t_texture*)texture)->size.y);
 	return (OK);
 }
 
@@ -33,6 +34,7 @@ t_result	debug_test(void *texture)
 		add_textures
 		add_actions
 */
+
 t_result	add_play_button_textures(t_animation *anim,
 				t_list_head *render_list)
 {
@@ -45,7 +47,7 @@ t_result	add_play_button_textures(t_animation *anim,
 		return (throw_error("add_play_button", "Texture list is empty"));
 	anim->curr = (t_texture*)anim->textures.next;
 	anim->box.anchor = ft_vec2i(720, 520);
-	anim->box.offset = anim->curr->offset;
+	update_animation_render_box(anim);
 	anim->list = render_list;
 	anim->subscribe(anim);
 	return (OK);
@@ -55,11 +57,16 @@ t_result	add_play_button_collide(t_animation *anim,
 				t_mouse_followers *followers)
 {
 	t_list_head	*list;
-	
+	t_arg		arg;
+
 	add_animation_collide_lists(anim, followers);
 	anim->collide.select.suscribe(&anim->collide.select);
 	list = &anim->collide.select.start_actions;
-	add_new_action(list, debug_test, (t_arg)(void*)anim->curr, TYPE_POINTER);
+	arg.integer = 42;
+	t_action_node *node;
+	node = add_new_action(list, debug_test, arg, TYPE_POINTER);
+
+	// printf("arg %d\n", get_args(&node->args)->integer);
 	return (OK);
 }
 

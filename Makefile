@@ -6,7 +6,7 @@
 #    By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/08 21:27:29 by lbenard           #+#    #+#              #
-#    Updated: 2020/02/28 18:29:38 by ppetitea         ###   ########.fr        #
+#    Updated: 2020/02/29 17:21:30 by ppetitea         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -90,6 +90,9 @@ SRCS_LIST	=	main.c														\
 				resources/images/image_load.c								\
 				resources/buttons/button_init.c								\
 				resources/scenes/scene_init.c								\
+				resources/scenes/scene_render.c								\
+				resources/maps/map_config_init.c							\
+				resources/maps/map_init.c									\
 																			\
 				events/handle.c												\
 				events/actions/action_add.c									\
@@ -100,6 +103,7 @@ SRCS_LIST	=	main.c														\
 				events/observer/observer_init.c								\
 				events/observer/observer_sub.c								\
 																			\
+				interface/screen/screen_get.c								\
 				interface/screen/screen_init.c								\
 				interface/screen/screen_reset.c								\
 				interface/sdl/sdl_init.c									\
@@ -111,6 +115,7 @@ SRCS_LIST	=	main.c														\
 				graphic/animations/animation_init.c							\
 				graphic/animations/animation_overwrite.c					\
 				graphic/animations/animation_sub.c							\
+				graphic/animations/animation_update.c						\
 				graphic/textures/texture_add.c								\
 				graphic/textures/texture_build.c							\
 				graphic/textures/texture_copy.c								\

@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 15:18:54 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/02/28 17:52:09 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/02/29 15:27:23 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_game	*build()
 	r = &game->resources;
 	if (!resources_load_images(&r->images, "resources/path_textures.doom"))
 		return (throw_null("build_game", "Fail to load images"));
-	add_test_scene(&game->resources.scenes);
+	game->curr_scene = add_test_scene(&game->resources.scenes);
 	// if (!build_new_buttons(&r->buttons, "resources/ui_buttons.doom"))
 	// 	return (throw_null("build_game", "Fail to load buttons"));
 	// printf("list len %ld\n", list_lenght(&game->resources.images));

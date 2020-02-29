@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 19:21:28 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/02/28 18:14:11 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/02/29 17:32:04 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ t_action_node	*add_new_action(t_list_head *actions, t_result (*fn)(),
 		return (throw_null("add_new_action", "init_new_action failed"));
 	action->fn = fn;
 	add_new_arg(&action->args, arg, type);
+	list_add_entry(&action->node, actions);
 	return (action);
 }
 

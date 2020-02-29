@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/22 18:11:32 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/02/27 13:18:10 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/02/29 17:19:46 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,19 +28,19 @@
 **	Le pointeur est invisible et lock au centre de l'ecran
 **	De plus les mouvements de la souris controlent la camera
 */
-typedef enum		e_pointer_mode
+typedef enum	e_pointer_mode
 {
 	POINTER_SELECT,
 	POINTER_DRAW,
 	POINTER_CAMERA
-}					t_pointer_mode;
+}				t_pointer_mode;
 
-typedef struct		s_mouse
+typedef struct	s_mouse
 {
 	t_pointer_mode		mode;
 	t_pos2i				pos;
 	t_bool				down;
 	t_bool				drag;
-}					t_mouse;
+}				t_mouse;
 
 #endif

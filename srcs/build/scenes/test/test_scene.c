@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/28 17:19:28 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/02/28 18:11:42 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/02/29 15:53:31 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,16 @@ t_result	add_test_scene_gui(t_scene_gui *gui, t_scene_events *events)
 	return (OK);
 }
 
-t_result	add_test_scene(t_list_head *scenes)
+t_scene		*add_test_scene(t_list_head *scenes)
 {
 	t_scene	*scene;
 
 	if (!(scene = init_new_scene()))
-		return (throw_error("create_new_scene", "init_new_scene failed"));
+		return (throw_null("create_new_scene", "init_new_scene failed"));
 	if (!(scene->name = ft_strdup("test_scene")))
-		return (throw_error("create_new_scene", "ft_strdup failed"));
+		return (throw_null("create_new_scene", "ft_strdup failed"));
 	add_test_scene_gui(&scene->gui, &scene->events);
 	// scene->map_config.color.display = TRUE;
 	list_add_entry(&scene->node, scenes);
-	return (OK);
+	return (scene);
 }

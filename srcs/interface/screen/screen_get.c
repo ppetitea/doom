@@ -1,33 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   screen.h                                           :+:      :+:    :+:   */
+/*   screen_get.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/24 23:27:11 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/02/29 15:36:05 by ppetitea         ###   ########.fr       */
+/*   Created: 2020/02/29 15:32:05 by ppetitea          #+#    #+#             */
+/*   Updated: 2020/02/29 15:35:21 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SCREEN_INIT_H
-# define SCREEN_INIT_H
+#include "resources/game.h"
+#include "interface/screen.h"
+#include "utils/error.h"
 
-# include "sizes/usize.h"
-# include "types.h"
-
-typedef struct			s_screen
+t_screen *get_screen()
 {
-	t_usize	size;
-	t_u32	*pixels;
-}						t_screen;
+	t_game	*game;
 
-t_result	init_screen(t_screen *self, t_usize window_size);
-void		reset_screen(t_screen screen);
-
-/*
-** get
-*/
-t_screen	*get_screen();
-
-#endif
+	if (!(game = game_singleton(NULL)))
+		return (throw_null("get_screen", "Game not found"));
+	return (&game->interface.screen);
+}

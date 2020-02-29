@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/22 11:39:15 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/02/28 12:19:22 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/02/29 14:15:32 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,19 @@
 # include "containers/list.h"
 # include "utils/parser.h"
 # include "maths/vec2i.h"
+
+/*
+**	render
+*/
+typedef struct		s_render_box
+{
+	t_vec2i			offset;
+	t_vec2i			size;
+	t_vec2f			scale;
+	t_vec2i			start;
+	t_vec2i			end;
+}					t_render_box;
+
 
 /*
 ** init
