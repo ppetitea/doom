@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/22 17:56:55 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/02/29 17:22:32 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/03/01 02:38:46 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,14 @@ typedef struct	s_box
 	t_pos2i		offset;
 	t_vec2i		size;
 }				t_box;
+
+// refact observer pour avoir une seule liste d'action
+// exemple
+// lorsque les actions de l'event hover_start sont declenche
+// une des actions va inscrire un autre observer a l'event hover end
+// beaucoup plus opti et logique
+
+// HERE YOU ARE !!!
 
 typedef struct		s_mouse_observer
 {
@@ -60,7 +68,12 @@ t_result			init_mouse_observable(t_mouse_observable *self);
 /*
 ** mouse handle
 */
+
+void			handle_mouse_motion(t_mouse_observable *mouse,
+					SDL_MouseMotionEvent event);
 void			handle_mouse_down(t_mouse_observable *mouse,
+					SDL_MouseButtonEvent event);
+void			handle_mouse_up(t_mouse_observable *mouse,
 					SDL_MouseButtonEvent event);
 
 /*

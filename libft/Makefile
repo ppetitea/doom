@@ -3,16 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+         #
+#    By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/05 18:02:14 by lbenard           #+#    #+#              #
-#    Updated: 2020/02/06 19:38:47 by lbenard          ###   ########.fr        #
+#    Updated: 2020/03/01 02:06:37 by ppetitea         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			=	libft.a
 SRCS_LIST		=	containers/list/init_list_head.c		\
 					containers/list/list_foreach.c			\
+					containers/list/list_get.c				\
 					containers/list/list_is_last.c			\
 					containers/list/list_is_empty.c			\
 					containers/list/list_add.c				\

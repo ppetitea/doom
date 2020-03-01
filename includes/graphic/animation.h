@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/22 11:39:15 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/02/29 16:08:46 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/03/01 01:44:26 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,14 +121,10 @@ t_result		animation_subscribe(t_animation *self);
 t_result		animation_unsubscribe(t_animation *self);
 
 /*
-** add
-*/
-t_result		add_animation_collide_lists(t_animation *anim,
-					t_mouse_followers *followers);
-
-/*
 ** update
 */
 t_result		update_animation_render_box(t_animation *anim);
+t_result		update_animation_collide_lists(t_animation *anim,
+					t_mouse_followers *followers);
 
 #endif

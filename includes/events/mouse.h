@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/22 18:11:32 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/02/29 17:19:46 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/03/01 01:32:10 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ typedef enum	e_pointer_mode
 {
 	POINTER_SELECT,
 	POINTER_DRAW,
-	POINTER_CAMERA
+	POINTER_GAME
 }				t_pointer_mode;
 
 typedef struct	s_mouse

@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/28 17:15:00 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/02/29 17:47:40 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/03/01 02:03:02 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@
 #include "ft/str.h"
 
 #include <stdio.h>
-t_result	debug_test(int n)
+t_result	debug_test(t_texture *texture)
 {
-	printf("number %d\n", n);
-	// if (texture == NULL)
-	// 	return (throw_error("debug_test", "texture is NULL"));
-	// printf("texture width %d\n", ((t_texture*)texture)->size.x);
-	// printf("texture height %d\n", ((t_texture*)texture)->size.y);
+	// printf("number %d\n", n);
+	if (texture == NULL)
+		return (throw_error("debug_test", "texture is NULL"));
+	printf("texture width %d\n", ((t_texture*)texture)->size.x);
+	printf("texture height %d\n", ((t_texture*)texture)->size.y);
 	return (OK);
 }
 
@@ -56,17 +56,12 @@ t_result	add_play_button_textures(t_animation *anim,
 t_result	add_play_button_collide(t_animation *anim,
 				t_mouse_followers *followers)
 {
-	t_list_head	*list;
-	t_arg		arg;
+	t_list_head	*action_list;
 
-	add_animation_collide_lists(anim, followers);
+	update_animation_collide_lists(anim, followers);
 	anim->collide.select.suscribe(&anim->collide.select);
-	list = &anim->collide.select.start_actions;
-	arg.integer = 42;
-	t_action_node *node;
-	node = add_new_action(list, debug_test, arg, TYPE_POINTER);
-
-	// printf("arg %d\n", get_args(&node->args)->integer);
+	action_list = &anim->collide.select.start_actions;
+	add_new_action(action_list, debug_test, (t_arg)(void*)anim->curr);
 	return (OK);
 }
 

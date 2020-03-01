@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/19 18:29:38 by lbenard           #+#    #+#             */
-/*   Updated: 2020/01/22 08:46:37 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/03/01 02:07:56 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,5 +107,10 @@ char			*lst_strjoin(const t_list *lst, const char *separator);
 ** Destructors
 */
 void			free_lst(t_list *list);
+
+/*
+** Getters
+*/
+t_list_head		*list_get(t_list_head *list, int offset);
 
 #endif
