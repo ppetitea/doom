@@ -6,7 +6,7 @@
 #    By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/08 21:27:29 by lbenard           #+#    #+#              #
-#    Updated: 2020/03/01 02:14:25 by ppetitea         ###   ########.fr        #
+#    Updated: 2020/03/01 12:57:38 by ppetitea         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -103,6 +103,7 @@ SRCS_LIST	=	main.c														\
 				events/observer/observable_init.c							\
 				events/observer/observer_init.c								\
 				events/observer/observer_sub.c								\
+				events/observer/observer_trigger.c							\
 																			\
 				interface/screen/screen_get.c								\
 				interface/screen/screen_init.c								\

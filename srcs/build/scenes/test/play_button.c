@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/28 17:15:00 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/03/01 02:03:02 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/03/01 14:22:55 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include "ft/str.h"
 
 #include <stdio.h>
+
 t_result	debug_test(t_texture *texture)
 {
 	// printf("number %d\n", n);
@@ -35,6 +36,26 @@ t_result	debug_test(t_texture *texture)
 		add_actions
 */
 
+t_result	reset_animation(t_animation *anim)
+{
+	if (anim->textures.next != &anim->textures)
+		anim->curr = (t_texture*)anim->textures.next;
+	anim->collide.hover_stop.unsuscribe(&anim->collide.hover_stop);
+	anim->collide.hover_start.suscribe(&anim->collide.hover_start);
+	return (OK);
+}
+
+t_result	texture_next(t_animation *anim)
+{
+	if (anim->curr->node.next != &anim->textures)
+		anim->curr = (t_texture*)anim->curr->node.next;
+	else
+		reset_animation(anim);
+	anim->collide.hover_start.unsuscribe(&anim->collide.hover_start);
+	anim->collide.hover_stop.suscribe(&anim->collide.hover_stop);
+	return (OK);
+}
+
 t_result	add_play_button_textures(t_animation *anim,
 				t_list_head *render_list)
 {
@@ -50,6 +71,7 @@ t_result	add_play_button_textures(t_animation *anim,
 	update_animation_render_box(anim);
 	anim->list = render_list;
 	anim->subscribe(anim);
+	// anim->state = ANIM_INFINITE;
 	return (OK);
 }
 
@@ -60,8 +82,16 @@ t_result	add_play_button_collide(t_animation *anim,
 
 	update_animation_collide_lists(anim, followers);
 	anim->collide.select.suscribe(&anim->collide.select);
-	action_list = &anim->collide.select.start_actions;
+	action_list = &anim->collide.select.actions;
 	add_new_action(action_list, debug_test, (t_arg)(void*)anim->curr);
+
+	anim->collide.hover_start.suscribe(&anim->collide.hover_start);
+	action_list = &anim->collide.hover_start.actions;
+	add_new_action(action_list, texture_next, (t_arg)(void*)anim);
+
+	action_list = &anim->collide.hover_stop.actions;
+	add_new_action(action_list, reset_animation, (t_arg)(void*)anim);
+
 	return (OK);
 }
 

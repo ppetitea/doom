@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/22 11:39:15 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/03/01 01:44:26 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/03/01 13:19:32 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,12 @@
 */
 typedef struct	s_animation_collide
 {
-	t_mouse_observer	hover;
+	t_mouse_observer	hover_start;
+	t_mouse_observer	hover_stop;
 	t_mouse_observer	select;
 	t_mouse_observer	drag;
-	t_mouse_observer	draw;
+	t_mouse_observer	drop;
+	t_mouse_observer	motion;
 }				t_animation_collide;
 
 /*
@@ -36,12 +38,11 @@ typedef struct	s_animation_collide
 */
 typedef enum	e_animation_status
 {
-	INFINITE,
-	IN_PROGRESS,
-	EPHEMERAL,
-	STOP,
-	FINAL,
-	NONE
+	ANIM_INFINITE,
+	ANIM_IN_PROGRESS,
+	ANIM_EPHEMERAL,
+	ANIM_STOP,
+	ANIM_FINAL,
 }				t_animation_status;
 
 typedef struct	s_animation_box

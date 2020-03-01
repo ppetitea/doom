@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/24 10:53:50 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/02/27 18:26:02 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/03/01 13:37:23 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,17 @@ static t_result	build_animation_status(t_animation_status *self,
 	if (self == NULL || anim_obj == NULL)
 		return (throw_error("build_animation_status", "NULL pointer provided"));
 	if (strcmp_obj("animation", "stop", anim_obj))
-		*self = STOP;
+		*self = ANIM_STOP;
 	else if (strcmp_obj("animation", "in_progress", anim_obj))
-		*self = IN_PROGRESS;
+		*self = ANIM_IN_PROGRESS;
 	else if (strcmp_obj("animation", "final", anim_obj))
-		*self = FINAL;
+		*self = ANIM_FINAL;
 	else if (strcmp_obj("animation", "ephemeral", anim_obj))
-		*self = EPHEMERAL;
+		*self = ANIM_EPHEMERAL;
 	else if (strcmp_obj("animation", "infinite", anim_obj))
-		*self = INFINITE;
+		*self = ANIM_INFINITE;
 	else
-		*self = NONE;
+		*self = ANIM_STOP;
 	return (OK);
 }
 

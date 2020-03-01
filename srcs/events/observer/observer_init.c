@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/28 17:03:48 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/02/28 18:23:38 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/03/01 13:03:31 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@ t_result	init_mouse_observer(t_mouse_observer *self)
 	self->suscribe = mouse_observer_subscribe;
 	self->unsuscribe = mouse_observer_unsubscribe;
 	self->suscribed = FALSE;
-	self->active = FALSE;
-	init_list_head(&self->start_actions);
-	init_list_head(&self->stop_actions);
+	init_list_head(&self->actions);
 	return (OK);
 }

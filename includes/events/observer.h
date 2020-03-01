@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/22 17:56:55 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/03/01 02:38:46 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/03/01 14:09:20 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,6 @@ typedef struct	s_box
 	t_vec2i		size;
 }				t_box;
 
-// refact observer pour avoir une seule liste d'action
-// exemple
-// lorsque les actions de l'event hover_start sont declenche
-// une des actions va inscrire un autre observer a l'event hover end
-// beaucoup plus opti et logique
-
-// HERE YOU ARE !!!
-
 typedef struct		s_mouse_observer
 {
 	t_list_head		node;
@@ -44,17 +36,18 @@ typedef struct		s_mouse_observer
 	t_result		(*unsuscribe)(struct s_mouse_observer*);
 	t_bool			suscribed;
 	t_bool			active;
-	t_list_head		start_actions;
-	t_list_head		stop_actions;
+	t_list_head		actions;
 }					t_mouse_observer;
 t_result			init_mouse_observer(t_mouse_observer *self);
 
 typedef struct		s_mouse_followers
 {
-	t_list_head		hover;
+	t_list_head		hover_start;
+	t_list_head		hover_stop;
 	t_list_head		select;
 	t_list_head		drag;
-	t_list_head		draw;
+	t_list_head		drop;
+	t_list_head		motion;
 }					t_mouse_followers;
 t_result			init_mouse_followers(t_mouse_followers *self);
 
@@ -87,7 +80,6 @@ typedef struct		s_keyboard_observer
 	t_result		(*suscribe)(struct s_keyboard_observer*, t_list_head*);
 	t_result		(*unsuscribe)(struct s_keyboard_observer*);
 	t_bool			suscribed;
-	t_bool			active;
 	t_list_head		start_actions;
 	t_list_head		stop_actions;
 }					t_keyboard_observer;
@@ -107,5 +99,13 @@ t_result			init_keyboard_observable(t_keyboard_observable *self);
 t_result			mouse_observer_subscribe(t_mouse_observer *self);
 t_result			mouse_observer_unsubscribe(t_mouse_observer *self);
 
+/*
+** trigger
+*/
+t_bool				trigger_mouse_observers(t_list_head *observers);
+t_bool				trigger_mouse_collide_on(t_list_head *observers,
+						t_mouse mouse);
+t_bool				trigger_mouse_collide_off(t_list_head *observers,
+						t_mouse mouse);
 
 #endif
