@@ -6,7 +6,7 @@
 #    By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/08 21:27:29 by lbenard           #+#    #+#              #
-#    Updated: 2020/03/02 16:44:45 by ppetitea         ###   ########.fr        #
+#    Updated: 2020/03/02 17:22:22 by ppetitea         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -118,6 +118,7 @@ SRCS_LIST	=	main.c														\
 				graphic/animations/animation_copy.c							\
 				graphic/animations/animation_init.c							\
 				graphic/animations/animation_overwrite.c					\
+				graphic/animations/animation_render.c						\
 				graphic/animations/animation_observer.c						\
 				graphic/animations/animation_sub.c							\
 				graphic/animations/animation_transform.c					\
@@ -127,6 +128,7 @@ SRCS_LIST	=	main.c														\
 				graphic/textures/texture_copy.c								\
 				graphic/textures/texture_filter.c							\
 				graphic/textures/texture_init.c								\
+				graphic/textures/texture_render.c							\
 
 SRCS_FOLDER	=	./srcs/
 SRCS		=	$(addprefix $(SRCS_FOLDER), $(SRCS_LIST))

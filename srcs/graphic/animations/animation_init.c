@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/22 12:57:38 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/03/02 14:56:47 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/03/02 17:22:37 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ t_result	init_animation(t_animation *self)
 	init_mouse_observers(&self->mouse_obs, &self->box);
 	self->curr = NULL;
 	init_list_head(&self->textures);
+	self->render = render_animation;
 	self->list = NULL;
 	self->subscribe = animation_subscribe;
 	self->unsubscribe = animation_unsubscribe;

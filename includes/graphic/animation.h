@@ -6,19 +6,20 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/22 11:39:15 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/03/02 16:44:15 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/03/02 17:18:07 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ANIMATION_H
 # define ANIMATION_H
 
-# include <sys/time.h>
+# include "interface/screen.h"
 # include "events/observer.h"
 # include "graphic/texture.h"
 # include "containers/list.h"
 # include "maths/vec2f.h"
 # include "maths/vec2i.h"
+# include "utils/time.h"
 
 /*
 ** init
@@ -48,11 +49,12 @@ typedef struct	s_animation
 	t_list_head				node;
 	int						z_index;
 	t_animation_status		state;
-	struct timeval			last;
+	t_time					last;
 	t_animation_box			box;
 	t_mouse_observers		mouse_obs;
 	t_texture				*curr;
 	t_list_head				textures;
+	t_result				(*render)(t_screen*, struct s_animation*, t_time);
 	t_list_head				*list;
 	t_result				(*subscribe)(struct s_animation*);
 	t_result				(*unsubscribe)(struct s_animation*);
@@ -136,6 +138,12 @@ t_result		transform_anim_on_mouse(t_animation	*anim);
 */
 t_result		reset_animation(t_animation *anim);
 t_result		texture_next(t_animation *anim);
+
+/*
+** render
+*/
+t_result		render_animation(t_screen *screen, t_animation *anim,
+					struct timeval time);
 
 
 #endif

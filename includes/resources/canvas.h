@@ -1,33 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   time.h                                             :+:      :+:    :+:   */
+/*   canvas.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/12 01:47:49 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/03/02 17:15:38 by ppetitea         ###   ########.fr       */
+/*   Created: 2020/02/22 22:57:02 by ppetitea          #+#    #+#             */
+/*   Updated: 2020/03/02 17:11:14 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TIME_H
-# define TIME_H
+#ifndef CANVAS_H
+# define CANVAS_H
 
-# include <sys/time.h>
-
-typedef struct timeval t_time;
+# include "graphic/animation.h"
 
 /*
-** Delta
+** init
 */
-float	*get_delta_ptr(void);
-void	set_delta(const float delta);
-float	get_delta(void);
-float	delta(const float value);
+typedef struct		s_canvas
+{
+	t_list_head			node;
+	char				*name;
+	t_animation			*background;
+	t_mouse_observers	mouse_obs;
+}					t_canvas;
+t_canvas			*init_new_canvas();
 
 /*
-** Time
+**	getter
 */
-double	get_wall_time(void);
+t_list_head			*get_resource_canvas_list();
+t_canvas			*get_canvas(char *name);
 
 #endif

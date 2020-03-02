@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/22 11:39:15 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/02/29 14:15:32 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/03/02 17:23:21 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "containers/list.h"
 # include "utils/parser.h"
 # include "maths/vec2i.h"
+# include "interface/screen.h"
 
 /*
 **	render
@@ -74,5 +75,11 @@ t_result			copy_texture_list(t_list_head *dest, t_list_head *src);
 */
 t_texture			*add_new_texture(t_list_head *textures, char *name,
 						t_vec2i size, t_filter_type filter);
+
+/*
+** render
+*/
+void				render_texture(t_screen *screen, t_texture *text,
+						t_render_box box);
 
 #endif
