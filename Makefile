@@ -6,7 +6,7 @@
 #    By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/08 21:27:29 by lbenard           #+#    #+#              #
-#    Updated: 2020/03/01 12:57:38 by ppetitea         ###   ########.fr        #
+#    Updated: 2020/03/02 14:54:04 by ppetitea         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -99,11 +99,13 @@ SRCS_LIST	=	main.c														\
 				events/actions/action_init.c								\
 				events/actions/action_trigger.c								\
 				events/mouse/mouse_handle.c									\
+				events/mouse/mouse_get.c									\
 				events/keyboard/keyboard_handle.c							\
 				events/observer/observable_init.c							\
 				events/observer/observer_init.c								\
 				events/observer/observer_sub.c								\
 				events/observer/observer_trigger.c							\
+				events/observer/observer_update.c							\
 																			\
 				interface/screen/screen_get.c								\
 				interface/screen/screen_init.c								\
@@ -112,7 +114,6 @@ SRCS_LIST	=	main.c														\
 				interface/sdl/sdl_destroy.c									\
 																			\
 				graphic/animations/animation_build.c						\
-				graphic/animations/animation_collide.c						\
 				graphic/animations/animation_copy.c							\
 				graphic/animations/animation_init.c							\
 				graphic/animations/animation_overwrite.c					\

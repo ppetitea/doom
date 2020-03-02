@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/22 11:39:15 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/03/01 13:19:32 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/03/02 14:57:28 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,6 @@
 # include "containers/list.h"
 # include "maths/vec2f.h"
 # include "maths/vec2i.h"
-
-/*
-** collider
-*/
-typedef struct	s_animation_collide
-{
-	t_mouse_observer	hover_start;
-	t_mouse_observer	hover_stop;
-	t_mouse_observer	select;
-	t_mouse_observer	drag;
-	t_mouse_observer	drop;
-	t_mouse_observer	motion;
-}				t_animation_collide;
 
 /*
 ** init
@@ -53,7 +40,7 @@ typedef struct	s_animation_box
 	t_box		render_box;
 }				t_animation_box;
 t_result		init_animation_box(t_animation_box *self);
-t_result		init_animation_collide(t_animation_collide *self,
+t_result		init_mouse_observers(t_mouse_observers *self,
 					t_animation_box *box);
 
 typedef struct	s_animation
@@ -63,13 +50,13 @@ typedef struct	s_animation
 	t_animation_status		state;
 	struct timeval			last;
 	t_animation_box			box;
-	t_animation_collide		collide;
+	t_mouse_observers		mouse_obs;
 	t_texture				*curr;
 	t_list_head				textures;
 	t_list_head				*list;
 	t_result				(*subscribe)(struct s_animation*);
 	t_result				(*unsubscribe)(struct s_animation*);
-	t_bool					suscribed;
+	t_bool					subscribed;
 }				t_animation;
 t_result		init_animation(t_animation *self);
 
@@ -125,7 +112,5 @@ t_result		animation_unsubscribe(t_animation *self);
 ** update
 */
 t_result		update_animation_render_box(t_animation *anim);
-t_result		update_animation_collide_lists(t_animation *anim,
-					t_mouse_followers *followers);
 
 #endif

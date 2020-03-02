@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/24 10:53:50 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/02/28 18:18:32 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/03/02 14:49:39 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,16 @@
 #include "utils/error.h"
 #include "utils/parser.h"
 
-// t_result	update_animation_collide(t_animation_collide *collide,
-// 				t_obj *collide_obj, t_mouse_observable *mouse)
+// t_result	update_mouse_observers(t_mouse_observers *mouse_obs,
+// 				t_obj *mouse_obs_obj, t_mouse_observable *mouse)
 // {
 // 	t_list_head		*pos;
 // 	t_action_node	*action;
 
-// 	if (collide == NULL || collide_obj == NULL)
-// 		return (throw_error("update_animation_collide", "NULL pointer"));
-// 	pos = (t_list_head*)collide_obj->value;
-// 	while ((pos = pos->next) != (t_list_head*)collide_obj->value)
+// 	if (mouse_obs == NULL || mouse_obs_obj == NULL)
+// 		return (throw_error("update_mouse_observers", "NULL pointer"));
+// 	pos = (t_list_head*)mouse_obs_obj->value;
+// 	while ((pos = pos->next) != (t_list_head*)mouse_obs_obj->value)
 // 	{
 // 		if ((action = init_new_action()))
 // 		{
@@ -49,6 +49,6 @@
 // 	if (init_vec2i_with_obj(&vec2i, get_child_list(anim_obj, "anchor")))
 // 		self->box.anchor = vec2i;
 // 	if ((boolean = get_int_child(anim_obj, "display", -1)) != -1)
-// 		self->suscribed = boolean ? TRUE : FALSE;
+// 		self->subscribed = boolean ? TRUE : FALSE;
 // 	return (OK);
 // }

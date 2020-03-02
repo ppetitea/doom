@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/28 17:15:00 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/03/01 14:22:55 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/03/02 15:12:24 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,10 @@
 #include "utils/error.h"
 #include "ft/str.h"
 
+
+/*
+	actions functions
+*/
 #include <stdio.h>
 
 t_result	debug_test(t_texture *texture)
@@ -29,19 +33,15 @@ t_result	debug_test(t_texture *texture)
 	return (OK);
 }
 
-/*
-	Create a button
-		init_new_button
-		add_textures
-		add_actions
-*/
-
 t_result	reset_animation(t_animation *anim)
-{
+{ 
 	if (anim->textures.next != &anim->textures)
 		anim->curr = (t_texture*)anim->textures.next;
-	anim->collide.hover_stop.unsuscribe(&anim->collide.hover_stop);
-	anim->collide.hover_start.suscribe(&anim->collide.hover_start);
+	anim->mouse_obs.hover_end.unsubscribe(&anim->mouse_obs.hover_end);
+	anim->mouse_obs.hover_start.subscribe(&anim->mouse_obs.hover_start);
+	
+	anim->mouse_obs.wheel_normal.unsubscribe(&anim->mouse_obs.wheel_normal);
+	anim->mouse_obs.wheel_flip.unsubscribe(&anim->mouse_obs.wheel_flip);
 	return (OK);
 }
 
@@ -51,10 +51,73 @@ t_result	texture_next(t_animation *anim)
 		anim->curr = (t_texture*)anim->curr->node.next;
 	else
 		reset_animation(anim);
-	anim->collide.hover_start.unsuscribe(&anim->collide.hover_start);
-	anim->collide.hover_stop.suscribe(&anim->collide.hover_stop);
+	anim->mouse_obs.hover_start.unsubscribe(&anim->mouse_obs.hover_start);
+	anim->mouse_obs.hover_end.subscribe(&anim->mouse_obs.hover_end);
+	
+	anim->mouse_obs.wheel_normal.subscribe(&anim->mouse_obs.wheel_normal);
+	anim->mouse_obs.wheel_flip.subscribe(&anim->mouse_obs.wheel_flip);
 	return (OK);
 }
+
+t_result	transform_anim_on_mouse(t_animation	*anim)
+{
+	t_mouse	*mouse;
+	t_vec2i	anchor;
+
+	if (!(mouse = get_mouse_state()))
+		return (throw_error("set_mouse_as_anchor", "Mouse not found"));
+	anchor = ft_vec2i(0, 0);
+	if (anim->box.parent_box)
+		anchor = anim->box.parent_box->offset;
+	anim->box.anchor = vec2i_sub(mouse->pos, anchor);
+	anim->box.render_box.offset = vec2i_add(anim->box.anchor, anim->box.offset);
+	return (OK);
+}
+
+t_result	set_mouse_as_anchor(t_animation *anim)
+{
+	t_mouse	*mouse;
+	t_vec2i	anchor;
+	
+	if (!(mouse = get_mouse_state()))
+		return (throw_error("set_mouse_as_anchor", "Mouse not found"));
+	anchor = ft_vec2i(0, 0);
+	if (anim->box.parent_box)
+		anchor = anim->box.parent_box->offset;
+	anim->box.offset = vec2i_sub(anim->box.render_box.offset, mouse->pos);
+	anim->box.anchor = vec2i_sub(mouse->pos, anchor);
+	anim->box.render_box.offset = vec2i_add(anim->box.anchor, anim->box.offset);
+	anim->mouse_obs.drag.unsubscribe(&anim->mouse_obs.drag);
+	anim->mouse_obs.motion.subscribe(&anim->mouse_obs.motion);
+	anim->mouse_obs.drop.subscribe(&anim->mouse_obs.drop);
+	return (OK);
+}
+
+t_result	release_mouse_anchor(t_animation *anim)
+{
+	anim->mouse_obs.motion.unsubscribe(&anim->mouse_obs.motion);
+	anim->mouse_obs.drop.unsubscribe(&anim->mouse_obs.drop);
+	anim->mouse_obs.drag.subscribe(&anim->mouse_obs.drag);
+	return (OK);
+}
+
+t_result	elevate_animation_anchor(t_animation *anim)
+{
+	anim->box.anchor.y++;
+	anim->box.render_box.offset = vec2i_add(anim->box.anchor, anim->box.offset);
+	return (OK);
+}
+
+t_result	lower_animation_anchor(t_animation *anim)
+{
+	anim->box.anchor.y--;
+	anim->box.render_box.offset = vec2i_add(anim->box.anchor, anim->box.offset);
+	return (OK);
+}
+
+/*
+	play_button
+*/
 
 t_result	add_play_button_textures(t_animation *anim,
 				t_list_head *render_list)
@@ -75,23 +138,39 @@ t_result	add_play_button_textures(t_animation *anim,
 	return (OK);
 }
 
-t_result	add_play_button_collide(t_animation *anim,
+t_result	add_play_button_mouse_obs(t_animation *anim,
 				t_mouse_followers *followers)
 {
 	t_list_head	*action_list;
 
-	update_animation_collide_lists(anim, followers);
-	anim->collide.select.suscribe(&anim->collide.select);
-	action_list = &anim->collide.select.actions;
+	update_mouse_observers_lists(&anim->mouse_obs, followers);
+	
+	// clic
+	anim->mouse_obs.left_up.subscribe(&anim->mouse_obs.left_up);
+	action_list = &anim->mouse_obs.left_up.actions;
 	add_new_action(action_list, debug_test, (t_arg)(void*)anim->curr);
 
-	anim->collide.hover_start.suscribe(&anim->collide.hover_start);
-	action_list = &anim->collide.hover_start.actions;
+	// hover
+	anim->mouse_obs.hover_start.subscribe(&anim->mouse_obs.hover_start);
+	action_list = &anim->mouse_obs.hover_start.actions;
 	add_new_action(action_list, texture_next, (t_arg)(void*)anim);
-
-	action_list = &anim->collide.hover_stop.actions;
+	action_list = &anim->mouse_obs.hover_end.actions;
 	add_new_action(action_list, reset_animation, (t_arg)(void*)anim);
 
+	// drag & drop
+	anim->mouse_obs.drag.subscribe(&anim->mouse_obs.drag);
+	action_list = &anim->mouse_obs.drag.actions;
+	add_new_action(action_list, set_mouse_as_anchor, (t_arg)(void*)anim);
+	action_list = &anim->mouse_obs.motion.actions;
+	add_new_action(action_list, transform_anim_on_mouse, (t_arg)(void*)anim);
+	action_list = &anim->mouse_obs.drop.actions;
+	add_new_action(action_list, release_mouse_anchor, (t_arg)(void*)anim);
+
+	// mouse wheel
+	action_list = &anim->mouse_obs.wheel_normal.actions;
+	add_new_action(action_list, lower_animation_anchor, (t_arg)(void*)anim);
+	action_list = &anim->mouse_obs.wheel_flip.actions;
+	add_new_action(action_list, elevate_animation_anchor, (t_arg)(void*)anim);
 	return (OK);
 }
 
@@ -106,8 +185,8 @@ t_result	add_play_button(t_list_head *buttons, t_list_head *render_list,
 		return (throw_error("add_play_button", "ft_strdup failed"));
 	if (!add_play_button_textures(&button->animation, render_list))
 		return (throw_error("add_play_button", "add_textures failed"));
-	if (!add_play_button_collide(&button->animation, followers))
-		return (throw_error("add_play_button", "add_collides failed"));
+	if (!add_play_button_mouse_obs(&button->animation, followers))
+		return (throw_error("add_play_button", "add_mouse_obss failed"));
 	list_add_entry(&button->node, buttons);
 	return (OK);
 }

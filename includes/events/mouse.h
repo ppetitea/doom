@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/22 18:11:32 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/03/01 14:21:44 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/03/02 13:46:30 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,6 @@ typedef struct	s_mouse
 	t_bool				hover;
 	t_bool				drag;
 }				t_mouse;
+
 
 #endif

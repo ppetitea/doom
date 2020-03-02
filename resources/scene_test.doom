@@ -30,7 +30,7 @@
 		"animation":{
 			"display":1,
 			"anchor":{"x":720,"y":320},
-			"collide":{
+			"mouse_obs":{
 				"hover":{
 					"subscribe":1,
 					"start":{"update_animation":{"args":{"state":"final"}}},
@@ -47,7 +47,7 @@
 		"animation":{
 			"display":1,
 			"anchor":{"x":720,"y":520},
-			"collide":{
+			"mouse_obs":{
 				"hover":{
 					"subscribe":1,
 					"start":{"update_animation":{"args":{"state":"final"}}},
@@ -64,7 +64,7 @@
 		"animation":{
 			"display":1,
 			"anchor":{"x":700,"y":170},
-			"collide":{
+			"mouse_obs":{
 				"hover":{
 					"subscribe":1,
 					"start":{"update_animation":{"args":{"state":"final"}}},

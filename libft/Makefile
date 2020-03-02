@@ -6,7 +6,7 @@
 #    By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/05 18:02:14 by lbenard           #+#    #+#              #
-#    Updated: 2020/03/01 02:06:37 by ppetitea         ###   ########.fr        #
+#    Updated: 2020/03/01 22:04:44 by ppetitea         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -67,6 +67,7 @@ SRCS_LIST		=	containers/list/init_list_head.c		\
 					maths/maths/ft_nblen.c					\
 					maths/vec2i/ft_vec2i.c					\
 					maths/vec2i/vec2i_add.c					\
+					maths/vec2i/vec2i_sub.c					\
 					maths/vec3i/ft_vec3i.c					\
 					maths/vec4i/ft_vec4i.c					\
 					maths/vec2f/ft_vec2f.c					\

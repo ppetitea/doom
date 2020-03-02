@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/22 12:57:38 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/03/01 13:33:04 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/03/02 14:56:47 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,23 +17,33 @@
 #include "utils/error.h"
 
 
-t_result	init_animation_collide(t_animation_collide *self,
+t_result	init_mouse_observers(t_mouse_observers *self,
 				t_animation_box *box)
 {
 	if (self == NULL || box == NULL)
-		return (throw_error("init_collide", "NULL pointer provided"));
+		return (throw_error("init_mouse_obs", "NULL pointer provided"));
 	init_mouse_observer(&self->hover_start);
 	self->hover_start.render_box = &box->render_box;
-	init_mouse_observer(&self->hover_stop);
-	self->hover_stop.render_box = &box->render_box;
-	init_mouse_observer(&self->select);
-	self->select.render_box = &box->render_box;
+	init_mouse_observer(&self->hover_end);
+	self->hover_end.render_box = &box->render_box;
+	init_mouse_observer(&self->right_up);
+	self->right_up.render_box = &box->render_box;
+	init_mouse_observer(&self->right_down);
+	self->right_down.render_box = &box->render_box;
+	init_mouse_observer(&self->left_up);
+	self->left_up.render_box = &box->render_box;
+	init_mouse_observer(&self->left_down);
+	self->left_down.render_box = &box->render_box;
 	init_mouse_observer(&self->drag);
 	self->drag.render_box = &box->render_box;
 	init_mouse_observer(&self->drop);
 	self->drop.render_box = &box->render_box;
 	init_mouse_observer(&self->motion);
 	self->motion.render_box = &box->render_box;
+	init_mouse_observer(&self->wheel_normal);
+	self->wheel_normal.render_box = &box->render_box;
+	init_mouse_observer(&self->wheel_flip);
+	self->wheel_flip.render_box = &box->render_box;
 	return (OK);
 }
 
@@ -57,13 +67,13 @@ t_result	init_animation(t_animation *self)
 	self->state = ANIM_STOP;
 	gettimeofday(&self->last, NULL);
 	init_animation_box(&self->box);
-	init_animation_collide(&self->collide, &self->box);
+	init_mouse_observers(&self->mouse_obs, &self->box);
 	self->curr = NULL;
 	init_list_head(&self->textures);
 	self->list = NULL;
 	self->subscribe = animation_subscribe;
 	self->unsubscribe = animation_unsubscribe;
-	self->suscribed = FALSE;
+	self->subscribed = FALSE;
 	return (OK);
 }
 

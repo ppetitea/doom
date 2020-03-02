@@ -1,36 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vec2i.h                                            :+:      :+:    :+:   */
+/*   vec2i_sub.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/20 17:16:35 by lbenard           #+#    #+#             */
-/*   Updated: 2020/03/01 22:04:19 by ppetitea         ###   ########.fr       */
+/*   Created: 2018/12/07 17:46:12 by freezee           #+#    #+#             */
+/*   Updated: 2020/03/01 22:09:40 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef VEC2I_H
-# define VEC2I_H
+#include "maths/vec2i.h"
 
-/*
-** Two-dimensional int vector
-*/
-typedef struct	s_vec2i
+t_vec2i	vec2i_sub(t_vec2i a, t_vec2i b)
 {
-	int	x;
-	int	y;
-}				t_vec2i;
+	t_vec2i	retval;
 
-#define t_pos2i t_vec2i
-
-/*
-** Constructors
-*/
-t_vec2i			ft_vec2i(int x, int y);
-#define 		ft_pos2i ft_vec2i
-
-t_vec2i			vec2i_add(t_vec2i a, t_vec2i b);
-t_vec2i			vec2i_sub(t_vec2i a, t_vec2i b);
-
-#endif
+	retval.x = a.x - b.x;
+	retval.y = a.y - b.y;
+	return (retval);
+}

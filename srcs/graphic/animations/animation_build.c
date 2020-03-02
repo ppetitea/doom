@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/24 10:53:50 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/03/01 13:37:23 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/03/02 13:50:24 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,6 @@ t_result	build_animation(t_animation *self, t_obj *anim_obj)
 	// if (init_vec2i_with_obj(&vec2i, get_child_list(anim_obj, "anchor")))
 	// 	self->box.anchor = vec2i;
 	// if ((boolean = get_int_child(anim_obj, "display", -1)) != -1)
-	// 	self->suscribed = boolean ? TRUE : FALSE;
+	// 	self->subscribed = boolean ? TRUE : FALSE;
 	return (OK);
 }
