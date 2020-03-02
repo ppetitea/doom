@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/02 17:17:04 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/03/02 17:22:53 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/03/02 17:46:54 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,4 +69,3 @@ t_result	render_animation(t_screen *screen, t_animation *anim,
 	render_texture(screen, anim->curr, box);
 	return (OK);
 }
-

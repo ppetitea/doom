@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/02 16:39:01 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/03/02 16:46:26 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/03/02 17:46:57 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,5 +55,18 @@ t_result	lower_animation_anchor(t_animation *anim)
 {
 	anim->box.anchor.y--;
 	anim->box.render_box.offset = vec2i_add(anim->box.anchor, anim->box.offset);
+	return (OK);
+}
+
+t_result	increase_scale_animation(t_animation *anim)
+{
+	anim->box.render_box.size.x *= 1.1;
+	anim->box.render_box.size.y *= 1.1;
+	return (OK);
+}
+t_result	decrease_scale_animation(t_animation *anim)
+{
+	anim->box.render_box.size.x /= 1.1;
+	anim->box.render_box.size.y /= 1.1;
 	return (OK);
 }

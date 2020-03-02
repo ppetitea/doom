@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/22 11:39:15 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/03/02 17:18:07 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/03/02 17:47:02 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,8 @@ t_result		elevate_animation_anchor(t_animation *anim);
 t_result		lower_animation_anchor(t_animation *anim);
 t_result		set_mouse_as_anchor(t_animation *anim);
 t_result		transform_anim_on_mouse(t_animation	*anim);
+t_result		increase_scale_animation(t_animation *anim);
+t_result		decrease_scale_animation(t_animation *anim);
 
 /*
 ** animate
@@ -144,6 +146,5 @@ t_result		texture_next(t_animation *anim);
 */
 t_result		render_animation(t_screen *screen, t_animation *anim,
 					struct timeval time);
-
 
 #endif

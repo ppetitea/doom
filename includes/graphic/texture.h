@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/22 11:39:15 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/03/02 17:23:21 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/03/02 17:24:01 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ typedef struct		s_render_box
 	t_vec2i			start;
 	t_vec2i			end;
 }					t_render_box;
-
 
 /*
 ** init
