@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/22 11:39:15 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/03/02 14:57:28 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/03/02 16:44:15 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,5 +112,30 @@ t_result		animation_unsubscribe(t_animation *self);
 ** update
 */
 t_result		update_animation_render_box(t_animation *anim);
+
+/*
+** mouse observer
+*/
+t_result		animation_hover_start(t_animation *anim);
+t_result		animation_hover_end(t_animation *anim);
+t_result		animation_drag_start(t_animation *anim);
+t_result		animation_drag_end(t_animation *anim);
+t_result		animation_wheel_start(t_animation *anim);
+t_result		animation_wheel_end(t_animation *anim);
+
+/*
+** transform
+*/
+t_result		elevate_animation_anchor(t_animation *anim);
+t_result		lower_animation_anchor(t_animation *anim);
+t_result		set_mouse_as_anchor(t_animation *anim);
+t_result		transform_anim_on_mouse(t_animation	*anim);
+
+/*
+** animate
+*/
+t_result		reset_animation(t_animation *anim);
+t_result		texture_next(t_animation *anim);
+
 
 #endif

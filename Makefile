@@ -6,7 +6,7 @@
 #    By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/08 21:27:29 by lbenard           #+#    #+#              #
-#    Updated: 2020/03/02 14:54:04 by ppetitea         ###   ########.fr        #
+#    Updated: 2020/03/02 16:44:45 by ppetitea         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -113,11 +113,14 @@ SRCS_LIST	=	main.c														\
 				interface/sdl/sdl_init.c									\
 				interface/sdl/sdl_destroy.c									\
 																			\
+				graphic/animations/animation_animate.c						\
 				graphic/animations/animation_build.c						\
 				graphic/animations/animation_copy.c							\
 				graphic/animations/animation_init.c							\
 				graphic/animations/animation_overwrite.c					\
+				graphic/animations/animation_observer.c						\
 				graphic/animations/animation_sub.c							\
+				graphic/animations/animation_transform.c					\
 				graphic/animations/animation_update.c						\
 				graphic/textures/texture_add.c								\
 				graphic/textures/texture_build.c							\
