@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/28 17:15:00 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/03/02 17:47:00 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/03/02 17:54:26 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ t_result	add_play_button_mouse_observer(t_animation *anim,
 	t_list_head	*action_list;
 
 	update_mouse_observers_lists(&anim->mouse_obs, followers);
-	
+
 	// clic
 	anim->mouse_obs.left_up.subscribe(&anim->mouse_obs.left_up);
 	action_list = &anim->mouse_obs.left_up.actions;
@@ -89,9 +89,9 @@ t_result	add_play_button_mouse_observer(t_animation *anim,
 
 	// mouse wheel
 	action_list = &anim->mouse_obs.wheel_normal.actions;
-	add_new_action(action_list, decrease_scale_animation, (t_arg)(void*)anim);
-	action_list = &anim->mouse_obs.wheel_flip.actions;
 	add_new_action(action_list, increase_scale_animation, (t_arg)(void*)anim);
+	action_list = &anim->mouse_obs.wheel_flip.actions;
+	add_new_action(action_list, decrease_scale_animation, (t_arg)(void*)anim);
 	return (OK);
 }
 
