@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/02 16:39:01 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/03/02 17:49:42 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/03/05 10:56:37 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,15 +58,60 @@ t_result	lower_animation_anchor(t_animation *anim)
 	return (OK);
 }
 
+
+ #include <stdio.h>
+// int			compute_pgcd(int a, int b)
+// {
+// 	int big;
+// 	int small;
+// 	int rest;
+
+// 	big = (a > b) ? a : b;
+// 	small = (big == a) ? b : a;
+// 	while ((rest = big % small) != 0)
+// 	{
+// 		big = small;
+// 		small = rest;
+// 	}
+// 	return (big);
+// }
+
+int			compute_ppcd(int a, int b)
+{
+	int big;
+	int small;
+	int ppcd;
+
+	big = (a > b) ? a : b;
+	small = (big == a) ? b : a;
+	ppcd = 2;
+	while (ppcd < small && small % ppcd != 0 && big % ppcd != 0)
+		ppcd++;
+	return ((ppcd == small) ? 1 : ppcd);
+}
+
 t_result	increase_scale_animation(t_animation *anim)
 {
-	anim->box.render_box.size.x *= 1.1;
-	anim->box.render_box.size.y *= 1.1;
+	anim->box.render_box.size.x *= 2;
+	anim->box.render_box.size.y *= 2;
 	return (OK);
 }
+
 t_result	decrease_scale_animation(t_animation *anim)
 {
-	anim->box.render_box.size.x /= 1.1;
-	anim->box.render_box.size.y /= 1.1;
+	t_vec2i	size;
+	int		ppcd;
+
+	size = anim->box.render_box.size;
+	ppcd = compute_ppcd(size.x, size.y);
+	if (size.x > ppcd && size.y > ppcd)
+	{
+		anim->box.render_box.size.x /= 2;
+		anim->box.render_box.size.y /= 2;
+		if (size.x % 2)
+			anim->box.render_box.size.x += 1;
+		if (size.y % 2)
+			anim->box.render_box.size.y += 1;
+	}
 	return (OK);
 }

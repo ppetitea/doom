@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/28 17:19:28 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/03/01 12:10:30 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/03/05 13:13:57 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,10 @@ t_result	add_test_scene_gui(t_scene_gui *gui, t_scene_events *events)
 	if (gui == NULL || events == NULL)
 		return (throw_error("add_scene_gui", "NULL pointer provided"));
 	add_play_button(&gui->buttons, &gui->render_list, &events->mouse.followers);
+	add_color_map_canvas(&gui->canvas, &gui->render_list,
+		&events->mouse.followers);
+	add_world3d_canvas(&gui->canvas, &gui->render_list,
+		&events->mouse.followers);
 	return (OK);
 }
 

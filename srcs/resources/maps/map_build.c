@@ -1,28 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   button_init.c                                      :+:      :+:    :+:   */
+/*   map_build.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/23 13:17:46 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/03/05 12:15:11 by ppetitea         ###   ########.fr       */
+/*   Created: 2020/03/05 16:39:26 by ppetitea          #+#    #+#             */
+/*   Updated: 2020/03/05 16:40:48 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "resources/button.h"
-#include "utils/parser.h"
+#include "resources/map.h"
 #include "utils/error.h"
-#include <stdlib.h>
+#include "utils/parser.h"
 
-t_button	*init_new_button()
-{
-	t_button	*self;
 
-	if (!(self = malloc(sizeof(t_button))))
-		return (throw_null("init_new_button", "malloc failed"));
-	init_list_head(&self->node);
-	self->name = NULL;
-	init_new_animation(&self->animation);
-	return (self);
-}

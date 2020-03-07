@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/22 11:39:15 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/03/02 17:47:02 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/03/05 12:45:17 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ typedef struct	s_animation
 	t_animation_box			box;
 	t_mouse_observers		mouse_obs;
 	t_texture				*curr;
-	t_list_head				textures;
+	t_list_head				*textures;
+	t_result				(*update)(struct s_animation*);
 	t_result				(*render)(t_screen*, struct s_animation*, t_time);
 	t_list_head				*list;
 	t_result				(*subscribe)(struct s_animation*);
@@ -61,6 +62,7 @@ typedef struct	s_animation
 	t_bool					subscribed;
 }				t_animation;
 t_result		init_animation(t_animation *self);
+t_result		init_new_animation(t_animation *self);
 
 /*
 ** render

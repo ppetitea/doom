@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/24 10:53:50 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/03/02 13:50:24 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/03/05 09:40:42 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,10 @@ t_result	build_animation(t_animation *self, t_obj *anim_obj)
 
 	if (self == NULL || anim_obj == NULL)
 		return (throw_error("build_animation", "NULL pointer provided"));
-	if (!build_textures(&self->textures,
+	if (!build_textures(self->textures,
 			get_child_list(anim_obj, "textures")))
 		return (throw_error("build_animation", "Fail to build_textures"));
-	if (list_lenght(&self->textures) == 0)
+	if (list_lenght(self->textures) == 0)
 		return (throw_error("build_animation", "Texture list is empty"));
 	build_animation_status(&self->state, anim_obj);
 	// if (init_vec2i_with_obj(&vec2i, get_child_list(anim_obj, "anchor")))

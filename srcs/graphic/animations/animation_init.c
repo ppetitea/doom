@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/22 12:57:38 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/03/02 17:22:37 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/03/05 12:50:17 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,9 @@ t_result	init_animation(t_animation *self)
 	self->state = ANIM_STOP;
 	gettimeofday(&self->last, NULL);
 	init_animation_box(&self->box);
+	self->textures = NULL;
 	init_mouse_observers(&self->mouse_obs, &self->box);
 	self->curr = NULL;
-	init_list_head(&self->textures);
 	self->render = render_animation;
 	self->list = NULL;
 	self->subscribe = animation_subscribe;
@@ -77,6 +77,19 @@ t_result	init_animation(t_animation *self)
 	self->subscribed = FALSE;
 	return (OK);
 }
+
+t_result	init_new_animation(t_animation *self)
+{
+	if (self == NULL)
+		return (throw_error("init_new_animation", "NULL pointer provided"));
+	if (!init_animation(self))
+		return (throw_error("init_new_animation", "init_animation failed"));
+	if (!(self->textures = malloc(sizeof(t_list_head))))
+		return (throw_error("init_new_animation", "Malloc failed"));
+	init_list_head(self->textures);
+	return (OK);
+}
+
 
 t_result	init_oriented_animations(t_oriented_animations *self)
 {

@@ -1,28 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   button_init.c                                      :+:      :+:    :+:   */
+/*   map_get.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/23 13:17:46 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/03/05 12:15:11 by ppetitea         ###   ########.fr       */
+/*   Created: 2020/03/05 11:00:40 by ppetitea          #+#    #+#             */
+/*   Updated: 2020/03/05 11:03:35 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "resources/button.h"
-#include "utils/parser.h"
+#include "resources/game.h"
 #include "utils/error.h"
-#include <stdlib.h>
 
-t_button	*init_new_button()
+t_map	*get_current_map()
 {
-	t_button	*self;
+	t_game	*game;
 
-	if (!(self = malloc(sizeof(t_button))))
-		return (throw_null("init_new_button", "malloc failed"));
-	init_list_head(&self->node);
-	self->name = NULL;
-	init_new_animation(&self->animation);
-	return (self);
+	if (!(game = game_singleton(NULL)))
+		return (throw_null("get_current_map", "Game not found"));
+	return (game->curr_map);
 }

@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 22:52:07 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/02/22 20:14:13 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/03/05 09:57:09 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ typedef struct			s_game_resources
 	t_list_head			images;
 	t_list_head			songs;
 	t_list_head			buttons;
+	t_list_head			canvas;
 	t_list_head			titles;
 	t_list_head			players;
 	t_list_head			mobs;
@@ -32,6 +33,11 @@ typedef struct			s_game_resources
 	t_list_head			maps;
 	t_list_head			scenes;
 }						t_game_resources;
+
+/* 
+	game resource need to be clean
+	this struct must contain only images/songs && maps/scenes...
+ */
 
 typedef struct			s_game_interface
 {

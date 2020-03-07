@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 14:03:50 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/02/28 18:24:09 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/03/05 12:15:06 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,9 @@ t_result	init_scene_gui(t_scene_gui *self)
 {
 	if (self == NULL)
 		return (throw_error("init_scene_gui", "NULL pointer provided"));
-	init_animation(&self->background);
+	init_new_animation(&self->background);
 	init_list_head(&self->buttons);
+	init_list_head(&self->canvas);
 	init_list_head(&self->render_list);
 	return (OK);
 }

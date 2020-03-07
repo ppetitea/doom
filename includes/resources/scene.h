@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 16:27:20 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/03/01 12:27:18 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/03/05 11:11:09 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ typedef struct			s_scene_gui
 {
 	t_animation			background;
 	t_list_head			buttons;
+	t_list_head			canvas;
 	t_list_head			render_list;
 }						t_scene_gui;
 t_result				init_scene_gui(t_scene_gui *self);

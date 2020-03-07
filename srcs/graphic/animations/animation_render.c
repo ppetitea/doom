@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/02 17:17:04 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/03/02 17:46:54 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/03/05 09:40:05 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@ static t_texture	*handle_animation_end(t_animation *anim)
 {
 	t_texture	*ret;
 
-	ret = (t_texture*)anim->textures.next;
+	ret = (t_texture*)anim->textures->next;
 	if (anim->state == ANIM_INFINITE)
-		return ((t_texture*)anim->textures.next);
+		return ((t_texture*)anim->textures->next);
 	if (anim->state == ANIM_IN_PROGRESS)
-		ret = ((t_texture*)anim->textures.next);
+		ret = ((t_texture*)anim->textures->next);
 	else if (anim->state == ANIM_FINAL)
 		ret = ((t_texture*)anim->curr);
 	else
@@ -40,7 +40,7 @@ t_result	animate(t_animation *anim, struct timeval time)
 	if (delta_ms > anim->curr->delay_ms)
 	{
 		anim->last = time;
-		if (anim->curr->node.next == &anim->textures)
+		if (anim->curr->node.next == anim->textures)
 			anim->curr = handle_animation_end(anim);
 		else
 			anim->curr = (t_texture*)anim->curr->node.next;
