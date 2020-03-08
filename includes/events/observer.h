@@ -6,21 +6,22 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/22 17:56:55 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/03/02 17:09:46 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/03/08 21:40:46 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef OBSERVER_H
 # define OBSERVER_H
 
-# include "events/keyboard.h"
-# include "events/mouse.h"
 # include "containers/list.h"
 # include "maths/vec2f.h"
 # include "maths/vec2i.h"
 # include "SDL_keycode.h"
 # include "SDL_events.h"
 
+/*
+** init
+*/
 typedef struct		s_observer
 {
 	t_list_head		node;
@@ -32,167 +33,37 @@ typedef struct		s_observer
 	t_list_head		actions;
 }					t_observer;
 t_result			init_observer(t_observer *self);
+t_result			set_observer(t_observer *self, t_list_head *list,
+						t_bool subscribe);
 
-t_bool				trigger_observers(t_list_head *observers);
-
-typedef struct	s_box
-{
-	t_pos2i		offset;
-	t_vec2i		size;
-}				t_box;
-
-typedef struct		s_mouse_observer
+typedef struct		s_time_observer
 {
 	t_list_head		node;
-	t_box			*render_box;
+	double			seconds;
 	t_list_head		*list;
-	t_result		(*subscribe)(struct s_mouse_observer*);
-	t_result		(*unsubscribe)(struct s_mouse_observer*);
+	t_result		(*subscribe)(struct s_time_observer*);
+	t_result		(*unsubscribe)(struct s_time_observer*);
 	t_bool			subscribed;
 	t_bool			active;
 	t_list_head		actions;
-}					t_mouse_observer;
-t_result			init_mouse_observer(t_mouse_observer *self);
-
-
-typedef struct	s_mouse_observers
-{
-	t_mouse_observer	hover_start;
-	t_mouse_observer	hover_end;
-	t_mouse_observer	left_up;
-	t_mouse_observer	left_down;
-	t_mouse_observer	right_up;
-	t_mouse_observer	right_down;
-	t_mouse_observer	drag;
-	t_mouse_observer	drop;
-	t_mouse_observer	motion;
-	t_mouse_observer	wheel_normal;
-	t_mouse_observer	wheel_flip;
-}				t_mouse_observers;
-
-typedef struct		s_mouse_followers
-{
-	t_list_head		hover_start;
-	t_list_head		hover_end;
-	t_list_head		right_down;
-	t_list_head		right_up;
-	t_list_head		left_down;
-	t_list_head		left_up;
-	t_list_head		drag;
-	t_list_head		drop;
-	t_list_head		motion;
-	t_list_head		wheel_normal;
-	t_list_head		wheel_flip;
-}					t_mouse_followers;
-t_result			init_mouse_followers(t_mouse_followers *self);
-
-typedef struct		s_mouse_observable
-{
-	t_mouse				state;
-	t_mouse_followers	followers;
-}					t_mouse_observable;
-t_result			init_mouse_observable(t_mouse_observable *self);
-
-/*
-** mouse handle
-*/
-
-void			handle_mouse_motion(t_mouse_observable *mouse,
-					SDL_MouseMotionEvent event);
-void			handle_mouse_down(t_mouse_observable *mouse,
-					SDL_MouseButtonEvent event);
-void			handle_mouse_up(t_mouse_observable *mouse,
-					SDL_MouseButtonEvent event);
-void			handle_mouse_wheel(t_mouse_observable *mouse,
-					SDL_MouseWheelEvent event);
-/*
-** mouse getters
-*/
-t_mouse_observable	*get_mouse_observable();
-t_mouse_followers	*get_mouse_followers();
-t_mouse				*get_mouse_state();
-
-/*
-** mouse update
-*/
-t_result			update_mouse_observers_lists(t_mouse_observers *mouse_obs,
-						t_mouse_followers *followers);
+}					t_time_observer;
+t_result			init_time_observer(t_time_observer *self);
+t_result			set_time_observer(t_time_observer *self, t_list_head *list,
+						t_bool subscribe, double seconds);
 
 /*
 ** sub
 */
-t_result			observer_subscribe(t_mouse_observer *self);
-t_result			observer_unsubscribe(t_mouse_observer *self);
+t_result			observer_subscribe(t_observer *self);
+t_result			observer_unsubscribe(t_observer *self);
+t_result			time_observer_subscribe(t_time_observer *self);
+t_result			time_observer_unsubscribe(t_time_observer *self);
 
 /*
 ** trigger
 */
-t_bool				trigger_mouse_observers(t_list_head *observers);
-t_bool				trigger_mouse_obs_on(t_list_head *observers,
-						t_mouse mouse);
-t_bool				trigger_mouse_obs_off(t_list_head *observers,
-						t_mouse mouse);
+t_bool				trigger_observers(t_list_head *observers);
+t_bool				trigger_time_observers(t_list_head *observers);
 
-typedef struct		s_keyboard_observer
-{
-	t_list_head		node;
-	SDL_Keycode		key;
-	t_list_head		*list;
-	t_result		(*subscribe)(struct s_keyboard_observer*);
-	t_result		(*unsubscribe)(struct s_keyboard_observer*);
-	t_bool			subscribed;
-	t_bool			active;
-	t_list_head		actions;
-}					t_keyboard_observer;
-t_result			init_keyboard_observer(t_keyboard_observer *self);
-
-typedef struct	s_keyboard_observers
-{
-	t_keyboard_observer	down;
-	t_keyboard_observer	up;
-}				t_keyboard_observers;
-
-typedef struct		s_keyboard_followers
-{
-	t_list_head	down;
-	t_list_head	up;
-}					t_keyboard_followers;
-t_result			init_keyboard_followers(t_keyboard_followers *self);
-
-typedef struct		s_keyboard_observable
-{
-	t_keyboard				state;
-	t_keyboard_followers	followers;
-}					t_keyboard_observable;
-t_result			init_keyboard_observable(t_keyboard_observable *self);
-
-/*
-** keyboard handle
-*/
-
-void			handle_keyboard_down(t_keyboard_observable *keyboard,
-					SDL_KeyboardEvent event);
-void			handle_keyboard_up(t_keyboard_observable *keyboard,
-					SDL_KeyboardEvent event);
-/*
-** keyboard getters
-*/
-t_keyboard_observable	*get_keyboard_observable();
-t_keyboard_followers	*get_keyboard_followers();
-t_keyboard				*get_keyboard_state();
-
-/*
-** keyboard update
-*/
-t_result			update_keyboard_observers_lists(
-						t_keyboard_observers *keyboard_obs,
-						t_keyboard_followers *followers);
-
-/*
-** trigger
-*/
-t_bool				trigger_keyboard_observers(t_list_head *observers);
-t_bool				trigger_keyboard_observers_on(t_list_head *observers,
-						t_keyboard keyboard);
 
 #endif

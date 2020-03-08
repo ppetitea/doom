@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "events/observer.h"
+#include "events/mouse.h"
 #include "utils/error.h"
 
 t_result	update_mouse_observers_lists(t_mouse_observers *mouse_obs,

@@ -1,22 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   observer_sub.c                                     :+:      :+:    :+:   */
+/*   keyboard_sub.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/28 17:03:48 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/03/08 19:25:48 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/03/08 19:26:48 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "events/observer.h"
+#include "events/keyboard.h"
 #include "utils/error.h"
 
-t_result	observer_subscribe(t_observer *self)
+t_result	keyboard_observer_subscribe(t_keyboard_observer *self)
 {
 	if (self == NULL || self->list == NULL)
-		return (throw_error("observer_sub", "NULL pointer provided"));
+		return (throw_error("keyboard_observer_sub", "NULL pointer provided"));
 	if (self->subscribed == FALSE)
 	{
 		self->subscribed = TRUE;
@@ -25,10 +25,10 @@ t_result	observer_subscribe(t_observer *self)
 	return (OK);
 }
 
-t_result	observer_unsubscribe(t_observer *self)
+t_result	keyboard_observer_unsubscribe(t_keyboard_observer *self)
 {
 	if (self == NULL || self->list == NULL)
-		return (throw_error("observer_unsub", "NULL pointer provided"));
+		return (throw_error("keyboard_observer_unsub", "NULL pointer provided"));
 	if (self->subscribed == TRUE)
 	{
 		self->subscribed = FALSE;

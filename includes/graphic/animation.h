@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/22 11:39:15 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/03/05 12:45:17 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/03/08 19:39:04 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 # define ANIMATION_H
 
 # include "interface/screen.h"
-# include "events/observer.h"
+# include "events/mouse.h"
+# include "events/keyboard.h"
 # include "graphic/texture.h"
 # include "containers/list.h"
 # include "maths/vec2f.h"

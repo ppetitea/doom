@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   observable_init.c                                  :+:      :+:    :+:   */
+/*   mouse_init.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/28 18:24:57 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/03/02 14:56:54 by ppetitea         ###   ########.fr       */
+/*   Created: 2020/03/08 19:11:08 by ppetitea          #+#    #+#             */
+/*   Updated: 2020/03/08 19:15:01 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "events/observer.h"
+#include "events/mouse.h"
 #include "utils/error.h"
 
 t_result	init_mouse_observable(t_mouse_observable *self)
@@ -36,16 +36,16 @@ t_result	init_mouse_observable(t_mouse_observable *self)
 	return (OK);
 }
 
-t_result	init_keyboard_observable(t_keyboard_observable *self)
+t_result	init_mouse_observer(t_mouse_observer *self)
 {
 	if (self == NULL)
-		return (throw_error("init_keyboard_observable", "NULL pointer"));
-	init_list_head(&self->followers.down);
-	init_list_head(&self->followers.up);
-	self->state.w = FALSE;
-	self->state.a = FALSE;
-	self->state.s = FALSE;
-	self->state.d = FALSE;
-	self->state.key = -42;
+		return (throw_error("init_observer", "NULL pointer provided"));
+	init_list_head(&self->node);
+	self->render_box = NULL;
+	self->list = NULL;
+	self->subscribe = mouse_observer_subscribe;
+	self->unsubscribe = mouse_observer_unsubscribe;
+	self->subscribed = FALSE;
+	init_list_head(&self->actions);
 	return (OK);
 }

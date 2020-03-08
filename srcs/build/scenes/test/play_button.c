@@ -6,12 +6,13 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/28 17:15:00 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/03/05 11:13:00 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/03/08 21:24:53 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "resources/scene.h"
 #include "resources/button.h"
+#include "events/mouse.h"
 #include "graphic/texture.h"
 #include "events/action.h"
 #include "utils/error.h"
