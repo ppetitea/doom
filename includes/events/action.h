@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 01:39:57 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/03/01 02:13:21 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/03/08 21:45:12 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,6 @@
 
 # include "containers/list.h"
 # include "utils/parser.h"
-
-// typedef enum	e_arg_type
-// {
-// 	TYPE_INT,
-// 	TYPE_FLOAT,
-// 	TYPE_CHAR,
-// 	TYPE_POINTER,
-// }				t_arg_type;
 
 typedef	union	u_arg
 {

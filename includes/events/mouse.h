@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/22 18:11:32 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/03/08 19:21:20 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/03/08 22:23:51 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,20 @@
 **	L'animation qui collisione active les actions de draw sur l'animation
 **	en question
 
-**	Lorsque le pointeur est en mode CAMERA
+**	Lorsque le pointeur est en mode GAME
 **	Le pointeur est invisible et lock au centre de l'ecran
 **	De plus les mouvements de la souris controlent la camera
 */
 typedef enum	e_pointer_mode
 {
 	POINTER_SELECT,
-	POINTER_DRAW,
 	POINTER_GAME
 }				t_pointer_mode;
+
+/* 
+	SDL_ShowCursor(SDL_DISABLE);
+	SDL_WarpMouseInWindow(game.SDL.window, game.screen.width / 2, game.screen.height / 2);
+*/
 
 typedef struct	s_mouse
 {

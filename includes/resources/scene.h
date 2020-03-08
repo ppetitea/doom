@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 16:27:20 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/03/05 11:11:09 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/03/08 22:39:35 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ typedef struct			s_scene_events
 	t_list_head				loop;
 	t_list_head				timed;
 	t_keyboard_observer		quit; // la scene observe l'event quit qui sera declenche par SDLK_ESCAPE
+	t_time_observer			timer_test; // utiliser pour jouer des musiques les unes a la suite des autres ?
 }						t_scene_events;
 
 /*
@@ -58,5 +59,9 @@ t_scene				*init_new_scene();
 */
 t_result			render_scene(t_scene *scene);
 
+/*
+** getter
+*/
+t_scene				*get_current_scene();
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 14:03:50 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/03/05 12:15:06 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/03/08 21:51:50 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ t_result	init_scene_events(t_scene_events *self)
 	init_list_head(&self->loop);
 	init_list_head(&self->timed);
 	init_keyboard_observer(&self->quit);
+	init_time_observer(&self->timer_test);
 	return (OK);
 }
 

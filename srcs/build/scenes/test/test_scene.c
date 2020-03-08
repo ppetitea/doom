@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/28 17:19:28 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/03/08 21:39:18 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/03/08 23:08:12 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,12 @@ t_result	add_test_scene_gui(t_scene_gui *gui, t_scene_events *events)
 
 #include <stdio.h>
 
+t_result	debug_time_test_function()
+{
+	printf("event trigger after 10 seconds\n");
+	return (OK);
+}
+
 t_result	quit_game()
 {
 	t_game *game;
@@ -40,8 +46,31 @@ t_result	quit_game()
 	return (OK);
 }
 
+t_result	toggle_game_mouse_mode()
+{
+	t_scene *scene;
+
+	if ((scene = get_current_scene()))
+	{
+		if (scene->events.mouse.state.mode == POINTER_GAME)
+		{
+			scene->events.mouse.state.mode = POINTER_SELECT;
+			SDL_ShowCursor(SDL_ENABLE);
+			printf("select\n");
+		}
+		else if (scene->events.mouse.state.mode == POINTER_SELECT)
+		{
+			scene->events.mouse.state.mode = POINTER_GAME;
+			SDL_ShowCursor(SDL_DISABLE);
+			printf("game\n");
+		}
+	}	
+	return (OK);
+}
+
 t_result	add_test_scene_events(t_scene *scene)
 {
+	t_time_observer		*time_test;
 	t_keyboard_observer	*quit;
 	t_list_head			*list;
 
@@ -49,6 +78,10 @@ t_result	add_test_scene_events(t_scene *scene)
 	list = &scene->events.keyboard.followers.down;
 	set_keyboard_observer(quit, list, SDLK_ESCAPE, TRUE);
 	add_new_basic_action(&quit->actions, quit_game);
+	time_test = &scene->events.timer_test;
+	list = &scene->events.timed;
+	set_time_observer(time_test, list, TRUE, 10);
+	add_new_basic_action(&time_test->actions, debug_time_test_function);
 	return (OK);
 }
 

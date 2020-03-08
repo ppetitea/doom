@@ -6,7 +6,7 @@
 #    By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/08 21:27:29 by lbenard           #+#    #+#              #
-#    Updated: 2020/03/08 19:36:07 by ppetitea         ###   ########.fr        #
+#    Updated: 2020/03/08 22:39:33 by ppetitea         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -93,6 +93,7 @@ SRCS_LIST	=	main.c														\
 				resources/buttons/button_init.c								\
 				resources/canvas/canvas_init.c								\
 				resources/canvas/canvas_update.c							\
+				resources/scenes/scene_get.c								\
 				resources/scenes/scene_init.c								\
 				resources/scenes/scene_render.c								\
 				resources/maps/map_init.c									\

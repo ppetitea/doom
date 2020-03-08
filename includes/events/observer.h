@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/22 17:56:55 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/03/08 21:40:46 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/03/08 21:48:26 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ t_result			time_observer_unsubscribe(t_time_observer *self);
 ** trigger
 */
 t_bool				trigger_observers(t_list_head *observers);
-t_bool				trigger_time_observers(t_list_head *observers);
+t_bool				trigger_time_observers(t_list_head *observers, double time);
 
 
 #endif
