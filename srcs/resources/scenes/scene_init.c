@@ -30,8 +30,9 @@ t_result	init_scene_events(t_scene_events *self)
 		return (throw_error("init_scene_events", "NULL pointer provided"));
 	init_mouse_observable(&self->mouse);
 	init_keyboard_observable(&self->keyboard);
-	// init_list_head(&self->loop);
-	// init_list_head(&self->timed);
+	init_list_head(&self->loop);
+	init_list_head(&self->timed);
+	init_keyboard_observer(&self->quit);
 	return (OK);
 }
 
@@ -45,6 +46,5 @@ t_scene		*init_new_scene()
 	self->name = NULL;
 	init_scene_gui(&self->gui);
 	init_scene_events(&self->events);
-	init_map_config(&self->map_config);
 	return (self);
 }

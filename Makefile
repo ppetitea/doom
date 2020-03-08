@@ -83,6 +83,7 @@ SRCS_LIST	=	main.c														\
 				build.c														\
 				build/scenes/test/play_button.c								\
 				build/scenes/test/color_map_canvas.c						\
+				build/scenes/test/world3d_canvas.c							\
 				build/scenes/test/test_scene.c								\
 																			\
 				loop.c														\
@@ -94,7 +95,6 @@ SRCS_LIST	=	main.c														\
 				resources/canvas/canvas_update.c							\
 				resources/scenes/scene_init.c								\
 				resources/scenes/scene_render.c								\
-				resources/maps/map_config_init.c							\
 				resources/maps/map_init.c									\
 				resources/maps/map_get.c									\
 																			\
@@ -149,7 +149,7 @@ INCLUDES	:=	-I includes
 #COMPILATION
 CC			=	gcc
 LD			=	gcc
-CFLAGS		:=	-Wall -Werror -Wextra -O3 -Ofast -flto
+CFLAGS		:=	-Wall -Wextra -O3 -Ofast -flto
 LDFLAGS		:=	-lm 
 
 #LIBRARIES

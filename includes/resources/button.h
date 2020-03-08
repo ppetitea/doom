@@ -20,9 +20,9 @@
 */
 typedef struct		s_button
 {
-	t_list_head		node;
-	char			*name;
-	t_animation		animation;
+	t_list_head				node;
+	char					*name;
+	t_animation				animation;
 }					t_button;
 t_button			*init_new_button();
 

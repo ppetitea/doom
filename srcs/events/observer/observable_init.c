@@ -40,13 +40,12 @@ t_result	init_keyboard_observable(t_keyboard_observable *self)
 {
 	if (self == NULL)
 		return (throw_error("init_keyboard_observable", "NULL pointer"));
-	// init_list_head(&self->followers.hover);
-	// init_list_head(&self->followers.select);
-	// init_list_head(&self->followers.drag);
-	// init_list_head(&self->followers.draw);
-	// self->state.drag = FALSE;
-	// self->state.down = FALSE;
-	// self->state.pos = ft_vec2i(0, 0);
-	// self->state.mode = POINTER_SELECT;
+	init_list_head(&self->followers.down);
+	init_list_head(&self->followers.up);
+	self->state.w = FALSE;
+	self->state.a = FALSE;
+	self->state.s = FALSE;
+	self->state.d = FALSE;
+	self->state.key = -42;
 	return (OK);
 }

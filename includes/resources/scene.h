@@ -38,6 +38,7 @@ typedef struct			s_scene_events
 	t_keyboard_observable	keyboard;
 	t_list_head				loop;
 	t_list_head				timed;
+	t_keyboard_observer		quit; // la scene observe l'event quit qui sera declenche par SDLK_ESCAPE
 }						t_scene_events;
 
 /*
@@ -49,7 +50,6 @@ typedef struct			s_scene
 	char				*name;
 	t_scene_events		events;
 	t_scene_gui			gui;
-	t_map_config		map_config;
 }						t_scene;
 t_scene				*init_new_scene();
 

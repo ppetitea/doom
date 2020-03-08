@@ -36,6 +36,7 @@ void	loop(t_game *game, t_screen *screen, t_sdl *sdl)
 			return (throw_void("loop", "SDL_UpdateTexture failed"));
 		while (SDL_PollEvent(&sdl->event))
 			handle_events(game);
+		trigger_observers(&game->curr_scene->events.loop);
 		// trigger_key_hold_bindings(&game->curr_scene->interface.key_hold_binds);
 		if (SDL_RenderCopy(sdl->renderer, sdl->texture, NULL, NULL))
 			return (throw_void("loop", "SDL_RenderCopy failed"));

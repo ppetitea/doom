@@ -13,10 +13,10 @@
 #include "events/observer.h"
 #include "utils/error.h"
 
-t_result	mouse_observer_subscribe(t_mouse_observer *self)
+t_result	observer_subscribe(t_mouse_observer *self)
 {
 	if (self == NULL || self->list == NULL)
-		return (throw_error("mouse_observer_sub", "NULL pointer provided"));
+		return (throw_error("observer_sub", "NULL pointer provided"));
 	if (self->subscribed == FALSE)
 	{
 		self->subscribed = TRUE;
@@ -25,10 +25,10 @@ t_result	mouse_observer_subscribe(t_mouse_observer *self)
 	return (OK);
 }
 
-t_result	mouse_observer_unsubscribe(t_mouse_observer *self)
+t_result	observer_unsubscribe(t_mouse_observer *self)
 {
 	if (self == NULL || self->list == NULL)
-		return (throw_error("mouse_observer_unsub", "NULL pointer provided"));
+		return (throw_error("observer_unsub", "NULL pointer provided"));
 	if (self->subscribed == TRUE)
 	{
 		self->subscribed = FALSE;

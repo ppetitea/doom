@@ -20,9 +20,24 @@ t_result	init_mouse_observer(t_mouse_observer *self)
 	init_list_head(&self->node);
 	self->render_box = NULL;
 	self->list = NULL;
-	self->subscribe = mouse_observer_subscribe;
-	self->unsubscribe = mouse_observer_unsubscribe;
+	self->subscribe = observer_subscribe;
+	self->unsubscribe = observer_unsubscribe;
 	self->subscribed = FALSE;
 	init_list_head(&self->actions);
 	return (OK);
 }
+
+t_result	init_keyboard_observer(t_keyboard_observer *self)
+{
+	if (self == NULL)
+		return (throw_error("init_observer", "NULL pointer provided"));
+	init_list_head(&self->node);
+	self->key = -42;
+	self->list = NULL;
+	self->subscribe = observer_subscribe;
+	self->unsubscribe = observer_unsubscribe;
+	self->subscribed = FALSE;
+	init_list_head(&self->actions);
+	return (OK);
+}
+

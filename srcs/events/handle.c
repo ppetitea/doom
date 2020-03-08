@@ -20,19 +20,22 @@
 void	handle_events(t_game *game)
 {
 	t_sdl *sdl;
+	t_scene_events	*events;
 
 	sdl = &game->interface.sdl;
+	events = &game->curr_scene->events;
 	if (sdl->event.type == SDL_MOUSEMOTION)
-		handle_mouse_motion(&game->curr_scene->events.mouse, sdl->event.motion);
+		handle_mouse_motion(&events->mouse, sdl->event.motion);
 	if (sdl->event.type == SDL_MOUSEBUTTONDOWN)
-		handle_mouse_down(&game->curr_scene->events.mouse, sdl->event.button);
+		handle_mouse_down(&events->mouse, sdl->event.button);
 	if (sdl->event.type == SDL_MOUSEBUTTONUP)
-		handle_mouse_up(&game->curr_scene->events.mouse, sdl->event.button);
+		handle_mouse_up(&events->mouse, sdl->event.button);
 	if (sdl->event.type == SDL_MOUSEWHEEL)
-		handle_mouse_wheel(&game->curr_scene->events.mouse, sdl->event.wheel);
-	// 	handle_keyboard_down(game->curr_scene, sdl->event.key.keysym.sym);
-	// if (sdl->event.type == SDL_KEYUP)
-	// 	handle_keyboard_up(game->curr_scene, sdl->event.key.keysym.sym);
+		handle_mouse_wheel(&events->mouse, sdl->event.wheel);
+	if (sdl->event.type == SDL_KEYDOWN)
+		handle_keyboard_down(&events->keyboard, sdl->event.key);
+	if (sdl->event.type == SDL_KEYUP)
+		handle_keyboard_up(&events->keyboard, sdl->event.key);
 	if (sdl->event.type == SDL_QUIT)
 		game->is_running = FALSE;
 	if (sdl->event.type == SDL_KEYDOWN && sdl->event.key.keysym.sym == SDLK_ESCAPE)

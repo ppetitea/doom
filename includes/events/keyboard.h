@@ -14,6 +14,7 @@
 # define KEYBOARD_H
 
 # include "types.h"
+# include "SDL_keycode.h"
 
 typedef struct	s_keyboard
 {
@@ -21,6 +22,7 @@ typedef struct	s_keyboard
 	t_bool		a;
 	t_bool		s;
 	t_bool		d;
+	SDL_Keycode	key;
 }				t_keyboard;
 
 #endif

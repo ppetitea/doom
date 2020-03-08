@@ -22,7 +22,7 @@
 */
 #include <stdio.h>
 
-t_result	test_canvas(t_texture *texture)
+t_result	debug_world3d_mouse_clic(t_texture *texture)
 {
 	// printf("number %d\n", n);
 	if (texture == NULL)
@@ -43,16 +43,21 @@ t_result	add_world3d_canvas_textures(t_animation *anim,
 
 	size = ft_vec2i(480, 360);
 	if (!(texture = init_new_texture_with_size(size)))
-		return (throw_null("world3d_canvas", "Fail to init_new_texture"));
+		return (throw_error("world3d_canvas", "Fail to init_new_texture"));
+	if (!(anim->textures = malloc(sizeof(t_list_head))))
+		return (throw_error("world3d_canvas", "Malloc failed"));
+	init_list_head(anim->textures);
 	list_add_entry(&texture->node, anim->textures);
 	anim->update = render_map3d_on_canvas;
-	if (!render_map3d_on_canvas(anim))
+	if (!anim->update(anim))
 		return (throw_error("add_world3d_canvas_textures", "Update failed"));
 	anim->box.anchor = ft_vec2i(500, 100);
 	anim->box.render_box.size = size;
 	update_animation_render_box(anim);
 	anim->list = render_list;
 	anim->subscribe(anim);
+	(void)anim;
+	(void)render_list;
 	return (OK);
 }
 
@@ -66,7 +71,7 @@ t_result	add_world3d_canvas_mouse_observer(t_animation *anim,
 	// clic
 	anim->mouse_obs.left_up.subscribe(&anim->mouse_obs.left_up);
 	action_list = &anim->mouse_obs.left_up.actions;
-	add_new_action(action_list, test_canvas, (t_arg)(void*)anim->curr);
+	add_new_action(action_list, debug_world3d_mouse_clic, (t_arg)(void*)anim->curr);
 
 	// hover
 	anim->mouse_obs.hover_start.subscribe(&anim->mouse_obs.hover_start);

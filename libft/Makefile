@@ -193,7 +193,7 @@ OBJS_LIST		=	$(SRCS_LIST:.c=.o)
 OBJS_FOLDER		=	./objs/
 OBJS			=	$(addprefix $(OBJS_FOLDER), $(OBJS_LIST))
 INCLUDES		=	-I includes/
-CFLAGS			=	-Wall -Wextra -Werror -O3 -Ofast -flto
+CFLAGS			=	-Wall -Wextra -O3 -Ofast -flto
 
 # Colors
 BOLD			=	\e[1m

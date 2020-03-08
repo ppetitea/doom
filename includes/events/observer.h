@@ -21,6 +21,20 @@
 # include "SDL_keycode.h"
 # include "SDL_events.h"
 
+typedef struct		s_observer
+{
+	t_list_head		node;
+	t_list_head		*list;
+	t_result		(*subscribe)(struct s_observer*);
+	t_result		(*unsubscribe)(struct s_observer*);
+	t_bool			subscribed;
+	t_bool			active;
+	t_list_head		actions;
+}					t_observer;
+t_result			init_observer(t_observer *self);
+
+t_bool				trigger_observers(t_list_head *observers);
+
 typedef struct	s_box
 {
 	t_pos2i		offset;
@@ -104,44 +118,81 @@ t_mouse				*get_mouse_state();
 t_result			update_mouse_observers_lists(t_mouse_observers *mouse_obs,
 						t_mouse_followers *followers);
 
-
-/*
-** keyboard
-*/
-typedef struct		s_keyboard_observer
-{
-	t_list_head		node;
-	SDL_Keycode		key;
-	t_list_head		*list;
-	t_result		(*subscribe)(struct s_keyboard_observer*, t_list_head*);
-	t_result		(*unsubscribe)(struct s_keyboard_observer*);
-	t_bool			subscribed;
-	t_list_head		start_actions;
-	t_list_head		stop_actions;
-}					t_keyboard_observer;
-t_result			init_keyboard_observer(t_keyboard_observer *self);
-
-typedef struct		s_keyboard_observable
-{
-	t_keyboard		*state;
-	t_list_head		press;
-	t_list_head		hold;
-}					t_keyboard_observable;
-t_result			init_keyboard_observable(t_keyboard_observable *self);
-
 /*
 ** sub
 */
-t_result			mouse_observer_subscribe(t_mouse_observer *self);
-t_result			mouse_observer_unsubscribe(t_mouse_observer *self);
+t_result			observer_subscribe(t_mouse_observer *self);
+t_result			observer_unsubscribe(t_mouse_observer *self);
 
 /*
 ** trigger
 */
 t_bool				trigger_mouse_observers(t_list_head *observers);
-t_bool				trigger_mouse_mouse_obs_on(t_list_head *observers,
+t_bool				trigger_mouse_obs_on(t_list_head *observers,
 						t_mouse mouse);
-t_bool				trigger_mouse_mouse_obs_off(t_list_head *observers,
+t_bool				trigger_mouse_obs_off(t_list_head *observers,
 						t_mouse mouse);
+
+typedef struct		s_keyboard_observer
+{
+	t_list_head		node;
+	SDL_Keycode		key;
+	t_list_head		*list;
+	t_result		(*subscribe)(struct s_keyboard_observer*);
+	t_result		(*unsubscribe)(struct s_keyboard_observer*);
+	t_bool			subscribed;
+	t_bool			active;
+	t_list_head		actions;
+}					t_keyboard_observer;
+t_result			init_keyboard_observer(t_keyboard_observer *self);
+
+typedef struct	s_keyboard_observers
+{
+	t_keyboard_observer	down;
+	t_keyboard_observer	up;
+}				t_keyboard_observers;
+
+typedef struct		s_keyboard_followers
+{
+	t_list_head	down;
+	t_list_head	up;
+}					t_keyboard_followers;
+t_result			init_keyboard_followers(t_keyboard_followers *self);
+
+typedef struct		s_keyboard_observable
+{
+	t_keyboard				state;
+	t_keyboard_followers	followers;
+}					t_keyboard_observable;
+t_result			init_keyboard_observable(t_keyboard_observable *self);
+
+/*
+** keyboard handle
+*/
+
+void			handle_keyboard_down(t_keyboard_observable *keyboard,
+					SDL_KeyboardEvent event);
+void			handle_keyboard_up(t_keyboard_observable *keyboard,
+					SDL_KeyboardEvent event);
+/*
+** keyboard getters
+*/
+t_keyboard_observable	*get_keyboard_observable();
+t_keyboard_followers	*get_keyboard_followers();
+t_keyboard				*get_keyboard_state();
+
+/*
+** keyboard update
+*/
+t_result			update_keyboard_observers_lists(
+						t_keyboard_observers *keyboard_obs,
+						t_keyboard_followers *followers);
+
+/*
+** trigger
+*/
+t_bool				trigger_keyboard_observers(t_list_head *observers);
+t_bool				trigger_keyboard_observers_on(t_list_head *observers,
+						t_keyboard keyboard);
 
 #endif

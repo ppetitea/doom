@@ -29,6 +29,13 @@ t_result	add_test_scene_gui(t_scene_gui *gui, t_scene_events *events)
 	return (OK);
 }
 
+#include <stdio.h>
+
+t_result	key_binding_debug(t_scene *scene)
+{
+	printf("scene name %s\n", scene->name);
+}
+
 t_scene		*add_test_scene(t_list_head *scenes)
 {
 	t_scene	*scene;
@@ -40,5 +47,10 @@ t_scene		*add_test_scene(t_list_head *scenes)
 	add_test_scene_gui(&scene->gui, &scene->events);
 	// scene->map_config.color.display = TRUE;
 	list_add_entry(&scene->node, scenes);
+	scene->events.quit.key = SDLK_SPACE;
+	add_new_action(&scene->events.quit.actions, key_binding_debug, (t_arg)(void*)scene);
+	scene->events.quit.list = &scene->events.keyboard.followers.down;
+	scene->events.quit.subscribe(&scene->events.quit);
+
 	return (scene);
 }

@@ -27,12 +27,12 @@ void	handle_mouse_motion(t_mouse_observable *mouse,
 	else if (mouse->state.down)
 	{
 		mouse->state.drag = TRUE;
-		trigger_mouse_mouse_obs_on(&mouse->followers.drag, mouse->state);
+		trigger_mouse_obs_on(&mouse->followers.drag, mouse->state);
 	}
 	else
 	{
-		trigger_mouse_mouse_obs_off(&mouse->followers.hover_end, mouse->state);
-		trigger_mouse_mouse_obs_on(&mouse->followers.hover_start, mouse->state);
+		trigger_mouse_obs_off(&mouse->followers.hover_end, mouse->state);
+		trigger_mouse_obs_on(&mouse->followers.hover_start, mouse->state);
 	}
 }
 
@@ -41,9 +41,9 @@ void	handle_mouse_down(t_mouse_observable *mouse, SDL_MouseButtonEvent event)
 	mouse->state.down = TRUE;
 	mouse->state.pos = ft_vec2i(event.x, event.y);
 	if (event.button == SDL_BUTTON_LEFT)
-		trigger_mouse_mouse_obs_on(&mouse->followers.left_down, mouse->state);
+		trigger_mouse_obs_on(&mouse->followers.left_down, mouse->state);
 	else if (event.button == SDL_BUTTON_RIGHT)
-		trigger_mouse_mouse_obs_on(&mouse->followers.right_down, mouse->state);
+		trigger_mouse_obs_on(&mouse->followers.right_down, mouse->state);
 }
 
 void	handle_mouse_up(t_mouse_observable *mouse, SDL_MouseButtonEvent event)
@@ -54,9 +54,9 @@ void	handle_mouse_up(t_mouse_observable *mouse, SDL_MouseButtonEvent event)
 		trigger_mouse_observers(&mouse->followers.drop);
 	}
 	else if (mouse->state.down && event.button == SDL_BUTTON_LEFT)
-		trigger_mouse_mouse_obs_on(&mouse->followers.left_up, mouse->state);
+		trigger_mouse_obs_on(&mouse->followers.left_up, mouse->state);
 	else if (mouse->state.down && event.button == SDL_BUTTON_RIGHT)
-		trigger_mouse_mouse_obs_on(&mouse->followers.right_up, mouse->state);
+		trigger_mouse_obs_on(&mouse->followers.right_up, mouse->state);
 	mouse->state.down = FALSE;
 	mouse->state.drag = FALSE;
 }
