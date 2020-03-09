@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 14:51:06 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/03/09 15:32:46 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/03/09 18:19:44 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ t_result	init_player(t_player *player)
 	init_list_head(&player->node);
 	init_list_head(&player->weapons);
 	player->curr_weapon = NULL;
+	player->curr = NULL;
 	init_animation(&player->map_icon);
 	init_destructible(&player->state);
 	init_camera(&player->cam);

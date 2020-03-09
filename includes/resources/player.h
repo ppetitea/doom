@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/22 22:57:02 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/03/09 16:07:10 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/03/09 18:09:18 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ typedef struct		s_player
 	t_list_head		weapons;
 	t_weapon		*curr_weapon;
 	t_animation		map_icon;
+	t_animation		*curr;
 	t_destructible	state;
 	t_camera		cam;
 }					t_player;
