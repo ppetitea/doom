@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/22 17:16:02 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/03/05 16:41:00 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/03/09 15:49:31 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ typedef struct	s_map_sprites
 	t_list_head		mobs;
 	t_list_head		objects;
 	t_list_head		destructibles;
+	t_list_head		render_list3d;
 	t_list_head		icons; // icons displayed on a canvas
 }				t_map_sprites;
 t_result		init_map_sprites(t_map_sprites *self);

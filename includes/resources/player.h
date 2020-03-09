@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/22 22:57:02 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/02/26 16:51:09 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/03/09 15:55:27 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,17 +31,9 @@ typedef struct		s_destructible
 	t_list_head		actions_die;
 	t_animation		die;
 }					t_destructible;
+t_result			init_destructible(t_destructible *destruct);
 
-typedef struct		s_movable
-{
-	t_list_head			node;
-	float				velocity;
-	t_pos2f				pos;
-	t_vec2f				dir;
-	t_pos2f				*target;
-}					t_movable;
-
-typedef	struct	s_camera
+typedef	struct		s_camera
 {
 	float			fov;
 	float			fov_half;
@@ -58,16 +50,39 @@ typedef	struct	s_camera
 	float			velocity;
 	int				horizon_height;
 	int				horizon_dist;
-}				t_camera;
+}					t_camera;
+t_result			init_camera(t_camera *self);
+
+typedef enum	e_weapon_type
+{
+	HAND,
+	MELEE,
+	GUN,
+}				t_weapon_type;
+
+typedef struct		s_weapon
+{
+	t_list_head			node;
+	t_weapon_type		type;
+	char				*name;
+	size_t				ammo;
+	size_t				magazine_size;
+	size_t				magazine;
+	ssize_t				damages;
+	t_animation			fire;
+	t_animation			reload;
+}					t_weapon;
+t_weapon			*init_new_weapon();
 
 typedef struct		s_player
 {
 	t_list_head		node;
 	t_list_head		weapons;
+	t_weapon		*curr_weapon;
 	t_animation		map_icon;
-	t_animation		*curr;
 	t_destructible	state;
 	t_camera		cam;
 }					t_player;
+t_result			init_player(t_player *player);
 
 #endif

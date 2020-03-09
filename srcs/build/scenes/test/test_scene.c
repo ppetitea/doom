@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/28 17:19:28 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/03/08 23:08:12 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/03/09 14:37:44 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include "build.h"
 #include "ft/str.h"
 
+#include <stdio.h>
 t_result	add_test_scene_gui(t_scene_gui *gui, t_scene_events *events)
 {
 	if (gui == NULL || events == NULL)

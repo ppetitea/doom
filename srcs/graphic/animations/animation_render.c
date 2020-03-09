@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/02 17:17:04 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/03/05 09:40:05 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/03/09 14:27:08 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ t_result	animate(t_animation *anim, struct timeval time)
 	return (OK);
 }
 
+#include <stdio.h>
 t_result	render_animation(t_screen *screen, t_animation *anim,
 				struct timeval time)
 {
@@ -66,6 +67,11 @@ t_result	render_animation(t_screen *screen, t_animation *anim,
 		box.end.y = (int)screen->size.y;
 	box.scale.x = (float)anim->curr->size.x / (float)box.size.x;
 	box.scale.y = (float)anim->curr->size.y / (float)box.size.y;
+	// printf("animation render\n");
+	// printf("box scale x %.2f y%.2f \n", box.scale.x, box.scale.y);
+	// printf("box size x %d y%d \n", box.size.x, box.size.y);
+	// printf("box start x %d y%d \n", box.start.x, box.start.y);
+	// printf("box end x %d y%d \n", box.end.x, box.end.y);
 	render_texture(screen, anim->curr, box);
 	return (OK);
 }

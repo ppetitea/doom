@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/24 10:55:07 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/02/28 12:09:53 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/03/09 14:26:51 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ static t_result	fill_texture_with_image(t_texture *text, t_bitmap *image)
 		return (throw_error("fill_texture_with_image", "NULL pointer"));
 	scale.x = (float)image->head.width / (float)text->size.x;
 	scale.y = (float)image->head.height / (float)text->size.y;
+	i.y = 0;
 	while (i.y < text->size.y)
 	{
 		i.x = 0;

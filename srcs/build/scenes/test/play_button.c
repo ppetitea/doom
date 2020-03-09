@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/28 17:15:00 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/03/08 21:24:53 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/03/09 15:33:54 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ t_result	add_play_button(t_list_head *buttons, t_list_head *render_list,
 {
 	t_button	*button;
 
+	printf("test debug\n");
 	if (!(button = init_new_button()))
 		return (throw_error("add_play_button", "init_new_button failed"));
 	if (!(button->name = ft_strdup("test_play")))
