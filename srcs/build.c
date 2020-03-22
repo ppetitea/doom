@@ -30,7 +30,7 @@ t_game	*build()
 	if (!(game = init_new_game(window)))
 		return (throw_null("build_game", "Fail to init_new_game"));
 	r = &game->resources;
-	if (!resources_load_images(&r->images, "resources/path_textures.doom"))
+	if (!resources_load_images(&r->images, "resources/path"))
 		return (throw_null("build_game", "Fail to load images"));
 	game->curr_scene = add_test_scene(&game->resources.scenes);
 	// if (!build_new_buttons(&r->buttons, "resources/ui_buttons.doom"))
