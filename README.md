@@ -39,6 +39,10 @@ Utilisation d'`enum` et d'`union` pour stocker la data
         t_obj_data      data;
     }               s_obj;
 
+### todo
+
+* Tweak the parser with this struct
+
 ## Event handler
 
 * s'inscrire a un event `add_event_listener()`
