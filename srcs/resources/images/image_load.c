@@ -48,7 +48,7 @@ static t_result		fill_pixels(FILE *file, uint32_t *pixels,
 
 t_bitmap	*load_bmp(char *path)
 {
-	FILE		*file;
+	FILE				*file;
 	t_bitmap	*bmp;
 
 	if (path == NULL)
@@ -58,6 +58,8 @@ t_bitmap	*load_bmp(char *path)
 	if (!(file = fopen(path, "rb")))
 		return (throw_null("load_bmp", "wrong path provided"));
 	fread(&bmp->head, sizeof(t_bitmap_header), 1, file);
+	// bmp->head.width += (bmp->head.width % 2) ? 1 : 0;
+	// bmp->head.height += (bmp->head.height % 2) ? 1 : 0;
 	fseek(file, bmp->head.offset, SEEK_SET);
 	if (bmp->head.type != 0x4d42)
 		return (throw_null("load_bmp", "file provided is not a bmp"));
