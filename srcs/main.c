@@ -1,24 +1,21 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/11 22:59:39 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/02/23 13:08:22 by ppetitea         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+#include <stdio.h>
+#include "libft.h"
+#include "node.h"
+#include "log.h"
+#include "data.h"
+#include "data_parser.h"
 
-#include "build.h"
-#include "utils/error.h"
-
-int		main()
+int main()
 {
-	t_game *game;
+	char *data;
 
-	// build();
-	if ((game = build()) != NULL)
-		loop(game, &game->interface.screen, &game->interface.sdl);
+	// test_node_creation();
+	// printf("main\n");
+	// test_data_creation();
+	// test_token_creation();
+
+	if (!(data = load_from_file("README.md")))
+		console(FATAL, __func__, __LINE__, "load data from file fail");
+	ft_putstr(data);
 	return (0);
 }
