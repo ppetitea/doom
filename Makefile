@@ -6,7 +6,7 @@
 #    By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/08 21:27:29 by lbenard           #+#    #+#              #
-#    Updated: 2020/04/10 22:36:08 by ppetitea         ###   ########.fr        #
+#    Updated: 2020/04/10 23:34:05 by ppetitea         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,8 @@ SRCS_LIST	=	main.c														\
 				log/log.c													\
 				node/node.c													\
 				data/data.c													\
-				data/parser/token.c											\
+				data/parse/token.c											\
+				data/parse/tokenize.c										\
 				data/load/from_file.c										\
 
 

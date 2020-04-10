@@ -2,11 +2,17 @@
 # define DATA_PARSER_H
 
 # include "node.h"
+# include "log.h"
 
 /*
 ** LOAD DATA FROM FILE
 */
-char	*load_from_file(char *path);
+char		*load_from_file(char *path);
+
+/*
+** CLEAN DATA
+*/
+t_result	clean_data(char *data);
 
 /*
 ** TOKENS
