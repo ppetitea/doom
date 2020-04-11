@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 22:20:06 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/04/11 00:18:42 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/04/11 13:50:17 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,18 +36,40 @@ t_result	clean_data(char *data)
 	return (OK);
 }
 
-// YOU are here !
+int			ft_next_char(char *str, char c)
+{
+	int i;
+
+	i = 0;
+	while (str && str[i] && str[i] != c)
+		i++;
+	return (i);
+}
+
+char		*ft_strcdup_bef(char *str, char c)
+{
+	return (ft_strndup(str, ft_next_char(str, c) - 1));
+}
+
+char		*ft_strcdup(char *str, char c)
+{
+	return (ft_strndup(str, ft_next_char(str, c)));
+}
 
 t_result	tokenize(char *data, t_node *list)
 {
 	t_token		*new;
+	t_bool		in_string;
 	int			i;
 
 	i = 0;
 	while (data && data[i])
 	{
+		in_string = (data[i] == '"') ? !in_string : in_string;
+
 		if (!(new = init_new_token()))
 			return (console(FATAL, __func__, __LINE__, "new token fail").err);
+
 
 		i++;
 	}
