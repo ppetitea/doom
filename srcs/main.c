@@ -10,10 +10,6 @@ int main()
 	t_token		*root;
 	char 		*data;
 
-	// test_node_creation();
-	// printf("main\n");
-	// test_data_creation();
-	// test_token_creation();
 	if (!(root = init_new_token()))
 		return (console(FATAL, __func__, __LINE__, "new token fail").err);
 	if (!(data = load_from_file("example.json")))

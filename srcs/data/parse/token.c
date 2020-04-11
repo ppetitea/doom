@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 21:31:04 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/04/11 16:55:43 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/04/11 17:44:47 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,15 @@ void		print_token_type(t_token_type type)
 
 t_result	print_token(t_token *self)
 {
+	int parents;
+	int	i;
+
 	if (self == NULL)
 		return (console(WARNING, __func__, __LINE__, "NULL pointer").warn);
+	parents = node_parents_amount(&self->node);
+	i = -1;
+	while (++i < parents)
+		ft_putstr("   ");
 	print_token_type(self->type);
 	ft_putstr("line-");
 	ft_putnbr(self->line);
@@ -104,6 +111,9 @@ t_result	print_token(t_token *self)
 	ft_putstr(" length: ");
 	ft_putnbr(self->length);
 	ft_putstr("\n");
+	i = -1;
+	while (++i < parents)
+		ft_putstr("   ");
 	ft_putstr(self->data);
 	ft_putstr("\n");
 	return (OK);
@@ -114,7 +124,7 @@ t_result	print_tokens(t_token *self)
 	if (self == NULL)
 		return (console(WARNING, __func__, __LINE__, "NULL pointer").warn);
 	print_token(self);
-	token_foreach_next(self, print_tokens);
+	token_foreach_next(self, print_token);
 	return (OK);
 }
 

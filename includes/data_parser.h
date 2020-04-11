@@ -104,7 +104,6 @@ t_result	tokenize(char *data, t_token *root);
 t_result	test_token_creation();
 
 
-
 /*
 ** 	JSON SYNTAX
 ** 	

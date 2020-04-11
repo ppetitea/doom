@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 22:20:06 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/04/11 16:56:59 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/04/11 17:53:59 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,9 +101,9 @@ t_result	tokenize(char *data, t_token *root)
 		}
 		else if (ft_isdigit(data[i]))
 		{
-			token_set(new, TOKEN_NUMBER, strcdup_bef(&data[i + 1], isntdigit));
+			token_set(new, TOKEN_NUMBER, strcdup_bef(&data[i], isntdigit));
 			node_add_child(&last->node, &new->node);
-			i += stri(&data[i + 1], isntdigit) + 1;
+			i += stri(&data[i], isntdigit) - 1;
 		}
 		else if (data[i] == '-')
 		{

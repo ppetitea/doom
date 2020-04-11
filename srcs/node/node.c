@@ -103,7 +103,7 @@ void	node_add_prev(t_node *head, t_node *new)
 		return ;
 	new->next = head;
 	new->prev = head->prev;
-	head->prev->next = new;
+	new->prev->next = new;
 	head->prev = new;
 }
 
@@ -162,19 +162,33 @@ void	nodes_del(t_node *node)
 ** COUNT NODES
 */
 
+int		node_childs_amount(t_node *node)
+{
+	t_node	*curr;
+	int		i;
+
+	i = 0;
+	curr = node->childs;
+	while ((curr = curr->next) != node->childs)
+		i++;
+	return (i);
+}
+
 int		node_parents_amount(t_node *node)
 {
 	t_node *curr;
 	t_node *parent;
+	int		amount;
 
+	amount = 0;
 	curr = node;
 	parent = curr->parent;
-	fn(curr);
 	while ((curr = parent) != NULL)
 	{
 		parent = parent->parent;
-		fn(curr);
+		amount++;
 	}
+	return (amount);
 }
 
 /* 
