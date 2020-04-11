@@ -158,6 +158,25 @@ void	nodes_del(t_node *node)
 	nodes_foreach(node, node_del);
 }
 
+/*
+** COUNT NODES
+*/
+
+int		node_parents_amount(t_node *node)
+{
+	t_node *curr;
+	t_node *parent;
+
+	curr = node;
+	parent = curr->parent;
+	fn(curr);
+	while ((curr = parent) != NULL)
+	{
+		parent = parent->parent;
+		fn(curr);
+	}
+}
+
 /* 
 	TEST NODE
 */

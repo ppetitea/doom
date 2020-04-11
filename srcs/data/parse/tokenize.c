@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 22:20:06 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/04/11 16:00:00 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/04/11 16:56:59 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int			stri(char *str, int (*fn)(char c))
 		i++;
 	if (!str[i])
 		return (i - 1);
-	return (i);
+	return (i + 1);
 }
 
 char		*strcdup_bef(char *str, int (*fn)(char c))
@@ -103,7 +103,7 @@ t_result	tokenize(char *data, t_token *root)
 		{
 			token_set(new, TOKEN_NUMBER, strcdup_bef(&data[i + 1], isntdigit));
 			node_add_child(&last->node, &new->node);
-			i += stri(&data[i + 1], isntdigit);
+			i += stri(&data[i + 1], isntdigit) + 1;
 		}
 		else if (data[i] == '-')
 		{

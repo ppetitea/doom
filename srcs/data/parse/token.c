@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 21:31:04 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/04/11 15:54:38 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/04/11 16:55:43 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,25 +70,25 @@ void		print_token_type(t_token_type type)
 {
 	if (type == TOKEN_UNDEFINED)
 		ft_putstr("Token: undefined ");
-	if (type == TOKEN_STRING)
+	else if (type == TOKEN_STRING)
 		ft_putstr("Token: String ");
-	if (type == TOKEN_NUMBER)
+	else if (type == TOKEN_NUMBER)
 		ft_putstr("Token: Number ");
-	if (type == TOKEN_LESS)
+	else if (type == TOKEN_LESS)
 		ft_putstr("Token: Less ");
-	if (type == TOKEN_DOT)
+	else if (type == TOKEN_DOT)
 		ft_putstr("Token: Dot ");
-	if (type == TOKEN_COMMA)
+	else if (type == TOKEN_COMMA)
 		ft_putstr("Token: Comma ");
-	if (type == TOKEN_COLON)
+	else if (type == TOKEN_COLON)
 		ft_putstr("Token: Colon ");
-	if (type == TOKEN_BRACKET_OPEN)
+	else if (type == TOKEN_BRACKET_OPEN)
 		ft_putstr("Token: Bracket Open ");
-	if (type == TOKEN_BRACKET_CLOSE)
+	else if (type == TOKEN_BRACKET_CLOSE)
 		ft_putstr("Token: Bracket Close ");
-	if (type == TOKEN_CURLY_BRACES_OPEN)
+	else if (type == TOKEN_CURLY_BRACES_OPEN)
 		ft_putstr("Token: Curly Braces Open ");
-	if (type == TOKEN_CURLY_BRACES_CLOSE)
+	else if (type == TOKEN_CURLY_BRACES_CLOSE)
 		ft_putstr("Token: Curly Braces Close ");
 }
 
@@ -138,7 +138,7 @@ t_token *init_new_token()
 {
 	t_token *self;
 
-	if (!(self = malloc(sizeof(t_token))))
+	if ((self = (t_token*)malloc(sizeof(t_token))) == NULL)
 		return (console(FATAL, __func__, __LINE__, "malloc failed").null);
 	init_token(self);
 	return (self);

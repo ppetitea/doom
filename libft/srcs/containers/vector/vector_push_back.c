@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector_push_back.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/18 16:14:58 by lbenard           #+#    #+#             */
-/*   Updated: 2019/02/20 20:01:19 by lbenard          ###   ########.fr       */
+/*   Updated: 2020/04/11 16:15:08 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_result	vector_push_back(t_vector *vector, const void *data, size_t size)
 	while (vector->size + size > capacity)
 		capacity *= 2;
 	if (!(vector_reserve(vector, capacity)))
-		return (ERROR);
+		return (ERR);
 	ft_memcpy((t_u8*)vector->data + vector->size, data, size);
 	vector->size += size;
 	return (OK);

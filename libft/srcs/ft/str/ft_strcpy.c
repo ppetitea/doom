@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/17 02:26:04 by lbenard           #+#    #+#             */
-/*   Updated: 2019/02/20 19:37:43 by lbenard          ###   ########.fr       */
+/*   Updated: 2020/04/11 16:43:17 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,5 +15,20 @@
 
 char	*ft_strcpy(char *dst, const char *src)
 {
-	return ((char*)ft_memcpy(dst, src, ft_strlen(src) + 1));
+	int		dst_len;
+	int		src_len;
+	int		len;
+	int		i;
+
+	dst_len = ft_strlen(dst);
+	src_len = ft_strlen(src);
+	len = (src_len < dst_len) ? src_len : dst_len;
+	i = 0;
+	while (i < len)
+	{
+		dst[i] = src[i];
+		i++;
+	}
+	dst[len] = '\0';
+	return (dst);
 }

@@ -6,7 +6,7 @@
 #    By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/08 21:27:29 by lbenard           #+#    #+#              #
-#    Updated: 2020/04/11 15:19:24 by ppetitea         ###   ########.fr        #
+#    Updated: 2020/04/11 16:20:12 by ppetitea         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,7 +61,7 @@ INCLUDES	:=	-I includes
 #COMPILATION
 CC			=	gcc
 LD			=	gcc
-CFLAGS		:=	-Wall -Wextra -O3 -Ofast -flto
+CFLAGS		:=	-Wall -Wextra -O3 -Ofast -flto -fsanitize=address -fno-omit-frame-pointer
 LDFLAGS		:=	-lm 
 
 #LIBRARIES

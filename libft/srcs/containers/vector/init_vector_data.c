@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_vector_data.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/17 20:05:00 by lbenard           #+#    #+#             */
-/*   Updated: 2019/02/20 20:00:59 by lbenard          ###   ########.fr       */
+/*   Updated: 2020/04/11 16:14:30 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@
 t_result	init_vector_data(t_vector *vector, const void *data, size_t size)
 {
 	if (!data)
-		return (ERROR);
+		return (ERR);
 	if (!(vector->data = malloc(size)))
 	{
 		vector->capacity = 0;
 		vector->size = 0;
-		return (ERROR);
+		return (ERR);
 	}
 	vector->capacity = size;
 	vector->size = size;
