@@ -23,7 +23,8 @@ typedef enum    e_data_type
 	INT,
 	FLOAT,
 	STRING,
-	LIST
+	LIST,
+	ARRAY,
 }               t_data_type;
 
 typedef union   u_val
