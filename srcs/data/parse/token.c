@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 21:31:04 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/04/11 17:44:47 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/04/12 00:57:42 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,9 +132,25 @@ t_result	print_tokens(t_token *self)
 ** INIT TOKEN
 */
 
+t_token *init_new_token_head()
+{
+	t_token *head;
+
+	if ((head = (t_token*)malloc(sizeof(t_token))) == NULL)
+		return (console(FATAL, __func__, __LINE__, "malloc failed").null);
+	if (!init_node(&head->node))
+		return (console(FATAL, __func__, __LINE__, "init_list fail").err);
+	self->line = 0;
+	self->column = 0;
+	self->data = NULL;
+	self->length = 0;
+	self->type = TOKEN_HEAD;
+	return (OK);
+};
+
 t_result init_token(t_token *self)
 {
-	if (!init_list(&self->node))
+	if (!init_node(&self->node))
 		return (console(FATAL, __func__, __LINE__, "init_list fail").err);
 	self->line = 0;
 	self->column = 0;

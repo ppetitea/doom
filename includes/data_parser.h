@@ -20,7 +20,8 @@ t_result	clean_data(char *data);
 
 typedef enum	e_token_type
 {
-	TOKEN_UNDEFINED,
+	TOKEN_HEAD,					//	head of the token list
+	TOKEN_UNDEFINED,			//	undefined
 	TOKEN_STRING,				//	[""]		→
 	TOKEN_NUMBER,				//	[0-9]		→
 	TOKEN_LESS,					//	-			→

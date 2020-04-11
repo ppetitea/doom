@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/11 17:54:30 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/04/11 23:57:32 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/04/12 00:46:53 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,27 +58,82 @@ t_data	*parse_key(t_token *token, t_data *parent)
 ** ANALYSE TOKENS
 */
 
-t_bool		token_is_key(t_token *token)
+t_bool		token_is_end(t_token *token)
 {
-	return (token->type == TOKEN_STRING &&
-		((t_token*)token->node.next)->type == TOKEN_COLON);
+	if (token->type == TOKEN_COMMA)
+		return (TRUE);
+	if (token->type == TOKEN_UNDEFINED)
+		return (TRUE);
+	return (TRUE);
 }
 
 t_bool		token_is_integer(t_token *token)
 {
-	if (token->type != TOKEN_LESS && token->type != TOKEN_NUMBER)
+	if (token->type == TOKEN_LESS)
+		token = (t_token*)token->node.next;
+	if (token->type != TOKEN_NUMBER)
 		return (FALSE);
 	token = (t_token*)token->node.next;
-	if (token->type != TOKEN_LESS && token->type != TOKEN_NUMBER)
+	if (token->type == TOKEN_DOT)
 		return (FALSE);
-	return (token->type == TOKEN_STRING &&
-		((t_token*)token->node.next)->type == TOKEN_COLON);
+	return (TRUE);
 }
 
 t_bool		token_is_float(t_token *token)
 {
-	return (token->type == TOKEN_STRING &&
-		((t_token*)token->node.next)->type == TOKEN_COLON);
+	if (token->type == TOKEN_LESS)
+		token = (t_token*)token->node.next;
+	if (token->type != TOKEN_NUMBER)
+		return (FALSE);
+	token = (t_token*)token->node.next;
+	if (token->type != TOKEN_DOT)
+		return (FALSE);
+	return (TRUE);
+}
+
+t_bool		token_is_value(t_token *token)
+{
+	if (token_is_float(token) || token_is_integer(token))
+		return (TRUE);
+	if (token->type == TOKEN_STRING)
+		return (TRUE);
+	return (FALSE);
+}
+
+t_bool		token_is_curly_braces(t_token *token)
+{
+	if (token->type != TOKEN_CURLY_BRACES_OPEN)
+		return (FALSE);
+	token = (t_token*)token->node.next;
+	if (token->type != TOKEN_CURLY_BRACES_CLOSE)
+		return (FALSE);
+	return (TRUE);
+}
+
+t_bool		token_is_brackets(t_token *token)
+{
+	if (token->type != TOKEN_BRACKET_OPEN)
+		return (FALSE);
+	token = (t_token*)token->node.next;
+	if (token->type != TOKEN_BRACKET_CLOSE)
+		return (FALSE);
+	return (TRUE);
+}
+
+t_bool		token_is_key(t_token *token)
+{
+	if (token->type != TOKEN_STRING)
+		return (FALSE);
+	token = (t_token*)token->node.next;
+	if (token->type != TOKEN_COLON)
+		return (FALSE);
+	token = (t_token*)token->node.next;
+	if (!token_is_value(token))
+		return (FALSE);
+	token = (t_token*)token->node.next;
+	if (token->type != TOKEN_COLON)
+		return (FALSE);
+	return (TRUE);
 }
 
 /*
