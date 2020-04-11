@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 21:31:04 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/04/11 14:59:25 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/04/11 15:54:38 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,15 +101,10 @@ t_result	print_token(t_token *self)
 	ft_putnbr(self->line);
 	ft_putstr(" col-");
 	ft_putnbr(self->column);
+	ft_putstr(" length: ");
+	ft_putnbr(self->length);
 	ft_putstr("\n");
-	if (self->type == CHAR)
-		ft_putstr(&self->data.c);
-	else if (self->type == INT)
-		ft_putnbr(self->data.i);
-	else if (self->type == FLOAT)
-		printf("%.2f", self->data.f); //				NORME ERROR
-	else if (self->type == STRING)
-		ft_putstr(self->data.s);
+	ft_putstr(self->data);
 	ft_putstr("\n");
 	return (OK);
 }
@@ -133,7 +128,8 @@ t_result init_token(t_token *self)
 		return (console(FATAL, __func__, __LINE__, "init_list fail").err);
 	self->line = 0;
 	self->column = 0;
-	self->data.s = NULL;
+	self->data = NULL;
+	self->length = 0;
 	self->type = TOKEN_UNDEFINED;
 	return (OK);
 };
@@ -156,8 +152,8 @@ t_result	token_del(t_token *self)
 {
 	if (self == NULL)
 		return (console(WARNING, __func__, __LINE__, "NULL pointer").warn);
-	if (self->data_type == STRING)
-		free(self->data.s);
+	if (self->data)
+		free(self->data);
 	node_del(&self->node);
 	return (OK);
 }
@@ -179,10 +175,12 @@ t_result	tokens_del(t_token *self)
 	return (OK);
 }
 
-t_res		tokens_del_and_quit(t_token *self)
+t_res		tokens_del_and_quit(t_token *self, char *msg)
 {
 	if (self == NULL)
 		return (console(FATAL, __func__, __LINE__, "NULL pointer"));
+	ft_putstr(msg);
+	ft_putchar('\n');
 	tokens_del(self);
 	return (response());
 }
@@ -191,12 +189,14 @@ t_res		tokens_del_and_quit(t_token *self)
 ** TOKEN SETUP
 */
 
-t_result token_set(t_token *self, t_token_type type, t_val data)
+t_result token_set(t_token *self, t_token_type type, char *data)
 {
-	if (self == NULL)
+	if (self == NULL || data == NULL)
 		return (console(FATAL, __func__, __LINE__, "NULL pointer").err);
 	self->type = type;
-	self->data = data;
+	if (!(self->data = data))
+		return (tokens_del_and_quit(self, "ft_strdup fail").err);
+	self->length = ft_strlen(self->data);
 	return (OK);
 }
 
@@ -209,10 +209,12 @@ t_result token_set_pos(t_token *self, int line, int column)
 	return (OK);
 }
 
-t_token	*new_token_set(t_token_type type, t_val data, int line, int column)
+t_token	*new_token_set(t_token_type type, char *data, int line, int column)
 {
 	t_token *self;
 
+	if (data == NULL)
+		return (console(FATAL, __func__, __LINE__, "NULL pointer").null);
 	if (!(self = init_new_token()))
 		return (console(FATAL, __func__, __LINE__, "new token fail").null);
 	if (!token_set(self, type, data) || !token_set_pos(self, line, column))
@@ -236,15 +238,15 @@ t_result	test_token_creation()
 	t_token *token_child;
 
 	printf("Test tokens\n");
-	if (!(list = new_token_set(TOKEN_STRING, (t_val)ft_strdup("bidibou parent <3"), 42, 21)))
+	if (!(list = new_token_set(TOKEN_STRING, "bidibou parent <3", 42, 21)))
 		return (console(FATAL, __func__, __LINE__, "set token fail").err);
 	for (int i = 0; i < 10; i++) {
-		if (!(token = new_token_set(TOKEN_STRING, (t_val)ft_strdup("bidibou <3"), i, 0)))
+		if (!(token = new_token_set(TOKEN_STRING, "bidibou parent <3", i, 0)))
 			console(FATAL, __func__, __LINE__, "set new token fail");
 		else	
 			node_add_child(&list->node, &token->node);
 		for (int j = 0; j < 10; j++) {
-			if (!(token_child = new_token_set(TOKEN_STRING, (t_val)ft_strdup("bidibou child <3"),
+			if (!(token_child = new_token_set(TOKEN_STRING, "bidibou parent <3",
 				i, i * 10 + j)))
 				console(FATAL, __func__, __LINE__, "set new token fail");
 			else

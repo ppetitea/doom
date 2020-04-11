@@ -6,13 +6,14 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 22:20:06 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/04/11 14:59:34 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/04/11 16:00:00 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "data_parser.h"
 #include "log.h"
 #include "ft/str.h"
+#include "ft/io.h"
 
 t_result	clean_data(char *data)
 {
@@ -36,6 +37,17 @@ t_result	clean_data(char *data)
 	return (OK);
 }
 
+#include <unistd.h>
+void	ft_putnstr(char *s, int n)
+{
+	int len;
+
+	ft_putstr("→");
+	len = ft_strlen(s);
+	if (s)
+		write(1, s, (n < len) ? n : len);
+	ft_putstr("←\n");
+}
 
 int			isquote(char c)
 {
@@ -54,6 +66,8 @@ int			stri(char *str, int (*fn)(char c))
 	i = 0;
 	while (str && str[i] && !fn(str[i]))
 		i++;
+	if (!str[i])
+		return (i - 1);
 	return (i);
 }
 
@@ -77,7 +91,7 @@ t_result	tokenize(char *data, t_token *root)
 	last = root;
 	while (data && data[i])
 	{
-		if ((new = init_new_token()))
+		if (!(new = init_new_token()))
 			return (console(FATAL, __func__, __LINE__, "new token fail").err);
 		if (isquote(data[i]))
 		{
@@ -93,13 +107,67 @@ t_result	tokenize(char *data, t_token *root)
 		}
 		else if (data[i] == '-')
 		{
-			token_set(new, TOKEN_LESS, ));
+			token_set(new, TOKEN_LESS, ft_strndup(&data[i], 1));
 			node_add_child(&last->node, &new->node);
-			i += stri(&data[i + 1], isntdigit);
+			i++;
 		}
-
-
-
+		else if (data[i] == '.')
+		{
+			token_set(new, TOKEN_DOT, ft_strndup(&data[i], 1));
+			node_add_child(&last->node, &new->node);
+			i++;
+		}
+		else if (data[i] == ',')
+		{
+			token_set(new, TOKEN_COMMA, ft_strndup(&data[i], 1));
+			node_add_child(&last->node, &new->node);
+			i++;
+		}
+		else if (data[i] == ':')
+		{
+			token_set(new, TOKEN_COLON, ft_strndup(&data[i], 1));
+			node_add_child(&last->node, &new->node);
+			i++;
+		}
+		else if (data[i] == '[')
+		{
+			token_set(new, TOKEN_BRACKET_OPEN, ft_strndup(&data[i], 1));
+			node_add_child(&last->node, &new->node);
+			last = new;
+			i++;
+		}
+		else if (data[i] == ']')
+		{
+			token_set(new, TOKEN_BRACKET_CLOSE, ft_strndup(&data[i], 1));
+			if (last->node.parent)
+				last = (t_token*)last->node.parent;
+			else
+				return (tokens_del_and_quit(root, "Too many ] detected").err);
+			node_add_child(&last->node, &new->node);
+			i++;
+		}
+		else if (data[i] == '{')
+		{
+			token_set(new, TOKEN_CURLY_BRACES_OPEN, ft_strndup(&data[i], 1));
+			node_add_child(&last->node, &new->node);
+			last = new;
+			i++;
+		}
+		else if (data[i] == '}')
+		{
+			token_set(new, TOKEN_CURLY_BRACES_CLOSE, ft_strndup(&data[i], 1));
+			if (last->node.parent)
+				last = (t_token*)last->node.parent;
+			else
+				return (tokens_del_and_quit(root, "Too many } detected").err);
+			node_add_child(&last->node, &new->node);
+			i++;
+		}
+		else
+		{
+			ft_putnstr(&data[i], 10);
+			return (tokens_del_and_quit(root, "Unknow token detected").err);
+		}
 	}
 	return (OK);
 }
