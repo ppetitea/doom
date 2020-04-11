@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 22:20:06 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/04/11 13:50:17 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/04/11 14:59:34 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,42 +36,70 @@ t_result	clean_data(char *data)
 	return (OK);
 }
 
-int			ft_next_char(char *str, char c)
+
+int			isquote(char c)
+{
+	return (c == '"');
+}
+
+int			isntdigit(char c)
+{
+	return (!ft_isdigit(c));
+}
+
+int			stri(char *str, int (*fn)(char c))
 {
 	int i;
 
 	i = 0;
-	while (str && str[i] && str[i] != c)
+	while (str && str[i] && !fn(str[i]))
 		i++;
 	return (i);
 }
 
-char		*ft_strcdup_bef(char *str, char c)
+char		*strcdup_bef(char *str, int (*fn)(char c))
 {
-	return (ft_strndup(str, ft_next_char(str, c) - 1));
+	return (ft_strndup(str, stri(str, fn) - 1));
 }
 
-char		*ft_strcdup(char *str, char c)
+char		*strcdup(char *str, int (*fn)(char c))
 {
-	return (ft_strndup(str, ft_next_char(str, c)));
+	return (ft_strndup(str, stri(str, fn)));
 }
 
-t_result	tokenize(char *data, t_node *list)
+t_result	tokenize(char *data, t_token *root)
 {
 	t_token		*new;
-	t_bool		in_string;
+	t_token		*last;
 	int			i;
 
 	i = 0;
+	last = root;
 	while (data && data[i])
 	{
-		in_string = (data[i] == '"') ? !in_string : in_string;
-
-		if (!(new = init_new_token()))
+		if ((new = init_new_token()))
 			return (console(FATAL, __func__, __LINE__, "new token fail").err);
+		if (isquote(data[i]))
+		{
+			token_set(new, TOKEN_STRING, strcdup_bef(&data[i + 1], isquote));
+			node_add_child(&last->node, &new->node);
+			i += stri(&data[i + 1], isquote) + 1;
+		}
+		else if (ft_isdigit(data[i]))
+		{
+			token_set(new, TOKEN_NUMBER, strcdup_bef(&data[i + 1], isntdigit));
+			node_add_child(&last->node, &new->node);
+			i += stri(&data[i + 1], isntdigit);
+		}
+		else if (data[i] == '-')
+		{
+			token_set(new, TOKEN_LESS, ));
+			node_add_child(&last->node, &new->node);
+			i += stri(&data[i + 1], isntdigit);
+		}
 
 
-		i++;
+
 	}
 	return (OK);
 }

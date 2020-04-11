@@ -1,6 +1,7 @@
 #ifndef DATA_PARSER_H
 # define DATA_PARSER_H
 
+# include "data.h"
 # include "node.h"
 # include "log.h"
 
@@ -37,8 +38,8 @@ typedef struct	s_token
 {
 	t_node			node;
 	t_token_type	type;
-	char			*data;
-	int				length;
+	t_data_type		data_type;
+	t_val			data;
 	int				line;
 	int				column;
 }				t_token;
@@ -85,11 +86,11 @@ t_res		tokens_del_and_quit(t_token *self);
 ** TOKEN SETUP
 */
 
-t_result token_set(t_token *self, t_token_type type, char *data);
+t_result token_set(t_token *self, t_token_type type, t_val data);
 
 t_result token_set_pos(t_token *self, int line, int column);
 
-t_token	*new_token_set(t_token_type type, char *data, int line, int column);
+t_token	*new_token_set(t_token_type type, t_val data, int line, int column);
 
 /* 
 	TEST TOKEN
