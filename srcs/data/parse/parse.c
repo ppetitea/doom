@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/11 17:54:30 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/04/12 03:59:51 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/04/12 04:55:06 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "ft/str.h"
 #include "ft/io.h"
 #include "maths/maths.h"
+#include <stdlib.h>
 
 /*
 ** ANALYSE TOKENS
@@ -47,7 +48,6 @@ t_token		*token_is_integer(t_token *token)
 	token = (t_token*)token->node.next;
 	if (token->type == TOKEN_DOT)
 		return (NULL);
-	token = (t_token*)token->node.next;
 	return (token_is_value_next(token));
 }
 
@@ -63,7 +63,6 @@ t_token		*token_is_float(t_token *token)
 	token = (t_token*)token->node.next;
 	if (token->type == TOKEN_NUMBER)
 		token = (t_token*)token->node.next;
-	token = (t_token*)token->node.next;
 	return (token_is_value_next(token));
 }
 
@@ -159,8 +158,25 @@ t_result	parse_integer(t_token *token, t_data *data)
 
 t_result	parse_float(t_token *token, t_data *data)
 {
-	if (!(data->value.f = ft_atof(token->data)))
+	char	*tmp;
+	char	*f;
+	
+	if (!(f = ft_strjoin(token->data, ((t_token*)token->node.next)->data)))
+		return (console(FATAL, __func__, __LINE__, "strjoin fail").err);
+	tmp = f;
+	token = (t_token*)token->node.next;
+	if (!(f = ft_strjoin(f, ((t_token*)token->node.next)->data)))
+	{
+		free(tmp);
+		return (console(FATAL, __func__, __LINE__, "strjoin fail").err);
+	}
+	free(tmp);
+	if (!(data->value.f = ft_atof(f)))
+	{
+		free(f);
 		return (console(FATAL, __func__, __LINE__, "atof fail").err);
+	}
+	free(f);
 	data->type = FLOAT;
 	return (OK);
 }
@@ -179,7 +195,6 @@ t_result	parse_value(t_token *token, t_data *data)
 t_result	parse_container(t_token *token, t_data *data,
 				t_result (*recursive_data_parsing)(t_token*, t_data*))
 {
-	print_token(token);
 	if (token_is_brackets(token))
 		data->type = ARRAY;
 	else if (token_is_curly_braces(token))
@@ -194,11 +209,18 @@ t_result	parse_container(t_token *token, t_data *data,
 t_result	parse_key_next(t_token *token, t_data *data,
 				t_result (*recursive_data_parsing)(t_token*, t_data*))
 {
-	if (!(parse_value(token, data)))
-		return (console(FATAL, __func__, __LINE__, "parse_next fail").err);
-	if (!(parse_container(token, data, recursive_data_parsing)))
-		return (console(FATAL, __func__, __LINE__, "parse_list fail").err);
-		
+	if (token_is_value(token))
+	{
+		if (!(parse_value(token, data)))
+			return (console(FATAL, __func__, __LINE__, "parse_value fail").err);
+	}
+	else if (token_is_container(token))
+	{
+		if (!(parse_container(token, data, recursive_data_parsing)))
+			return (console(FATAL, __func__, __LINE__, "parse_list fail").err);
+	}
+	else
+		return (console(FATAL, __func__, __LINE__, "unknow key_next").err);
 	return (OK);
 }
 
@@ -233,7 +255,7 @@ t_result	recursive_data_parsing(t_token *token, t_data *parent)
 			return (console(FATAL, __func__, __LINE__, "parse_key").err);
 		if (parent->type == LIST)
 			token = (t_token*)token->node.next->next;
-		if (parse_key_next(token, new, recursive_data_parsing))
+		if (!parse_key_next(token, new, recursive_data_parsing))
 			return (console(FATAL, __func__, __LINE__, "parse_next fail").err);
 		token = next_token;
 		index++;
@@ -246,7 +268,7 @@ t_data		*parse(t_token *root_token)
 	t_data	*root;
 	t_token	*token;
 
-	if (!(root = init_new_data()))
+	if (!(root = new_data_set("root", UNDEFINED, (t_val)0)))
 		return (console(FATAL, __func__, __LINE__, "new data fail").null);
 	token = (t_token*)root_token->node.childs->next;
 	if (token_is_curly_braces(token))

@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 21:31:04 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/04/12 03:23:47 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/04/12 04:54:38 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ void		print_token_type(t_token_type type)
 {
 	if (type == TOKEN_UNDEFINED)
 		ft_putstr("Token: undefined ");
+	else if (type == TOKEN_HEAD)
+		ft_putstr("Token: Head      ");
 	else if (type == TOKEN_STRING)
 		ft_putstr("Token: String    ");
 	else if (type == TOKEN_NUMBER)

@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/05 17:30:14 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/04/11 16:11:46 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/04/12 04:54:33 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ t_res	console(t_log_level lvl, const char *fn, int line, char *msg)
 	ft_putstr_fd(fn, fd);
 	ft_putstr_fd("() line ", fd);
 	ft_putnbr_fd(line, fd);
-	ft_putstr_fd("\n\t", fd);
+	ft_putstr_fd("\t", fd);
 	ft_putstr_fd(msg, fd);
 	ft_putstr_fd("\n", fd);
 	return (response());

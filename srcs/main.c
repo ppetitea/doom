@@ -24,6 +24,6 @@ int main()
 	// print_tokens(token);
 	if (!(json = parse(token)))
 		console(FATAL, __func__, __LINE__, "parse data from tokens fail");
-	// print_datas(json);
+	print_datas(json);
 	return (0);
 }

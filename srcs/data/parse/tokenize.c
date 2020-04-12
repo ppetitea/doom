@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 22:20:06 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/04/11 18:07:14 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/04/12 04:59:17 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ t_result	tokenize(char *data, t_token *root)
 	{
 		if (!(new = init_new_token()))
 			return (console(FATAL, __func__, __LINE__, "new token fail").err);
+		// if (isquote(data[i]) && token_set_str(new, &data[i + 1]))
 		if (isquote(data[i]))
 		{
 			token_set(new, TOKEN_STRING, strcdup_bef(&data[i + 1], isquote));
