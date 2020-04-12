@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 22:20:06 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/04/12 05:03:49 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/04/12 15:47:18 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ t_result	clean_data(char *data)
 	}
 	return (OK);
 }
-
+ 
 #include <unistd.h>
 void	ft_putnstr(char *s, int n)
 {
