@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 21:31:04 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/04/12 00:57:42 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/04/12 01:08:51 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,19 +139,24 @@ t_token *init_new_token_head()
 	if ((head = (t_token*)malloc(sizeof(t_token))) == NULL)
 		return (console(FATAL, __func__, __LINE__, "malloc failed").null);
 	if (!init_node(&head->node))
-		return (console(FATAL, __func__, __LINE__, "init_list fail").err);
-	self->line = 0;
-	self->column = 0;
-	self->data = NULL;
-	self->length = 0;
-	self->type = TOKEN_HEAD;
+		return (console(FATAL, __func__, __LINE__, "init_node fail").null);
+	head->line = 0;
+	head->column = 0;
+	head->data = NULL;
+	head->length = 0;
+	head->type = TOKEN_HEAD;
 	return (OK);
 };
 
 t_result init_token(t_token *self)
 {
+	t_token		*head;
+
 	if (!init_node(&self->node))
 		return (console(FATAL, __func__, __LINE__, "init_list fail").err);
+	if (!(head = init_new_token_head()))
+		return (console(FATAL, __func__, __LINE__, "new_token_head fail").err);
+	self->node.childs = &head->node;
 	self->line = 0;
 	self->column = 0;
 	self->data = NULL;
@@ -166,7 +171,8 @@ t_token *init_new_token()
 
 	if ((self = (t_token*)malloc(sizeof(t_token))) == NULL)
 		return (console(FATAL, __func__, __LINE__, "malloc failed").null);
-	init_token(self);
+	if (!init_token(self))
+		return (console(FATAL, __func__, __LINE__, "init_token failed").null);
 	return (self);
 }
 
