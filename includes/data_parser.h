@@ -1,6 +1,7 @@
 #ifndef DATA_PARSER_H
 # define DATA_PARSER_H
 
+# include "data.h"
 # include "node.h"
 # include "log.h"
 
@@ -104,7 +105,6 @@ t_result	tokenize(char *data, t_token *root);
 
 t_result	test_token_creation();
 
-
 /*
 ** 	JSON SYNTAX
 ** 	
@@ -133,18 +133,50 @@ t_result	test_token_creation();
 ** 										→ }
 */
 
-typedef enum	e_syntax_type
-{
-	SYNTAX_STRING,				//	"key" → : → "value"
-	SYNTAX_INTEGER,				//	"key" → : → 42
-	SYNTAX_FLOAT,				//	"key" → : → - → 21.42
-	SYNTAX_OBJECT,				//	"key" → : → {↓ → ↑}
-	SYNTAX_ARRAY				//	"key" → : → [↓ → ↑]
-}				t_syntax_type;
+/*
+** ANALYSE TOKENS
+*/
 
-typedef struct	s_syntax
-{
-	t_node		node;
-}				t_syntax;
+t_token		*token_is_value_next(t_token *token);
+
+t_token		*token_is_string(t_token *token);
+
+t_token		*token_is_integer(t_token *token);
+
+t_token		*token_is_float(t_token *token);
+
+t_token		*token_is_value(t_token *token);
+
+t_token		*token_is_curly_braces(t_token *token);
+
+t_token		*token_is_brackets(t_token *token);
+
+t_token		*token_is_container(t_token *token);
+
+t_token		*token_is_key_next(t_token *token);
+
+t_token		*token_is_key(t_token *token);
+
+/*
+** PARSE TOKENS
+*/
+
+t_result	parse_string(t_token *token, t_data *data);
+
+t_result	parse_integer(t_token *token, t_data *data);
+
+t_result	parse_float(t_token *token, t_data *data);
+
+t_result	parse_value(t_token *token, t_data *data);
+
+t_result	parse_container(t_token *token, t_data *data,
+				t_result (*recursive_data_parsing)(t_token*, t_data*));
+
+t_data	*parse_key(t_token *token, t_data *parent, int index);
+
+t_result	recursive_data_parsing(t_token *token, t_data *parent);
+
+t_data		*parse(t_token *root_token);
+
 
 #endif

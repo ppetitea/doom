@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 21:31:04 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/04/12 01:08:51 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/04/12 03:23:47 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,25 +71,25 @@ void		print_token_type(t_token_type type)
 	if (type == TOKEN_UNDEFINED)
 		ft_putstr("Token: undefined ");
 	else if (type == TOKEN_STRING)
-		ft_putstr("Token: String ");
+		ft_putstr("Token: String    ");
 	else if (type == TOKEN_NUMBER)
-		ft_putstr("Token: Number ");
+		ft_putstr("Token: Number    ");
 	else if (type == TOKEN_LESS)
-		ft_putstr("Token: Less ");
+		ft_putstr("Token: Less      ");
 	else if (type == TOKEN_DOT)
-		ft_putstr("Token: Dot ");
+		ft_putstr("Token: Dot       ");
 	else if (type == TOKEN_COMMA)
-		ft_putstr("Token: Comma ");
+		ft_putstr("Token: Comma     ");
 	else if (type == TOKEN_COLON)
-		ft_putstr("Token: Colon ");
+		ft_putstr("Token: Colon     ");
 	else if (type == TOKEN_BRACKET_OPEN)
-		ft_putstr("Token: Bracket Open ");
+		ft_putstr("Token: Bracket O ");
 	else if (type == TOKEN_BRACKET_CLOSE)
-		ft_putstr("Token: Bracket Close ");
+		ft_putstr("Token: Bracket C ");
 	else if (type == TOKEN_CURLY_BRACES_OPEN)
-		ft_putstr("Token: Curly Braces Open ");
+		ft_putstr("Token: Curly O   ");
 	else if (type == TOKEN_CURLY_BRACES_CLOSE)
-		ft_putstr("Token: Curly Braces Close ");
+		ft_putstr("Token: Curly C   ");
 }
 
 t_result	print_token(t_token *self)
@@ -104,16 +104,12 @@ t_result	print_token(t_token *self)
 	while (++i < parents)
 		ft_putstr("   ");
 	print_token_type(self->type);
-	ft_putstr("line-");
-	ft_putnbr(self->line);
-	ft_putstr(" col-");
-	ft_putnbr(self->column);
-	ft_putstr(" length: ");
-	ft_putnbr(self->length);
-	ft_putstr("\n");
-	i = -1;
-	while (++i < parents)
-		ft_putstr("   ");
+	// ft_putstr("l-");
+	// ft_putnbr(self->line);
+	// ft_putstr(" c-");
+	// ft_putnbr(self->column);
+	// ft_putstr(" length: ");
+	// ft_putnbr(self->length);
 	ft_putstr(self->data);
 	ft_putstr("\n");
 	return (OK);
@@ -145,7 +141,7 @@ t_token *init_new_token_head()
 	head->data = NULL;
 	head->length = 0;
 	head->type = TOKEN_HEAD;
-	return (OK);
+	return (head);
 };
 
 t_result init_token(t_token *self)
