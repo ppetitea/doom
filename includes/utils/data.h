@@ -23,7 +23,8 @@ typedef enum    e_data_type
 	INT,
 	FLOAT,
 	STRING,
-	LIST
+	LIST,
+	ARRAY,
 }               t_data_type;
 
 typedef union   u_val
@@ -90,5 +91,6 @@ t_data	*new_data_set(char *key, t_data_type type, t_val val);
 */
 
 t_result	test_data_creation();
+
 
 #endif

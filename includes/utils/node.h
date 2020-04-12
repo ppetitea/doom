@@ -49,6 +49,14 @@ void	node_del(t_node *node);
 
 void	nodes_del(t_node *node);
 
+/*
+** COUNT NODE
+*/
+
+int		node_childs_amount(t_node *node);
+
+int		node_parents_amount(t_node *node);
+
 /* 
 	TEST NODE
 */

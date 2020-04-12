@@ -1,4 +1,4 @@
-#include "node.h"
+#include "utils/node.h"
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
@@ -12,7 +12,7 @@
 t_result init_node(t_node *self)
 {
 	if (self == NULL)
-		return (ERR);
+		return (ERROR);
 	self->prev = self;
 	self->next = self;
 	self->parent = NULL;
@@ -23,10 +23,10 @@ t_result init_node(t_node *self)
 t_result	init_list(t_node *self)
 {
 	if (self == NULL)
-		return (ERR);
+		return (ERROR);
 	init_node(self);
 	if (!(self->childs = malloc(sizeof(t_node))))
-		return (ERR);
+		return (ERROR);
 	init_node(self->childs);
 	return (OK);
 }
@@ -103,7 +103,7 @@ void	node_add_prev(t_node *head, t_node *new)
 		return ;
 	new->next = head;
 	new->prev = head->prev;
-	head->prev->next = new;
+	new->prev->next = new;
 	head->prev = new;
 }
 
@@ -156,6 +156,39 @@ void	node_del(t_node *node)
 void	nodes_del(t_node *node)
 {
 	nodes_foreach(node, node_del);
+}
+
+/*
+** COUNT NODES
+*/
+
+int		node_childs_amount(t_node *node)
+{
+	t_node	*curr;
+	int		i;
+
+	i = 0;
+	curr = node->childs;
+	while ((curr = curr->next) != node->childs)
+		i++;
+	return (i);
+}
+
+int		node_parents_amount(t_node *node)
+{
+	t_node *curr;
+	t_node *parent;
+	int		amount;
+
+	amount = 0;
+	curr = node;
+	parent = curr->parent;
+	while ((curr = parent) != NULL)
+	{
+		parent = parent->parent;
+		amount++;
+	}
+	return (amount);
 }
 
 /* 

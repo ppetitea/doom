@@ -6,11 +6,11 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/05 17:30:14 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/04/10 15:07:45 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/04/12 16:25:44 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "log.h"
+#include "utils/log.h"
 #include <stdlib.h>
 #include "ft/io.h"
 #include "ft/str.h"
@@ -25,7 +25,7 @@ t_res	response()
 
 	res.ok = OK;
 	res.warn = WARNING;
-	res.err = ERR;
+	res.err = ERROR;
 	res.null = NULL;
 	return (res);
 }
@@ -64,7 +64,7 @@ t_res	console(t_log_level lvl, const char *fn, int line, char *msg)
 	ft_putstr_fd(fn, fd);
 	ft_putstr_fd("() line ", fd);
 	ft_putnbr_fd(line, fd);
-	ft_putstr_fd("\n\t", fd);
+	ft_putstr_fd("\t", fd);
 	ft_putstr_fd(msg, fd);
 	ft_putstr_fd("\n", fd);
 	return (response());

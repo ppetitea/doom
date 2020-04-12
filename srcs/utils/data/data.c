@@ -10,13 +10,14 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "data.h"
-#include "log.h"
+#include "utils/data.h"
+#include "utils/log.h"
 #include <stdlib.h>
 #include "ft/io.h"
 #include "ft/str.h"
 
 #include <stdio.h> //				NORME ERROR
+
 /*
 ** DATA FOREACH
 */
@@ -68,8 +69,15 @@ t_result	data_foreach_next(t_data *self, t_result (*fn)(t_data*))
 
 t_result	print_data(t_data *self)
 {
+	int		parent_amount;
+	int		i;
+
 	if (self == NULL)
 		return (console(WARNING, __func__, __LINE__, "NULL pointer").warn);
+	parent_amount = node_parents_amount(&self->node);
+	i = -1;
+	while (++i < parent_amount)
+		ft_putstr("   ");
 	ft_putstr(self->key);
 	ft_putstr(": ");
 	if (self->type == CHAR)
@@ -77,7 +85,7 @@ t_result	print_data(t_data *self)
 	else if (self->type == INT)
 		ft_putnbr(self->value.i);
 	else if (self->type == FLOAT)
-		printf("%.2f", self->value.f); //				NORME ERROR
+		ft_putnbr((int)self->value.f); //				ft_putnbrf
 	else if (self->type == STRING)
 		ft_putstr(self->value.s);
 	ft_putstr("\n");
@@ -167,7 +175,8 @@ t_result data_set(t_data *self, char *key, t_data_type type, t_val val)
 		return (console(FATAL, __func__, __LINE__, "NULL pointer").err);
 	if (!(self->key = ft_strdup(key)))
 		return (console(FATAL, __func__, __LINE__, "strdup fail").err);
-	if (type != CHAR && type != INT && type != FLOAT && type != STRING)
+	if (type != CHAR && type != INT && type != FLOAT && type != STRING
+		&& type != LIST && type != UNDEFINED)
 		return (console(FATAL, __func__, __LINE__, "unknow type").err);
 	self->type = type;
 	if (type == STRING)
