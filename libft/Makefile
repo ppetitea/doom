@@ -6,25 +6,23 @@
 #    By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/05 18:02:14 by lbenard           #+#    #+#              #
-#    Updated: 2020/03/01 22:04:44 by ppetitea         ###   ########.fr        #
+#    Updated: 2020/04/22 20:59:45 by ppetitea         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			=	libft.a
 SRCS_LIST		=	containers/list/init_list_head.c		\
 					containers/list/list_foreach.c			\
-					containers/list/list_get.c				\
 					containers/list/list_is_last.c			\
 					containers/list/list_is_empty.c			\
 					containers/list/list_add.c				\
 					containers/list/list_add_entry.c		\
-					containers/list/list_add_first.c		\
 					containers/list/list_add_tail.c			\
 					containers/list/list_del.c				\
 					containers/list/list_del_entry.c		\
-					containers/list/list_length.c			\
-					containers/list/list_move_tail.c		\
 					containers/list/list_move.c				\
+					containers/list/list_move_tail.c		\
+					containers/list/list_length.c			\
 					containers/list/list_sort.c				\
 					containers/list/new_lst.c				\
 					containers/list/new_lstcpy.c			\
@@ -48,6 +46,8 @@ SRCS_LIST		=	containers/list/init_list_head.c		\
 					containers/vector/vector_insert.c		\
 					containers/vector/vector_push_back.c	\
 					containers/vector/free_vector.c			\
+					containers/node/node.c					\
+					colors/blend/add_blend.c				\
 					colors/rgb/ft_rgb.c						\
 					colors/rgb/ft_rgb_int.c					\
 					colors/rgb/ft_rgb_hsv.c					\
@@ -55,10 +55,8 @@ SRCS_LIST		=	containers/list/init_list_head.c		\
 					colors/hsv/ft_hsv.c						\
 					colors/hsv/hsv_to_int.c					\
 					sizes/ft_usize.c						\
-					sizes/is_contain.c						\
 					sizes/ft_isize.c						\
 					maths/maths/ft_abs.c					\
-					maths/maths/ft_absf.c					\
 					maths/maths/ft_max.c					\
 					maths/maths/ft_min.c					\
 					maths/maths/ft_atoi.c					\
@@ -66,24 +64,13 @@ SRCS_LIST		=	containers/list/init_list_head.c		\
 					maths/maths/ft_itoa.c					\
 					maths/maths/ft_nblen.c					\
 					maths/vec2i/ft_vec2i.c					\
-					maths/vec2i/vec2i_add.c					\
-					maths/vec2i/vec2i_sub.c					\
 					maths/vec3i/ft_vec3i.c					\
 					maths/vec4i/ft_vec4i.c					\
 					maths/vec2f/ft_vec2f.c					\
 					maths/vec2f/vec2f_dot.c					\
-					maths/vec2f/vec2f_add.c					\
-					maths/vec2f/vec2f_sub.c					\
 					maths/vec2f/vec2f_scalar.c				\
-					maths/vec2f/vec2f_magnitude.c			\
-					maths/vec2f/vec2f_normalize.c			\
-					maths/vec2f/vec2f_equals.c				\
-					maths/vec2f/vec2f_opposite.c			\
 					maths/vec3f/ft_vec3f.c					\
 					maths/vec3f/vec3f_dot.c					\
-					maths/vec3f/vec3f_add.c					\
-					maths/vec3f/vec3f_sub.c					\
-					maths/vec3f/vec3f_mult.c				\
 					maths/vec3f/vec3f_scalar.c				\
 					maths/vec3f/vec3f_to_vec2f.c			\
 					maths/vec3f/vec3f_to_vec4f.c			\
@@ -126,6 +113,25 @@ SRCS_LIST		=	containers/list/init_list_head.c		\
 					maths/mat4f/ft_mat4f_rotation.c			\
 					maths/mat4f/mat4f_x_mat4f.c				\
 					maths/mat4f/mat4f_x_vec4f.c				\
+					maths/matrix/mult.c						\
+					maths/matrix/rotate.c					\
+					maths/matrix/scale.c					\
+					maths/matrix/to_vtx.c					\
+					maths/matrix/translate.c				\
+					image/image.c							\
+					image/bitmap/bmp_parser.c				\
+					log/log.c								\
+					time/delta.c							\
+					time/get_delta_ptr.c					\
+					time/get_delta.c						\
+					time/get_wall_time.c					\
+					time/set_delta.c						\
+					data/data.c								\
+					data/load/from_file.c					\
+					data/json/json.c						\
+					data/json/parse.c						\
+					data/json/token.c						\
+					data/json/tokenize.c					\
 					ft/io/ft_putchar.c						\
 					ft/io/ft_putstr.c						\
 					ft/io/ft_putendl.c						\
@@ -184,8 +190,7 @@ SRCS_LIST		=	containers/list/init_list_head.c		\
 					ft/str/ft_islower.c						\
 					ft/str/ft_toupper.c						\
 					ft/str/ft_tolower.c						\
-					ft/str/ft_get_next_line.c				\
-					callbacks/error.c
+					ft/str/ft_get_next_line.c
 
 SRCS_FOLDER		=	./srcs/
 SRCS			=	$(addprefix $(SRCS_FOLDER), $(SRCS_LIST))
@@ -193,7 +198,7 @@ OBJS_LIST		=	$(SRCS_LIST:.c=.o)
 OBJS_FOLDER		=	./objs/
 OBJS			=	$(addprefix $(OBJS_FOLDER), $(OBJS_LIST))
 INCLUDES		=	-I includes/
-CFLAGS			=	-Wall -Wextra -O3 -Ofast -flto
+CFLAGS			=	-Wall -Wextra -Werror -O3 -Ofast -flto
 
 # Colors
 BOLD			=	\e[1m

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector_insert.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/20 18:37:54 by lbenard           #+#    #+#             */
-/*   Updated: 2020/04/11 16:14:58 by ppetitea         ###   ########.fr       */
+/*   Updated: 2019/02/20 21:16:27 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_result	vector_insert(t_vector *vector, size_t pos, const void *data,
 	size_t	new_capacity;
 
 	if (!data || pos > vector->size)
-		return (ERR);
+		return (ERROR);
 	if (vector->capacity == 0)
 	{
 		vector_push_back(vector, data, size);

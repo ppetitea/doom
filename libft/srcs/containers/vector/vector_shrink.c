@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector_shrink.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/20 18:24:04 by lbenard           #+#    #+#             */
-/*   Updated: 2020/04/11 16:14:50 by ppetitea         ###   ########.fr       */
+/*   Updated: 2019/02/20 20:01:11 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_result	vector_shrink(t_vector *vector)
 	{
 		free(vector->data);
 		init_vector(vector);
-		return (ERR);
+		return (ERROR);
 	}
 	ft_memcpy(new_data, vector->data, vector->size);
 	vector->data = new_data;
