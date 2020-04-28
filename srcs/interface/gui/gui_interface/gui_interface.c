@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/25 15:00:43 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/04/25 23:56:00 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/04/26 14:09:24 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,10 @@ t_result init_gui_interface(t_gui_interface *self)
 	self->curr_scene = NULL;
 	init_list_head(&self->images);
 	init_list_head(&self->songs);
+	self->mouse_pos = ft_vec2i(0, 0);
+	self->mouse_ishover = FALSE;
+	self->mouse_isdown = FALSE;
+	self->mouse_isdrag = FALSE;
 	init_list_head(&self->mouse_hover_start);
 	init_list_head(&self->mouse_hover_end);
 	init_list_head(&self->mouse_left_up);
@@ -30,6 +34,8 @@ t_result init_gui_interface(t_gui_interface *self)
 	init_list_head(&self->mouse_drag);
 	init_list_head(&self->mouse_drop);
 	init_list_head(&self->mouse_motion);
+	init_list_head(&self->mouse_wheel_normal);
+	init_list_head(&self->mouse_wheel_flip);
 	init_list_head(&self->key_up);
 	init_list_head(&self->key_down);
 	init_list_head(&self->time);

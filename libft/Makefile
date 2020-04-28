@@ -6,13 +6,14 @@
 #    By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/05 18:02:14 by lbenard           #+#    #+#              #
-#    Updated: 2020/04/22 20:59:45 by ppetitea         ###   ########.fr        #
+#    Updated: 2020/04/28 23:28:30 by ppetitea         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			=	libft.a
 SRCS_LIST		=	containers/list/init_list_head.c		\
 					containers/list/list_foreach.c			\
+					containers/list/list_get.c				\
 					containers/list/list_is_last.c			\
 					containers/list/list_is_empty.c			\
 					containers/list/list_add.c				\
@@ -24,6 +25,7 @@ SRCS_LIST		=	containers/list/init_list_head.c		\
 					containers/list/list_move_tail.c		\
 					containers/list/list_length.c			\
 					containers/list/list_sort.c				\
+					containers/list/string_list.c			\
 					containers/list/new_lst.c				\
 					containers/list/new_lstcpy.c			\
 					containers/list/new_lstmap.c			\
@@ -48,6 +50,8 @@ SRCS_LIST		=	containers/list/init_list_head.c		\
 					containers/vector/free_vector.c			\
 					containers/node/node.c					\
 					colors/blend/add_blend.c				\
+					colors/rgba.c							\
+					colors/bgra.c							\
 					colors/rgb/ft_rgb.c						\
 					colors/rgb/ft_rgb_int.c					\
 					colors/rgb/ft_rgb_hsv.c					\
@@ -64,6 +68,7 @@ SRCS_LIST		=	containers/list/init_list_head.c		\
 					maths/maths/ft_itoa.c					\
 					maths/maths/ft_nblen.c					\
 					maths/vec2i/ft_vec2i.c					\
+					maths/vec2i/ft_vec2i_mult.c				\
 					maths/vec3i/ft_vec3i.c					\
 					maths/vec4i/ft_vec4i.c					\
 					maths/vec2f/ft_vec2f.c					\

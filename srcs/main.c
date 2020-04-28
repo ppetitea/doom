@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 22:59:39 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/04/25 23:56:04 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/04/26 14:09:22 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,7 @@ t_result	loop(t_gui_interface *interface, t_sdl *sdl)
 			return (console(FATAL, __func__, __LINE__, "scene is null").err);
 		last_time = get_wall_time();
 		while (SDL_PollEvent(&sdl->event))
-		{
-			if (sdl->event.key.keysym.sym == SDLK_ESCAPE)
-				interface->is_running = FALSE;
-		}
+			handle_gui_events(interface, &sdl->event);
 		render_gui(interface->curr_scene);
 		if (SDL_UpdateTexture(sdl->texture, NULL, scene->layer.pixels,
 			scene->layer.width * sizeof(uint32_t)) == SDL_ERROR)

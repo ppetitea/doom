@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/19 18:29:38 by lbenard           #+#    #+#             */
-/*   Updated: 2020/04/22 20:59:26 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/04/29 00:29:41 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ typedef struct	s_list_head
 ** Constructors
 */
 t_result		init_list_head(t_list_head *list);
+t_list_head		*init_new_list_head();
 
 /*
 ** Iterators
@@ -56,6 +57,38 @@ void			list_move(t_list_head *list, t_list_head *head);
 void			list_move_tail(t_list_head *list, t_list_head *head);
 void			bubble_sort_linked_list(t_list_head *list,
 	t_bool(*rule)(t_list_head*, t_list_head*));
+
+/*
+** Getters
+*/
+t_list_head		*list_get(t_list_head *list, int offset);
+
+
+/*
+** String list
+*/
+
+typedef enum	e_list_type
+{
+	STRING_LIST,
+	INTEGER_LIST,
+	FLOAT_LIST,
+}				t_list_type;
+
+typedef struct	s_string_node
+{
+	t_list_head	node;
+	t_list_type	type;
+	char		*s;
+}				t_string_node;
+
+t_result		init_string_node(t_string_node *self);
+
+t_string_node	*init_new_string_node();
+
+t_result		del_string_node(t_string_node *self);
+
+t_string_node	*set_new_string_node(char *string);
 
 /*
 ** libft linked lists

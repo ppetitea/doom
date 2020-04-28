@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/20 17:16:35 by lbenard           #+#    #+#             */
-/*   Updated: 2020/04/18 23:02:35 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/04/28 00:13:40 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,6 @@ typedef t_vec2i t_pos2i;
 ** Constructors
 */
 t_vec2i			ft_vec2i(int x, int y);
+t_vec2i			vec2i_mult(t_vec2i vec2i, float k);
 
 #endif

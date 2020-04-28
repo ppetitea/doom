@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/17 15:58:14 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/04/26 00:35:28 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/04/29 00:36:35 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,89 @@
 ** INIT GUI
 */
 
+t_result		action_del(t_action_node *action)
+{
+	if (action == NULL)
+		return (console(WARN, __func__, __LINE__, "null pointer").warn);
+	if (action->key)
+		free(action->key);
+	list_del_entry(&action->node);
+	free(action);
+	return (OK);
+}
+
+t_action_node	*add_new_basic_action(t_list_head *actions, char *key,
+					t_result (*fn)())
+{
+	t_action_node	*action;
+
+	if (!(action = init_new_action()))
+		return (console(FATAL, __func__, __LINE__, "new action fail").null);
+	if (!(action->key = ft_strdup(key)) && action_del(action))
+		return (console(FATAL, __func__, __LINE__, "strdup fail").null);
+	action->fn = fn;
+	list_add_entry(&action->node, actions);
+	return (action);
+}
+
+t_arg_node		*add_new_arg(t_list_head *args, t_arg arg)
+{
+	t_arg_node	*self;
+	
+	if (args == NULL)
+		return (console(FATAL, __func__, __LINE__, "null pointer").null);
+	if (!(self = malloc(sizeof(t_arg_node))))
+		return (console(FATAL, __func__, __LINE__, "malloc fail").null);
+	init_list_head(&self->node);
+	self->arg = arg;
+	list_add_entry(&self->node, args);
+	return (self);
+}
+
+t_action_node	*add_new_action(t_list_head *actions, t_result (*fn)(),
+					char *key, t_arg arg)
+{
+	t_action_node	*action;
+	
+	if (actions == NULL || fn == NULL)
+		return (console(FATAL, __func__, __LINE__, "null pointer").null);
+	if (!(action = init_new_action()))
+		return (console(FATAL, __func__, __LINE__, "new action fail").null);
+	if (!(action->key = ft_strdup(key)) && action_del(action))
+		return (console(FATAL, __func__, __LINE__, "strdup fail").null);
+	action->fn = fn;
+	add_new_arg(&action->args, arg);
+	list_add_entry(&action->node, actions);
+	return (action);
+}
+
+t_result		add_action_arg(t_action_node *action, t_arg arg)
+{
+	if (action == NULL)
+		return (console(FATAL, __func__, __LINE__, "null pointer").err);
+	add_new_arg(&action->args, arg);
+	return (OK);
+}
+
+t_action_node	*init_new_action()
+{
+	t_action_node	*self;
+
+	if (!(self = malloc(sizeof(t_action_node))))
+	return (console(FATAL, __func__, __LINE__, "malloc fail").null);
+	init_list_head(&self->node);
+	self->fn = NULL;
+	init_list_head(&self->args);
+	return (self);
+}
+
 t_result init_mouse_obs(t_mouse_obs *self)
 {
 	if (!init_list_head(&self->node))
 		return (console(FATAL, __func__, __LINE__, "init_list_head fail").err);
 	if (!init_list_head(&self->actions))
 		return (console(FATAL, __func__, __LINE__, "init_list_head fail").err);
+	self->gui = NULL;
 	self->list = NULL;
 	self->subscribed = FALSE;
 	return (OK);
@@ -38,6 +115,7 @@ t_result init_key_obs(t_key_obs *self)
 		return (console(FATAL, __func__, __LINE__, "init_list_head fail").err);
 	if (!init_list_head(&self->actions))
 		return (console(FATAL, __func__, __LINE__, "init_list_head fail").err);
+	self->gui = NULL;
 	self->list = NULL;
 	self->subscribed = FALSE;
 	self->key = -1;
@@ -50,6 +128,7 @@ t_result init_time_obs(t_time_obs *self)
 		return (console(FATAL, __func__, __LINE__, "init_list_head fail").err);
 	if (!init_list_head(&self->actions))
 		return (console(FATAL, __func__, __LINE__, "init_list_head fail").err);
+	self->gui = NULL;
 	self->list = NULL;
 	self->subscribed = FALSE;
 	self->seconds = -1;
@@ -220,6 +299,34 @@ t_gui *init_new_gui()
 }
 
 /*
+** FIND GUI
+*/
+
+t_gui *gui_find(t_gui *self, char *id)
+{
+	t_gui *find;
+	t_node *curr;
+	t_node *next;
+
+	if (self == NULL)
+		return (ERROR);
+	curr = self->node.childs;
+	next = curr->next;
+	if (self->node.childs)
+	{
+		while ((curr = next) != self->node.childs)
+		{
+			next = next->next;
+			if (!ft_strcmp(((t_gui*)curr)->id, id))
+				return ((t_gui*)curr);
+			if ((find = gui_find((t_gui *)curr, id)))
+				return (find);
+		}
+	}
+	return (NULL);
+}
+
+/*
 ** SET GUI
 */
 
@@ -241,6 +348,89 @@ t_gui		*set_new_gui(char *id, int width, int height)
 		return (console(WARN, __func__, __LINE__, "malloc fail").null);
 	}
 	return (self);
+}
+
+void	set_gui_to_update(t_node *node)
+{
+	((t_gui*)node)->up_to_date = FALSE;
+}
+
+t_result	lighten_gui_layer(t_gui *gui)
+{
+	gui->filter = FILTER_LIGHT;
+	nodes_foreach_ascend(&gui->node, set_gui_to_update);
+	return (OK);
+}
+
+t_result	darken_gui_layer(t_gui *gui)
+{
+	gui->filter = FILTER_DARK;
+	nodes_foreach_ascend(&gui->node, set_gui_to_update);
+	return (OK);
+}
+
+t_result	filter_check_gui_layer(t_gui *gui)
+{
+	gui->filter = FILTER_DARK;
+	nodes_foreach_ascend(&gui->node, set_gui_to_update);
+	return (OK);
+}
+
+t_result	filter_reset_gui_layer(t_gui *gui)
+{
+	gui->filter = FILTER_NONE;
+	nodes_foreach_ascend(&gui->node, set_gui_to_update);
+	return (OK);
+}
+
+t_result	toogle_colorize_gui(t_gui *gui)
+{
+	t_bgra	green;
+	t_bgra	gray;
+
+	green = ft_bgra(82, 216, 105, 255);
+	gray = ft_bgra(159, 159, 159, 255);
+	gui->bg_color = (gui->bg_color.px == gray.px) ? green : gray;
+	nodes_foreach_ascend(&gui->node, set_gui_to_update);
+	return (OK);
+}
+
+t_result	checkout_gui(t_gui *gui)
+{
+	t_bgra	gray;
+
+	gray = ft_bgra(159, 159, 159, 255);
+	gui->bg_color = gray;
+	nodes_foreach_ascend(&gui->node, set_gui_to_update);
+	return (OK);
+}
+
+t_result	check_gui(t_gui *gui)
+{
+	t_bgra	green;
+
+	green = ft_bgra(82, 216, 105, 255);
+	gui->bg_color = green;
+	nodes_foreach_ascend(&gui->node, set_gui_to_update);
+	return (OK);
+}
+
+t_result	checkout_gui_list(t_gui *gui, t_list_head *string_list)
+{
+	t_list_head		*curr;
+	t_string_node	*string;
+	t_gui			*root;
+	t_gui			*find;
+
+	root = (t_gui*)node_get_root(&gui->node);
+	curr = string_list;
+	while ((curr = curr->next) != string_list)
+	{
+		string = (t_string_node*)curr;
+		if ((find = gui_find(root, string->s)))
+			checkout_gui(find);
+	}
+	return (OK);
 }
 
 /*
@@ -271,7 +461,7 @@ void render_background_on_layer(t_layer *layer, t_image *bg)
 	while (++y < layer->height)
 	{
 		x = -1;
-		while (++y < layer->width)
+		while (++x < layer->width)
 		{
 			layer->pixels[x + y * layer->width] =
 				bg->pixels[(int)(x * x_ratio) + (int)(y * y_ratio) * bg->width];
@@ -292,7 +482,7 @@ void render_child_layer_on_parent_layer(t_layer *dest, t_gui *child)
 	end.x = child->pos.x + child->size.x;
 	end.x = end.x < dest->width ? end.x : dest->width;
 	end.y = child->pos.y + child->size.y;
-	end.y = end.y < dest->height ? end.x : dest->height;
+	end.y = end.y < dest->height ? end.y : dest->height;
 	i.y = child->pos.y < 0 ? -child->pos.y : 0;
 	while (child->pos.y + i.y < end.y)
 	{
@@ -387,4 +577,26 @@ void render_gui(t_gui *gui)
 t_bool	z_index_rule(t_node *a, t_node *b)
 {
 	return (((t_gui*)a)->z_index > ((t_gui*)b)->z_index ? TRUE : FALSE);
+}
+
+/*
+** GUI POSITION
+*/
+
+t_pos2i get_absolute_position(t_gui *gui)
+{
+	t_node *curr;
+	t_node *parent;
+	t_pos2i pos;
+	
+	pos = gui->pos;
+	curr = &gui->node;
+	parent = curr->parent;
+	while ((curr = parent) != NULL)
+	{
+		parent = parent->parent;
+		pos.x += ((t_gui*)curr)->pos.x;
+		pos.y += ((t_gui*)curr)->pos.y;
+	}
+	return (pos);
 }
