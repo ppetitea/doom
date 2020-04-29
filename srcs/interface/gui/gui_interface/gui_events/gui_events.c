@@ -6,14 +6,15 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/26 12:28:34 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/04/28 00:24:19 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/04/29 23:20:16 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "interface/gui.h"
 #include "containers/list.h"
 #include "log/log.h"
-# include <SDL_events.h>
+#include <SDL_events.h>
+#include "action/action.h"
 
 t_result	mouse_obs_subscribe(t_mouse_obs *obs)
 {
@@ -64,38 +65,6 @@ t_result	time_obs_unsubscribe(t_time_obs *obs)
 	list_del_entry(&obs->node);
 	obs->subscribed = FALSE;
 	return (OK);
-}
-
-t_arg	get_arg(t_list_head *args, int offset)
-{
-	return (((t_arg_node*)list_get(args, offset))->arg);
-}
-
-void	trigger_actions(t_list_head *actions)
-{
-	t_list_head		*pos;
-	t_action_node	*action;
-	t_list_head		*args;
-	int				args_amount;
-
-	pos = actions;
-	while ((pos = pos->next) != actions)
-	{
-		action = (t_action_node*)pos;
-		args = &action->args;
-		args_amount = list_lenght(args);
-		if (args_amount == 0)
-			action->fn();
-		else if (args_amount == 1)
-			action->fn(get_arg(args, 1));
-		else if (args_amount == 2)
-			action->fn(get_arg(args, 1), get_arg(args, 2));
-		else if (args_amount == 3)
-			action->fn(list_get(args, 1), get_arg(args, 2), get_arg(args, 3));
-		else if (args_amount == 4)
-			action->fn(list_get(args, 1), get_arg(args, 2), get_arg(args, 3),
-				get_arg(args, 4));
-	}
 }
 
 static t_bool	is_mouse_obs_with_box(t_gui *gui, t_pos2i mouse)

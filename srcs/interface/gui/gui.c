@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/17 15:58:14 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/04/29 00:36:35 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/04/30 00:54:44 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,88 +14,12 @@
 #include "log/log.h"
 #include "colors/color.h"
 #include "ft/str.h"
-
+#include "action/action.h"
 #include <stdlib.h>
 
 /*
 ** INIT GUI
 */
-
-t_result		action_del(t_action_node *action)
-{
-	if (action == NULL)
-		return (console(WARN, __func__, __LINE__, "null pointer").warn);
-	if (action->key)
-		free(action->key);
-	list_del_entry(&action->node);
-	free(action);
-	return (OK);
-}
-
-t_action_node	*add_new_basic_action(t_list_head *actions, char *key,
-					t_result (*fn)())
-{
-	t_action_node	*action;
-
-	if (!(action = init_new_action()))
-		return (console(FATAL, __func__, __LINE__, "new action fail").null);
-	if (!(action->key = ft_strdup(key)) && action_del(action))
-		return (console(FATAL, __func__, __LINE__, "strdup fail").null);
-	action->fn = fn;
-	list_add_entry(&action->node, actions);
-	return (action);
-}
-
-t_arg_node		*add_new_arg(t_list_head *args, t_arg arg)
-{
-	t_arg_node	*self;
-	
-	if (args == NULL)
-		return (console(FATAL, __func__, __LINE__, "null pointer").null);
-	if (!(self = malloc(sizeof(t_arg_node))))
-		return (console(FATAL, __func__, __LINE__, "malloc fail").null);
-	init_list_head(&self->node);
-	self->arg = arg;
-	list_add_entry(&self->node, args);
-	return (self);
-}
-
-t_action_node	*add_new_action(t_list_head *actions, t_result (*fn)(),
-					char *key, t_arg arg)
-{
-	t_action_node	*action;
-	
-	if (actions == NULL || fn == NULL)
-		return (console(FATAL, __func__, __LINE__, "null pointer").null);
-	if (!(action = init_new_action()))
-		return (console(FATAL, __func__, __LINE__, "new action fail").null);
-	if (!(action->key = ft_strdup(key)) && action_del(action))
-		return (console(FATAL, __func__, __LINE__, "strdup fail").null);
-	action->fn = fn;
-	add_new_arg(&action->args, arg);
-	list_add_entry(&action->node, actions);
-	return (action);
-}
-
-t_result		add_action_arg(t_action_node *action, t_arg arg)
-{
-	if (action == NULL)
-		return (console(FATAL, __func__, __LINE__, "null pointer").err);
-	add_new_arg(&action->args, arg);
-	return (OK);
-}
-
-t_action_node	*init_new_action()
-{
-	t_action_node	*self;
-
-	if (!(self = malloc(sizeof(t_action_node))))
-	return (console(FATAL, __func__, __LINE__, "malloc fail").null);
-	init_list_head(&self->node);
-	self->fn = NULL;
-	init_list_head(&self->args);
-	return (self);
-}
 
 t_result init_mouse_obs(t_mouse_obs *self)
 {
@@ -415,19 +339,19 @@ t_result	check_gui(t_gui *gui)
 	return (OK);
 }
 
-t_result	checkout_gui_list(t_gui *gui, t_list_head *string_list)
+t_result	checkout_gui_list(t_gui *gui, t_node *list)
 {
-	t_list_head		*curr;
-	t_string_node	*string;
+	t_node			*curr;
+	t_arg			*arg;
 	t_gui			*root;
 	t_gui			*find;
 
 	root = (t_gui*)node_get_root(&gui->node);
-	curr = string_list;
-	while ((curr = curr->next) != string_list)
+	curr = list;
+	while ((curr = curr->next) != list)
 	{
-		string = (t_string_node*)curr;
-		if ((find = gui_find(root, string->s)))
+		arg = (t_arg*)curr;
+		if ((find = gui_find(root, arg->value.s)))
 			checkout_gui(find);
 	}
 	return (OK);

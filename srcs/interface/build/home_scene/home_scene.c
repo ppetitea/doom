@@ -6,13 +6,14 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/25 14:20:40 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/04/29 00:36:33 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/04/30 00:49:01 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "interface/gui.h"
 #include "log/log.h"
 #include "maths/vec2i.h"
+#include "data/data.h"
 
 t_gui *build_start_button(t_gui_interface *interface, t_gui *home)
 {
@@ -49,8 +50,8 @@ t_gui *build_random_checkbox(t_gui_interface *interface, t_gui *home)
 
 t_gui *build_radio1(t_gui_interface *interface, t_gui *home)
 {
-	t_string_node	*string;
-	t_list_head		*list;
+	t_arg			*string;
+	t_arg			*list;
 	t_gui			*radio;
 	t_pos2i			pos;
 	t_pos2i			size;
@@ -59,12 +60,12 @@ t_gui *build_radio1(t_gui_interface *interface, t_gui *home)
 	size = ft_vec2i(20, 20);
 	if (!(radio = build_gui_radio("radio1", pos, size, interface)))
 		return (console(FATAL, __func__, __LINE__, "build_radio fail").null);
-	if (!(list = init_new_list_head()) && del_gui(&radio->node))
-		return (console(FATAL, __func__, __LINE__, "new_list fail").null);
-	if ((string = set_new_string_node("radio2")))
-		list_add_entry(&string->node, list);
-	if ((string = set_new_string_node("radio3")))
-		list_add_entry(&string->node, list);
+	if (!(list = set_new_arg(ARG_LIST, (t_argv)NULL)) && del_gui(&radio->node))
+		return (console(FATAL, __func__, __LINE__, "new_arg fail").null);
+	if ((string = set_new_arg(ARG_STRING, (t_argv)"radio2")))
+		node_add_child(&list->node, &string->node);
+	if ((string = set_new_arg(ARG_STRING, (t_argv)"radio3")))
+		node_add_child(&list->node, &string->node);
 	build_radio_default_events(radio, list);
 	radio->display = TRUE;
 	radio->bg_color = ft_bgra(82, 216, 105, 255);
@@ -75,8 +76,8 @@ t_gui *build_radio1(t_gui_interface *interface, t_gui *home)
 
 t_gui *build_radio2(t_gui_interface *interface, t_gui *home)
 {
-	t_string_node	*string;
-	t_list_head		*list;
+	t_arg			*string;
+	t_arg			*list;
 	t_gui			*radio;
 	t_pos2i			pos;
 	t_pos2i			size;
@@ -85,12 +86,12 @@ t_gui *build_radio2(t_gui_interface *interface, t_gui *home)
 	size = ft_vec2i(20, 20);
 	if (!(radio = build_gui_radio("radio2", pos, size, interface)))
 		return (console(FATAL, __func__, __LINE__, "build_radio fail").null);
-	if (!(list = init_new_list_head()) && del_gui(&radio->node))
-		return (console(FATAL, __func__, __LINE__, "new_list fail").null);
-	if ((string = set_new_string_node("radio1")))
-		list_add_entry(&string->node, list);
-	if ((string = set_new_string_node("radio3")))
-		list_add_entry(&string->node, list);
+	if (!(list = set_new_arg(ARG_LIST, (t_argv)NULL)) && del_gui(&radio->node))
+		return (console(FATAL, __func__, __LINE__, "new_arg fail").null);
+	if ((string = set_new_arg(ARG_STRING, (t_argv)"radio1")))
+		node_add_child(&list->node, &string->node);
+	if ((string = set_new_arg(ARG_STRING, (t_argv)"radio3")))
+		node_add_child(&list->node, &string->node);
 	build_radio_default_events(radio, list);
 	radio->display = TRUE;
 	node_add_child(&home->node, &radio->node);
@@ -100,8 +101,8 @@ t_gui *build_radio2(t_gui_interface *interface, t_gui *home)
 
 t_gui *build_radio3(t_gui_interface *interface, t_gui *home)
 {
-	t_string_node	*string;
-	t_list_head		*list;
+	t_arg			*string;
+	t_arg			*list;
 	t_gui			*radio;
 	t_pos2i			pos;
 	t_pos2i			size;
@@ -110,12 +111,12 @@ t_gui *build_radio3(t_gui_interface *interface, t_gui *home)
 	size = ft_vec2i(20, 20);
 	if (!(radio = build_gui_radio("radio3", pos, size, interface)))
 		return (console(FATAL, __func__, __LINE__, "build_radio fail").null);
-	if (!(list = init_new_list_head()) && del_gui(&radio->node))
-		return (console(FATAL, __func__, __LINE__, "new_list fail").null);
-	if ((string = set_new_string_node("radio1")))
-		list_add_entry(&string->node, list);
-	if ((string = set_new_string_node("radio2")))
-		list_add_entry(&string->node, list);
+	if (!(list = set_new_arg(ARG_LIST, (t_argv)NULL)) && del_gui(&radio->node))
+		return (console(FATAL, __func__, __LINE__, "new_arg fail").null);
+	if ((string = set_new_arg(ARG_STRING, (t_argv)"radio1")))
+		node_add_child(&list->node, &string->node);
+	if ((string = set_new_arg(ARG_STRING, (t_argv)"radio2")))
+		node_add_child(&list->node, &string->node);
 	build_radio_default_events(radio, list);
 	radio->display = TRUE;
 	node_add_child(&home->node, &radio->node);

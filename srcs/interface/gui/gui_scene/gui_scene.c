@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/22 21:41:50 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/04/29 00:36:34 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/04/30 00:33:10 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "interface/build.h"
 #include "image/image.h"
 #include "log/log.h"
+#include "action/action.h"
 
 t_gui	*build_gui_image(char *name, t_vec2i size, t_pos2i pos, char *img_src)
 {
@@ -74,24 +75,24 @@ t_result	build_gui_observers(t_gui_interface *interface, t_gui *gui)
 
 t_result	build_gui_hover_default_events(t_gui *gui)
 {
-	t_arg		arg;
+	t_argv		argv;
 	t_list_head	*list;
 
-	arg.pointer = gui;
+	argv.ref = gui;
 	list = &gui->hover_start.actions;
-	add_new_action(list, lighten_gui_layer, "lighten", arg);
-	arg.pointer = &gui->hover_start;
-	add_new_action(list, mouse_obs_unsubscribe, "unsubscribe", arg);
-	arg.pointer = &gui->hover_end;
-	add_new_action(list, mouse_obs_subscribe, "subscribe", arg);
+	add_new_action(list, lighten_gui_layer, argv, ARG_REF);
+	argv.ref = &gui->hover_start;
+	add_new_action(list, mouse_obs_unsubscribe, argv, ARG_REF);
+	argv.ref = &gui->hover_end;
+	add_new_action(list, mouse_obs_subscribe, argv, ARG_REF);
 	mouse_obs_subscribe(&gui->hover_start);
 	list = &gui->hover_end.actions;
-	arg.pointer = gui;
-	add_new_action(list, filter_reset_gui_layer, "filterReset", arg);
-	arg.pointer = &gui->hover_end;
-	add_new_action(list, mouse_obs_unsubscribe, "unsubscribe", arg);
-	arg.pointer = &gui->hover_start;
-	add_new_action(list, mouse_obs_subscribe, "subscribe", arg);
+	argv.ref = gui;
+	add_new_action(list, filter_reset_gui_layer, argv, ARG_REF);
+	argv.ref = &gui->hover_end;
+	add_new_action(list, mouse_obs_unsubscribe, argv, ARG_REF);
+	argv.ref = &gui->hover_start;
+	add_new_action(list, mouse_obs_subscribe, argv, ARG_REF);
 	return (OK);
 }
 
@@ -111,11 +112,11 @@ t_gui	*build_gui_button(char *name, t_pos2i pos, t_vec2i size,
 t_result	build_checkbox_default_events(t_gui *checkbox)
 {
 	t_list_head		*list;
-	t_arg			arg;
+	t_argv			argv;
 
 	list = &checkbox->left_down.actions;
-	arg.pointer = checkbox;
-	add_new_action(list, toogle_colorize_gui, "toogle_color", arg);
+	argv.ref = checkbox;
+	add_new_action(list, toogle_colorize_gui, argv, ARG_REF);
 	mouse_obs_subscribe(&checkbox->left_down);
 	return (OK);
 }
@@ -134,18 +135,17 @@ t_gui	*build_gui_checkbox(char *name, t_pos2i pos, t_vec2i size,
 	return (checkbox);
 }
 
-t_result	build_radio_default_events(t_gui *radio, t_list_head *radio_list)
+t_result	build_radio_default_events(t_gui *radio, t_arg *radio_list)
 {
-	t_action_node	*action;
-	t_list_head		*list;
-	t_arg			arg;
+	t_action	*action;
+	t_list_head	*list;
+	t_argv		argv;
 
 	list = &radio->left_down.actions;
-	arg.pointer = radio;
-	add_new_action(list, check_gui, "check_gui", arg);
-	action = add_new_action(list, checkout_gui_list, "checkout_gui_list", arg);
-	arg.pointer = radio_list;
-	add_action_arg(action, arg);
+	argv.ref = radio;
+	add_new_action(list, check_gui, argv, ARG_REF);
+	action = add_new_action(list, checkout_gui_list, argv, ARG_REF);
+	node_add_child(&action->args.node, &radio_list->node);
 	mouse_obs_subscribe(&radio->left_down);
 	return (OK);
 }

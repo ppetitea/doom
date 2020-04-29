@@ -6,7 +6,7 @@
 #    By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/08 21:27:29 by lbenard           #+#    #+#              #
-#    Updated: 2020/04/26 14:09:24 by ppetitea         ###   ########.fr        #
+#    Updated: 2020/04/29 23:20:50 by ppetitea         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,6 +42,8 @@ SRCS_LIST	=	main.c														\
 				interface/gui/gui_scene/gui_scene.c							\
 				interface/gui/gui_interface/gui_interface.c					\
 				interface/gui/gui_interface/gui_events/gui_events.c			\
+				interface/gui/gui_interface/gui_events/arg.c				\
+				interface/gui/gui_interface/gui_events/action.c				\
 				interface/build/build_interface.c							\
 				interface/build/home_scene/home_scene.c						\
 																			\

@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/12 16:43:29 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/04/29 00:36:36 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/04/30 00:51:04 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,50 +20,7 @@
 # include "maths/vec2f.h"
 # include "SDL_keycode.h"
 # include "colors/color.h"
-
-/*
-** EVENTS ACTIONS
-*/
-
-typedef	union	u_arg
-{
-	int			integer;
-	float		floating;
-	char		character;
-	void		*pointer;
-}				t_arg;
-
-typedef struct	s_arg_node
-{
-	t_list_head		node;
-	t_arg			arg;
-}				t_arg_node;
-t_result		init_new_arg(t_arg arg);
-
-typedef struct	s_action_node
-{
-	t_list_head		node;
-	char			*key;
-	t_result		(*fn)();
-	t_bool			active;
-	t_list_head		args;
-}				t_action_node;
-t_action_node	*init_new_action();
-
-/*
-**	add
-*/
-t_action_node	*add_new_basic_action(t_list_head *actions, char *key,
-					t_result (*fn)());
-t_action_node	*add_new_action(t_list_head *actions, t_result (*fn)(),
-					char *key, t_arg arg);
-t_arg_node		*add_new_arg(t_list_head *args, t_arg arg);
-t_result		add_action_arg(t_action_node *action, t_arg arg);
-
-/*
-** trigger
-*/
-void			trigger_actions(t_list_head *actions);
+# include "action/action.h"
 
 /*
 ** EVENTS OBSERVERS
@@ -221,7 +178,7 @@ t_result	checkout_gui(t_gui *gui);
 
 t_result	check_gui(t_gui *gui);
 
-t_result	checkout_gui_list(t_gui *gui, t_list_head *string_list);
+t_result	checkout_gui_list(t_gui *gui, t_node *parent);
 
 /*
 ** RENDER GUI
@@ -298,7 +255,7 @@ t_result	build_button_default_events(t_gui *button);
 
 t_result	build_checkbox_default_events(t_gui *checkbox);
 
-t_result	build_radio_default_events(t_gui *radio, t_list_head *radio_list);
+t_result	build_radio_default_events(t_gui *radio, t_arg *radio_list);
 
 t_gui		*build_gui_button(char *name, t_pos2i pos, t_vec2i size,
 	t_gui_interface *interface);
