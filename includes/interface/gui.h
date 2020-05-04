@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/12 16:43:29 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/04/30 00:51:04 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/05/04 21:52:35 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # include "SDL_keycode.h"
 # include "colors/color.h"
 # include "action/action.h"
+# include "SDL_ttf.h"
+# include "SDL_surface.h"
 
 /*
 ** EVENTS OBSERVERS
@@ -56,7 +58,29 @@ typedef struct		s_time_obs
 }					t_time_obs;
 
 t_result	mouse_obs_subscribe(t_mouse_obs *obs);
+t_result	obs_hover_start_sub(t_mouse_obs *obs);
+t_result	obs_hover_end_sub(t_mouse_obs *obs);
+t_result	obs_left_up_sub(t_mouse_obs *obs);
+t_result	obs_left_down_sub(t_mouse_obs *obs);
+t_result	obs_right_up_sub(t_mouse_obs *obs);
+t_result	obs_right_down_sub(t_mouse_obs *obs);
+t_result	obs_drag_sub(t_mouse_obs *obs);
+t_result	obs_drop_sub(t_mouse_obs *obs);
+t_result	obs_motion_sub(t_mouse_obs *obs);
+t_result	obs_wheel_normal_sub(t_mouse_obs *obs);
+t_result	obs_wheel_flip_sub(t_mouse_obs *obs);
 t_result	mouse_obs_unsubscribe(t_mouse_obs *obs);
+t_result	obs_hover_start_unsub(t_mouse_obs *obs);
+t_result	obs_hover_end_unsub(t_mouse_obs *obs);
+t_result	obs_left_up_unsub(t_mouse_obs *obs);
+t_result	obs_left_down_unsub(t_mouse_obs *obs);
+t_result	obs_right_up_unsub(t_mouse_obs *obs);
+t_result	obs_right_down_unsub(t_mouse_obs *obs);
+t_result	obs_drag_unsub(t_mouse_obs *obs);
+t_result	obs_drop_unsub(t_mouse_obs *obs);
+t_result	obs_motion_unsub(t_mouse_obs *obs);
+t_result	obs_wheel_normal_unsub(t_mouse_obs *obs);
+t_result	obs_wheel_flip_unsub(t_mouse_obs *obs);
 
 t_result	key_obs_subscribe(t_key_obs *obs);
 t_result	key_obs_unsubscribe(t_key_obs *obs);
@@ -116,6 +140,10 @@ typedef struct	s_gui
 	t_key_obs	key_up;
 	t_key_obs	key_down;
 	t_time_obs	time_obs;
+	char		*text;
+	SDL_Surface	*text_surface;
+	TTF_Font	*font;
+	t_bgra		color;		
 }				t_gui;
 
 /*
@@ -166,6 +194,12 @@ t_gui *gui_find(t_gui *self, char *id);
 
 t_gui		*set_new_gui(char *id, int width, int height);
 
+t_result	set_gui_font(t_gui *self, char *font, int size);
+
+t_result	set_gui_text(t_gui *self, char *text, t_bgra color);
+
+void		set_gui_to_update(t_node *node);
+
 t_result	lighten_gui_layer(t_gui *gui);
 
 t_result	darken_gui_layer(t_gui *gui);
@@ -179,6 +213,14 @@ t_result	checkout_gui(t_gui *gui);
 t_result	check_gui(t_gui *gui);
 
 t_result	checkout_gui_list(t_gui *gui, t_node *parent);
+
+t_result	translate_gui(t_gui *gui, t_vec2i translation);
+
+t_result	translate_gui_childs(t_gui *parent, t_vec2i translation);
+
+t_result	scroll_down_gui_childs(t_gui *parent);
+
+t_result	scroll_up_gui_childs(t_gui *parent);
 
 /*
 ** RENDER GUI
@@ -203,6 +245,8 @@ t_bool	z_index_rule(t_node *a, t_node *b);
 */
 
 t_pos2i get_absolute_position(t_gui *gui);
+
+t_result	drag_gui(t_gui *gui);
 
 /*
 ** GUI INTERFACE
@@ -229,6 +273,7 @@ typedef struct	s_gui_interface
 	t_list_head mouse_motion;
 	t_list_head mouse_wheel_normal;
 	t_list_head mouse_wheel_flip;
+	SDL_Keycode key;
 	t_list_head key_up;
 	t_list_head key_down;
 	t_list_head time;
@@ -269,5 +314,14 @@ t_gui	*build_gui_radio(char *name, t_pos2i pos, t_vec2i size,
 
 t_gui		*build_gui_image(char *name, t_vec2i size, t_pos2i pos, char *img_src);
 
+t_result	build_gui_input_default_events(t_gui *gui);
+
+t_gui	*build_gui_input(char *name, t_pos2i pos, t_vec2i size,
+			t_gui_interface *interface);
+
+t_result	build_gui_scrollview_default_events(t_gui *gui);
+
+t_gui	*build_gui_scrollview(char *name, t_pos2i pos, t_vec2i size,
+			t_gui_interface *interface);
 
 #endif

@@ -5,6 +5,6 @@ objs/
 doom-nukem
 *.swp
 .DS_STORE
-SDL/
+SDL*
 archives
 resources/tmp

@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/29 22:23:38 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/04/30 00:53:00 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/05/03 15:08:48 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,11 +90,65 @@ t_action	*set_new_action(t_result (*fn)(), t_argv argv, t_arg_type arg_type)
 ** ADD ACTION
 */
 
+t_action		*find_action(t_list_head *actions, t_result (*fn)())
+{
+	t_action	*action;
+	t_list_head	*curr;
+
+	curr = actions;
+	while ((curr = curr->next) != actions)
+	{
+		action = (t_action*)curr;
+		if (action->fn == fn)
+			return (action);
+	}
+	return (NULL);
+}
+
+t_result		disable_action(t_list_head *actions, t_result (*fn)())
+{
+	t_action	*action;
+
+	if (!(action = find_action(actions, fn)))
+		return (console(FATAL, __func__, __LINE__, "action not found").err);
+	if (action->active == FALSE)
+		return (console(WARN, __func__, __LINE__, "already disable").warn);
+	action->active = FALSE;
+	return (OK);
+}
+
+t_result		enable_action(t_list_head *actions, t_result (*fn)())
+{
+	t_action	*action;
+
+	if (!(action = find_action(actions, fn)))
+		return (console(FATAL, __func__, __LINE__, "action not found").err);
+	if (action->active == TRUE)
+		return (console(WARN, __func__, __LINE__, "already enable").warn);
+	action->active = TRUE;
+	return (OK);
+}
+
+t_action	*add_new_basic_action(t_list_head *list, t_result (*fn)())
+{
+	t_action	*action;
+
+	if (find_action(list, fn))
+		return (console(FATAL, __func__, __LINE__, "action already set").null);
+	if (!(action = init_new_action()))
+		return (console(FATAL, __func__, __LINE__, "new_action fail").null);
+	action->fn = fn;
+	list_add_entry(&action->node, list);
+	return (action);
+}
+
 t_action	*add_new_action(t_list_head *list, t_result (*fn)(), t_argv argv,
 	t_arg_type arg_type)
 {
 	t_action	*action;
 
+	if (find_action(list, fn))
+		return (console(FATAL, __func__, __LINE__, "action already set").null);
 	if (!(action = set_new_action(fn, argv, arg_type)))
 		return (console(FATAL, __func__, __LINE__, "new_action fail").null);
 	list_add_entry(&action->node, list);

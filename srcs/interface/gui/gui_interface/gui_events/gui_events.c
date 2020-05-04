@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/26 12:28:34 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/04/29 23:20:16 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/05/04 21:56:43 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,56 @@ t_result	mouse_obs_subscribe(t_mouse_obs *obs)
 {
 	if (obs == NULL || obs->list == NULL)
 		return (console(FATAL, __func__, __LINE__, "null pointer").err);
-	list_add_entry(&obs->node, obs->list);
+	if (obs->subscribed == FALSE)
+		list_add_entry(&obs->node, obs->list);
 	obs->subscribed = TRUE;
 	return (OK);
 }
+t_result	obs_hover_start_sub(t_mouse_obs *obs)
+{
+	return (mouse_obs_subscribe(obs));
+}
+t_result	obs_hover_end_sub(t_mouse_obs *obs)
+{
+	return (mouse_obs_subscribe(obs));
+}
+t_result	obs_left_up_sub(t_mouse_obs *obs)
+{
+	return (mouse_obs_subscribe(obs));
+}
+t_result	obs_left_down_sub(t_mouse_obs *obs)
+{
+	return (mouse_obs_subscribe(obs));
+}
+t_result	obs_right_up_sub(t_mouse_obs *obs)
+{
+	return (mouse_obs_subscribe(obs));
+}
+t_result	obs_right_down_sub(t_mouse_obs *obs)
+{
+	return (mouse_obs_subscribe(obs));
+}
+t_result	obs_drag_sub(t_mouse_obs *obs)
+{
+	return (mouse_obs_subscribe(obs));
+}
+t_result	obs_drop_sub(t_mouse_obs *obs)
+{
+	return (mouse_obs_subscribe(obs));
+}
+t_result	obs_motion_sub(t_mouse_obs *obs)
+{
+	return (mouse_obs_subscribe(obs));
+}
+t_result	obs_wheel_normal_sub(t_mouse_obs *obs)
+{
+	return (mouse_obs_subscribe(obs));
+}
+t_result	obs_wheel_flip_sub(t_mouse_obs *obs)
+{
+	return (mouse_obs_subscribe(obs));
+}
+
 t_result	mouse_obs_unsubscribe(t_mouse_obs *obs)
 {
 	if (obs == NULL)
@@ -32,12 +78,57 @@ t_result	mouse_obs_unsubscribe(t_mouse_obs *obs)
 	obs->subscribed = FALSE;
 	return (OK);
 }
+t_result	obs_hover_start_unsub(t_mouse_obs *obs)
+{
+	return (mouse_obs_unsubscribe(obs));
+}
+t_result	obs_hover_end_unsub(t_mouse_obs *obs)
+{
+	return (mouse_obs_unsubscribe(obs));
+}
+t_result	obs_left_up_unsub(t_mouse_obs *obs)
+{
+	return (mouse_obs_unsubscribe(obs));
+}
+t_result	obs_left_down_unsub(t_mouse_obs *obs)
+{
+	return (mouse_obs_unsubscribe(obs));
+}
+t_result	obs_right_up_unsub(t_mouse_obs *obs)
+{
+	return (mouse_obs_unsubscribe(obs));
+}
+t_result	obs_right_down_unsub(t_mouse_obs *obs)
+{
+	return (mouse_obs_unsubscribe(obs));
+}
+t_result	obs_drag_unsub(t_mouse_obs *obs)
+{
+	return (mouse_obs_unsubscribe(obs));
+}
+t_result	obs_drop_unsub(t_mouse_obs *obs)
+{
+	return (mouse_obs_unsubscribe(obs));
+}
+t_result	obs_motion_unsub(t_mouse_obs *obs)
+{
+	return (mouse_obs_unsubscribe(obs));
+}
+t_result	obs_wheel_normal_unsub(t_mouse_obs *obs)
+{
+	return (mouse_obs_unsubscribe(obs));
+}
+t_result	obs_wheel_flip_unsub(t_mouse_obs *obs)
+{
+	return (mouse_obs_unsubscribe(obs));
+}
 
 t_result	key_obs_subscribe(t_key_obs *obs)
 {
 	if (obs == NULL || obs->list == NULL)
 		return (console(FATAL, __func__, __LINE__, "null pointer").err);
-	list_add_entry(&obs->node, obs->list);
+	if (obs->subscribed == FALSE)
+		list_add_entry(&obs->node, obs->list);
 	obs->subscribed = TRUE;
 	return (OK);
 }
@@ -54,7 +145,8 @@ t_result	time_obs_subscribe(t_time_obs *obs)
 {
 	if (obs == NULL || obs->list == NULL)
 		return (console(FATAL, __func__, __LINE__, "null pointer").err);
-	list_add_entry(&obs->node, obs->list);
+	if (obs->subscribed == FALSE)
+		list_add_entry(&obs->node, obs->list);
 	obs->subscribed = TRUE;
 	return (OK);
 }
@@ -156,7 +248,7 @@ void	handle_mouse_motion(t_gui_interface *interface,
 	else if (interface->mouse_isdown)
 	{
 		interface->mouse_isdrag = TRUE;
-		trigger_mouse_obs_on(&interface->mouse_motion, mouse);
+		trigger_mouse_observers(&interface->mouse_motion);
 	}
 	else
 	{
@@ -167,27 +259,23 @@ void	handle_mouse_motion(t_gui_interface *interface,
 
 void	handle_mouse_down(t_gui_interface *interface, SDL_MouseButtonEvent event)
 {
-	t_pos2i mouse;
-	
-	mouse = (interface->mouse_pos = ft_vec2i(event.x, event.y));
+	interface->mouse_pos = ft_vec2i(event.x, event.y);
 	interface->mouse_isdown = TRUE;
 	if (event.button == SDL_BUTTON_LEFT)
-		trigger_mouse_obs_on(&interface->mouse_left_down, mouse);
+		trigger_mouse_observers(&interface->mouse_left_down);
 	else if (event.button == SDL_BUTTON_RIGHT)
-		trigger_mouse_obs_on(&interface->mouse_right_down, mouse);
+		trigger_mouse_observers(&interface->mouse_right_down);
 }
 
 void	handle_mouse_up(t_gui_interface *interface, SDL_MouseButtonEvent event)
 {
-	t_pos2i mouse;
-	
-	mouse = (interface->mouse_pos = ft_vec2i(event.x, event.y));
+	interface->mouse_pos = ft_vec2i(event.x, event.y);
 	if (interface->mouse_isdrag)
 		trigger_mouse_observers(&interface->mouse_drop);
-	else if (interface->mouse_isdrag && event.button == SDL_BUTTON_LEFT)
-		trigger_mouse_obs_on(&interface->mouse_left_up, mouse);
-	else if (interface->mouse_isdrag && event.button == SDL_BUTTON_RIGHT)
-		trigger_mouse_obs_on(&interface->mouse_right_up, mouse);
+	else if (event.button == SDL_BUTTON_LEFT)
+		trigger_mouse_observers(&interface->mouse_left_up);
+	else if (event.button == SDL_BUTTON_RIGHT)
+		trigger_mouse_observers(&interface->mouse_right_up);
 	interface->mouse_isdown = FALSE;
 	interface->mouse_isdrag = FALSE;
 }
@@ -201,9 +289,52 @@ void	handle_mouse_wheel(t_gui_interface *interface,
 		trigger_mouse_observers(&interface->mouse_wheel_flip);
 }
 
+t_bool	trigger_key_observers(t_list_head *observers,
+			SDL_Keycode key)
+{
+	t_key_obs	*obs;
+	t_list_head	*pos;
+	t_list_head	*next;
+	t_bool		ret;
+
+	ret = FALSE;
+	pos = observers;
+	next = pos->next;
+	while ((pos = next) != observers)
+	{
+		next = next->next;
+		obs = (t_key_obs*)pos;
+		if (obs->key == key || obs->key == -1)
+		{
+			trigger_actions(&obs->actions);
+			ret = TRUE;
+		}
+	}
+	return (ret);
+}
+
+void	handle_keyboard_down(t_gui_interface *interface,
+	SDL_KeyboardEvent event)
+{
+	interface->key = event.keysym.sym;
+	trigger_key_observers(&interface->key_down, interface->key);
+	(void)event;
+}
+
+void	handle_keyboard_up(t_gui_interface *interface,
+	SDL_KeyboardEvent event)
+{
+	
+	interface->key = event.keysym.sym;
+	trigger_key_observers(&interface->key_up, interface->key);
+	(void)event;
+}
+
 t_result	handle_gui_events(t_gui_interface *interface, SDL_Event *event)
 {
-	if (event->type == SDL_MOUSEMOTION)
+	if (event->type == SDL_QUIT || event->key.keysym.sym == SDLK_ESCAPE)
+		interface->is_running = FALSE;
+	else if (event->type == SDL_MOUSEMOTION)
 		handle_mouse_motion(interface, event->motion);
 	else if (event->type == SDL_MOUSEBUTTONDOWN)
 		handle_mouse_down(interface, event->button);
@@ -211,13 +342,9 @@ t_result	handle_gui_events(t_gui_interface *interface, SDL_Event *event)
 		handle_mouse_up(interface, event->button);
 	else if (event->type == SDL_MOUSEWHEEL)
 		handle_mouse_wheel(interface, event->wheel);
-	// else if (event->type == SDL_KEYDOWN)
-	// 	handle_keyboard_down(interface, event->key);
-	// else if (event->type == SDL_KEYUP)
-	// 	handle_keyboard_up(interface, event->key);
-	else if (event->key.keysym.sym == SDLK_ESCAPE)
-		interface->is_running = FALSE;
-	else if (event->type == SDL_QUIT)
-		interface->is_running = FALSE;
+	else if (event->type == SDL_KEYDOWN)
+		handle_keyboard_down(interface, event->key);
+	else if (event->type == SDL_KEYUP)
+		handle_keyboard_up(interface, event->key);
 	return (OK);
 }

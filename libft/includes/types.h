@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/19 17:41:35 by lbenard           #+#    #+#             */
-/*   Updated: 2020/04/18 22:05:36 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/05/02 16:51:04 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 #  include <stdint.h>
 # endif
 
-typedef u_int8_t					t_u8;
+typedef u_int8_t				t_u8;
 typedef int8_t					t_i8;
 typedef	u_int16_t				t_u16;
 typedef int16_t					t_i16;

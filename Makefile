@@ -6,7 +6,7 @@
 #    By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/08 21:27:29 by lbenard           #+#    #+#              #
-#    Updated: 2020/04/29 23:20:50 by ppetitea         ###   ########.fr        #
+#    Updated: 2020/05/02 13:02:20 by ppetitea         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,7 +66,7 @@ INCLUDES	:=	-I includes
 #COMPILATION
 CC			=	gcc
 LD			=	gcc
-CFLAGS		:=	-Wall -Wextra -O3 -Ofast -flto
+CFLAGS		:=	-Wall -Wextra -O3 -Ofast -flto -g
 LDFLAGS		:=	-lm 
 
 #LIBRARIES
@@ -95,7 +95,7 @@ SDL_TTF_FOLDER		=	./SDL_ttf
 SDL_TTF				=	$(SDL_TTF_FOLDER)/.libs
 SDL_TTF_CONFIGURE	=	$(SDL_TTF_FOLDER)/autom4te.cache
 INCLUDES			:=	$(INCLUDES) -I $(SDL_TTF_FOLDER)
-LDFLAGS				:=	$(LDFLAGS) -Wl,-rpath=$(SDL_TTF_FOLDER) -L $(SDL_TTF_FOLDER) #-lSDL2_ttf
+LDFLAGS				:=	$(LDFLAGS) -Wl,-rpath=$(SDL_TTF_FOLDER)/.libs -L $(SDL_TTF_FOLDER)/.libs -lSDL2_ttf
 
 # Colors
 BOLD			=	\e[1m

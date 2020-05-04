@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 23:50:37 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/04/25 19:23:14 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/05/02 13:03:36 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,7 @@ t_result	init_sdl(t_sdl *self, size_t width, size_t height)
 		SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STATIC, width, height)))
 		return (console(FATAL, __func__, __LINE__, "sdl fail").err);
 	SDL_SetTextureBlendMode(self->texture, SDL_BLENDMODE_ADD);
+	if (TTF_Init() == SDL_ERROR)
+		return (console(FATAL, __func__, __LINE__, "init ttf fail").err);
 	return (OK);
 }

@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 00:37:26 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/04/25 19:23:13 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/05/02 12:42:12 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,6 @@ t_result	destroy_sdl(t_sdl *self)
 	if (self->window != NULL)
 		SDL_DestroyWindow(self->window);
 	SDL_Quit();
+	TTF_Quit();
 	return (OK);
 }

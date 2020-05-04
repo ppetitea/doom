@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/29 22:24:08 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/04/30 00:50:46 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/05/03 15:08:31 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ t_action	*set_new_action(t_result (*fn)(), t_argv argv,
 /*
 ** ADD ACTION
 */
+t_action	*add_new_basic_action(t_list_head *list, t_result (*fn)());
 
 t_action	*add_new_action(t_list_head *list, t_result (*fn)(), t_argv argv,
 	t_arg_type arg_type);
