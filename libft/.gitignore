@@ -1,0 +1,6 @@
+.vscode/
+libft.a
+objs/
+*.swp
+.DS_STORE
+archives

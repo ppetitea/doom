@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbenard <lbenard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 14:43:39 by lbenard           #+#    #+#             */
-/*   Updated: 2019/12/17 05:57:31 by ppetitea         ###   ########.fr       */
+/*   Updated: 2019/02/20 20:07:14 by lbenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,5 @@
 # include "ft/io.h"
 # include "ft/mem.h"
 # include "ft/str.h"
-
-/*
-** callbacks
-*/
-# include "callbacks/error.h"
 
 #endif
