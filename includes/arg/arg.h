@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/29 22:07:29 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/04/30 00:50:38 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/05/09 21:54:24 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define ARG_H
 
 # include "log/log.h"
+# include "data/data.h"
 # include "containers/node.h"
 
 typedef	union	u_argv
@@ -71,6 +72,8 @@ t_arg		*init_new_arg();
 
 t_result	arg_del(t_arg *self);
 
+t_result	del_new_arg(t_arg *self);
+
 t_result	args_childs_del(t_arg *self);
 
 t_result	args_del(t_arg *self);
@@ -84,5 +87,9 @@ t_res		args_del_and_quit(t_arg *self);
 t_result set_arg(t_arg *self, t_arg_type type, t_argv val);
 
 t_arg	*set_new_arg(t_arg_type type, t_argv val);
+
+t_arg	*data_to_arg(t_data *data);
+
+t_arg	*data_list_to_arg_list(t_data *parent);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/22 21:41:50 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/05/05 21:07:37 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/05/09 23:38:12 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,17 +191,14 @@ t_gui *build_gui_checkbox(char *name, t_pos2i pos, t_vec2i size,
 	return (checkbox);
 }
 
-t_result build_radio_default_events(t_gui *radio, t_arg *radio_list)
+t_result build_radio_default_events(t_gui *radio)
 {
-	t_action *action;
 	t_list_head *list;
 	t_argv argv;
 
 	list = &radio->left_down.actions;
 	argv.ref = radio;
-	add_new_action(list, check_gui, argv, ARG_REF);
-	action = add_new_action(list, checkout_gui_list, argv, ARG_REF);
-	node_add_child(&action->args.node, &radio_list->node);
+	add_new_action(list, check_gui_radio_lists, argv, ARG_REF);
 	return (OK);
 }
 
@@ -216,6 +213,7 @@ t_gui *build_gui_radio(char *name, t_pos2i pos, t_vec2i size,
 	radio->bg_color = ft_bgra(159, 159, 159, 255);
 	build_gui_observers(interface, radio);
 	build_gui_clic_default_events(radio);
+	build_radio_default_events(radio);
 	mouse_obs_subscribe(&radio->hover_start);
 	return (radio);
 }
@@ -340,6 +338,48 @@ t_gui *build_gui_checkbox_list(t_data *list, t_pos2i pos, t_vec2i size,
 		return (console(FATAL, __func__, __LINE__, "gui_block fail").null);
 	build_gui_checkbox_childs(checkbox_list, list, interface);
 	return (checkbox_list);
+}
+
+t_result build_gui_radio_childs(t_gui *parent, t_data *radio_list,
+							  t_gui_interface *interface)
+{
+	t_node *curr;
+	t_data *item;
+	t_gui *child;
+	t_pos2i pos;
+	t_vec2i size;
+
+	if (radio_list == NULL || radio_list->node.childs == NULL)
+		return (console(WARNING, __func__, __LINE__, "NULL pointer").warn);
+	size = ft_vec2i(parent->size.x, 50);
+	pos = ft_vec2i(0, 0);
+	curr = radio_list->node.childs;
+	while ((curr = curr->next) != radio_list->node.childs)
+	{
+		item = (t_data*)curr;
+		if ((child = build_gui_radio(item->value.s, pos, size, interface)))
+		{
+			if (!set_gui_font(child, "resources/fonts/arial.ttf", 30))
+				return (console(FATAL, __func__, __LINE__, "gui_font fail").err);
+			set_gui_text(child, item->value.s, ft_bgra(255, 255, 255, 255));
+			data_add_child_duplicata(child->radio, radio_list);
+			node_add_child(&parent->node, &child->node);
+		}
+		pos.y += 50;
+	}
+	return (OK);
+}
+
+t_gui *build_gui_radio_list(t_data *list, t_pos2i pos, t_vec2i size,
+							   t_gui_interface *interface)
+{
+	t_gui *radio;
+
+	if (!(radio = build_gui_scrollview(list->key, pos, size, interface)))
+		return (console(FATAL, __func__, __LINE__, "gui_block fail").null);
+	if (!build_gui_radio_childs(radio, list, interface))
+		return (console(FATAL, __func__, __LINE__, "radio_childs fail").null);
+	return (radio);
 }
 
 t_gui *build_gui_scene(char *name, t_vec2i screen_size)

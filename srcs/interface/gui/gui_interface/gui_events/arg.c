@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/05 16:35:23 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/04/30 00:50:40 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/05/06 22:19:27 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <stdlib.h>
 #include "ft/io.h"
 #include "ft/str.h"
-
+#include "data/data.h"
 #include <stdio.h> //				NORME ERROR
 
 /*
@@ -135,6 +135,14 @@ t_result	arg_del(t_arg *self)
 		free(self->value.s);
 	else if (self->type == ARG_POINTER && self->value.p)
 		free(self->value.p);
+	return (OK);
+}
+
+t_result	del_new_arg(t_arg *self)
+{
+	if (self == NULL)
+		return (console(WARNING, __func__, __LINE__, "NULL pointer").warn);
+	arg_del(self);
 	node_del(&self->node);
 	return (OK);
 }
@@ -193,4 +201,40 @@ t_arg	*set_new_arg(t_arg_type type, t_argv val)
 	if (!set_arg(self, type, val) && args_del(self))
 		return (console(FATAL, __func__, __LINE__, "set arg fail").null);
 	return (self);
+}
+
+t_arg	*data_to_arg(t_data *data)
+{
+	if (data->type == CHAR)
+			return (set_new_arg(ARG_CHAR, (t_argv)data->value.c));
+	if (data->type == INT)
+			return (set_new_arg(ARG_INT, (t_argv)data->value.i));
+	if (data->type == FLOAT)
+			return (set_new_arg(ARG_FLOAT, (t_argv)data->value.f));
+	if (data->type == STRING)
+			return (set_new_arg(ARG_STRING, (t_argv)data->value.s));
+	if (data->type == LIST)
+			return (set_new_arg(ARG_LIST, (t_argv)NULL));
+	return (console(FATAL, __func__, __LINE__, "unknow data type").null);
+}
+
+t_arg	*data_list_to_arg_list(t_data *parent)
+{
+	t_node	*curr;
+	t_arg	*arg;
+	t_arg	*child;
+	t_data	*data;
+
+	if (!(arg = set_new_arg(ARG_LIST, (t_argv)NULL)))
+		return (console(FATAL, __func__, __LINE__, "set_new_arg fail").null);
+	curr = parent->node.childs;
+	while ((curr = curr->next) != parent->node.childs)
+	{
+		data = (t_data*)curr;
+		if (data->type == LIST && (child = data_list_to_arg_list(data)))
+			node_add_child(&arg->node, &child->node);
+		else if ((child = data_to_arg(data)))
+			node_add_child(&arg->node, &child->node);
+	}
+	return (arg);
 }

@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/26 12:28:34 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/05/04 22:23:25 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/05/15 09:34:31 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,21 @@
 #include "log/log.h"
 #include <SDL_events.h>
 #include "action/action.h"
+ 
+t_result init_listener(t_listener *self)
+{
+	init_list_head(&self->node);
+	self->name = NULL;
+	self->list = NULL;
+	self->is_listen = NULL;
+	self->gui = NULL;
+	init_list_head(&self->conditions);
+	// init_mouse(&self->mouse)
+	// init_keys(&self->keys)
+	init_list_head(&self->actions);
+	return (OK);
+};
+
 
 t_result	mouse_obs_subscribe(t_mouse_obs *obs)
 {

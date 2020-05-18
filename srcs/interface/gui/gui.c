@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/17 15:58:14 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/05/05 21:07:36 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/05/09 23:38:10 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,10 @@ t_result init_gui(t_gui *self)
 	if (!init_list(&self->node))
 		return (console(FATAL, __func__, __LINE__, "init_node fail").err);
 	self->id = NULL;
+	if (!(self->radio = new_data_set("radioLists", LIST, (t_val)NULL)))
+		return (console(FATAL, __func__, __LINE__, "new_data_set fail").err);
+	// if (!(self->tags = set_new_arg(ARG_LIST, (t_argv)NULL)))
+	// 	return (console(FATAL, __func__, __LINE__, "set_new_arg fail").err);
 	self->z_index = 0;
 	self->display = FALSE;
 	self->up_to_date = FALSE;
@@ -213,6 +217,8 @@ t_result	del_gui(t_node *node)
 	gui = (t_gui*)node;
 	if (gui->id)
 		free(gui->id);
+	if (gui->radio)
+		datas_del(gui->radio);
 	if (gui->layer.pixels)
 		free(gui->layer.pixels);
 	delete_gui_mouse_obs(gui);
@@ -265,6 +271,32 @@ t_gui *gui_find(t_gui *self, char *id)
 	}
 	return (NULL);
 }
+
+// t_bool	compare_gui_tags()
+
+// t_gui *gui_find_by_tag(t_gui *self, t_result (*fn)(t_gui *))
+// {
+// 	t_gui *find;
+// 	t_node *curr;
+// 	t_node *next;
+
+// 	if (self == NULL)
+// 		return (ERROR);
+// 	curr = self->node.childs;
+// 	next = curr->next;
+// 	if (self->node.childs)
+// 	{
+// 		while ((curr = next) != self->node.childs)
+// 		{
+// 			next = next->next;
+// 			if (!ft_strcmp(((t_gui*)curr)->id, id))
+// 				return ((t_gui*)curr);
+// 			if ((find = gui_find((t_gui *)curr, id)))
+// 				return (find);
+// 		}
+// 	}
+// 	return (NULL);
+// }
 
 /*
 ** SET GUI
@@ -395,20 +427,65 @@ t_result	check_gui(t_gui *gui)
 	return (OK);
 }
 
-t_result	checkout_gui_list(t_gui *gui, t_node *list)
+// t_result	checkout_gui_list(t_gui *gui, t_node *list)
+// {
+// 	t_node			*curr;
+// 	t_arg			*arg;
+// 	t_gui			*root;
+// 	t_gui			*find;
+
+// 	root = (t_gui*)node_get_root(&gui->node);
+// 	curr = list;
+// 	while ((curr = curr->next) != list)
+// 	{
+// 		arg = (t_arg*)curr;
+// 		if ((find = gui_find(root, arg->value.s)))
+// 			checkout_gui(find);
+// 	}
+// 	return (OK);
+// }
+
+t_result	check_gui_radio_list(t_gui *gui, t_data	*radio_list)
 {
-	t_node			*curr;
-	t_arg			*arg;
-	t_gui			*root;
-	t_gui			*find;
+	t_node	*curr;
+	t_data	*data;
+	t_gui	*root;
+	t_gui	*find;
 
 	root = (t_gui*)node_get_root(&gui->node);
-	curr = list;
-	while ((curr = curr->next) != list)
+	curr = radio_list->node.childs;
+	while ((curr = curr->next) != radio_list->node.childs)
 	{
-		arg = (t_arg*)curr;
-		if ((find = gui_find(root, arg->value.s)))
+		data = (t_data*)curr;
+		if (data->type == STRING && (find = gui_find(root, data->value.s)))
 			checkout_gui(find);
+	}
+	check_gui(gui);
+	return (OK);
+}
+
+t_result	check_gui_radio_list_by_name(t_gui *gui, char *radioList)
+{
+	t_data	*list;
+
+	if (!(list = data_find_by_key(gui->radio, radioList)))
+		return (console(WARNING, __func__, __LINE__, "key not found").warn);
+	check_gui_radio_list(gui, list);
+	return (OK);
+}
+
+t_result	check_gui_radio_lists(t_gui *gui)
+{
+	t_node	*curr;
+	t_data	*radio_list;
+
+	if (gui == NULL)
+		return (console(WARNING, __func__, __LINE__, "null pointer").err);
+	curr = gui->radio->node.childs;
+	while ((curr = curr->next) != gui->radio->node.childs)
+	{
+		radio_list = (t_data*)curr;
+		check_gui_radio_list(gui, radio_list);
 	}
 	return (OK);
 }

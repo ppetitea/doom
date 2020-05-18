@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/12 16:43:29 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/05/05 21:07:37 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/05/18 10:06:05 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,85 @@
 # include "SDL_ttf.h"
 # include "SDL_surface.h"
 # include "data/data.h"
+
+/*
+** EVENT
+*/
+typedef enum	e_mouse_button
+{
+	MOUSE_LEFT,
+	MOUSE_RIGHT,
+	MOUSE_WHEEL,
+}				t_mouse_button;
+
+typedef enum	e_mouse_e_type
+{
+	MOUSE_UP,
+	MOUSE_DOWN,
+	MOUSE_MOTION,
+	MOUSE_WHEEL_NORMAL,
+	MOUSE_WHEEL_FLIP,
+}				t_mouse_e_type;
+
+typedef struct	s_mouse_event
+{
+	t_list_head		node;
+	t_mouse_button	button;
+	t_mouse_e_type	type;
+}				t_mouse_event;
+
+typedef struct	s_mouse
+{
+	t_list_head	events;
+	t_bool		*hold_down;
+	t_vec2f		velocity;
+	float		wheel;
+	int			x;
+	int			y;
+}				t_mouse;
+
+typedef struct	s_keys
+{
+	t_list_head		up;
+	t_list_head		down;
+	t_list_head		*hold_ref;
+}				t_keys;
+
+/*
+** L'event est passe a tout l'arbre de composants des feuilles a la racine
+** comparer avec les event enregistre dans chaque component
+*/
+typedef struct	s_event
+{
+	t_list_head		node;
+	//time
+	t_mouse			mouse;
+	t_keys			keys;
+}				t_event;
+
+typedef struct	s_event
+{
+	t_list_head		node;
+	//time
+	t_mouse			mouse;
+	t_keys			keys;
+}				t_event;
+
+typedef struct	s_listener
+{
+	t_list_head		node;
+	char			*name;
+	t_list_head		*list;
+	t_bool			is_listen;
+	void			*gui;
+	t_list_head		conditions;
+	t_mouse			mouse;
+	t_keys			keys;
+	t_list_head		actions;
+}				t_listener;
+
+t_bool		condition(t_listener *listener, t_event *event);
+
 /*
 ** EVENTS OBSERVERS
 */
@@ -117,6 +196,8 @@ typedef struct	s_gui
 {
 	t_node		node;
 	char		*id;
+	t_data		*radio;
+	// t_arg		*tags;
 	int			z_index;
 	t_bool		up_to_date;
 	t_bool		display;
@@ -126,6 +207,8 @@ typedef struct	s_gui
 	t_image		*background;
 	t_bgra		bg_color;
 	t_filter	filter;
+	t_list_head	listeners;
+
 	t_mouse_obs	hover_start;
 	t_mouse_obs	hover_end;
 	t_mouse_obs	left_up;
@@ -143,7 +226,7 @@ typedef struct	s_gui
 	char		*text;
 	SDL_Surface	*text_surface;
 	TTF_Font	*font;
-	t_bgra		color;		
+	t_bgra		color;
 }				t_gui;
 
 /*
@@ -214,7 +297,11 @@ t_result	checkout_gui(t_gui *gui);
 
 t_result	check_gui(t_gui *gui);
 
-t_result	checkout_gui_list(t_gui *gui, t_node *parent);
+t_result	check_gui_radio_list(t_gui *gui, t_data	*radio_list);
+
+t_result	check_gui_radio_list_by_name(t_gui *gui, char *radioList);
+
+t_result	check_gui_radio_lists(t_gui *gui);
 
 t_result	translate_gui(t_gui *gui, t_vec2i translation);
 
@@ -302,7 +389,7 @@ t_result	build_button_default_events(t_gui *button);
 
 t_result	build_checkbox_default_events(t_gui *checkbox);
 
-t_result	build_radio_default_events(t_gui *radio, t_arg *radio_list);
+t_result	build_radio_default_events(t_gui *radio);
 
 t_gui		*build_gui_button(char *name, t_pos2i pos, t_vec2i size,
 	t_gui_interface *interface);
@@ -332,5 +419,10 @@ t_result build_gui_checkbox_childs(t_gui *parent, t_data *list,
 t_gui *build_gui_checkbox_list(t_data *list, t_pos2i pos, t_vec2i size,
 	t_gui_interface *interface);
 
+t_result build_gui_radio_childs(t_gui *parent, t_data *radio_list,
+	t_gui_interface *interface);
+
+t_gui *build_gui_radio_list(t_data *list, t_pos2i pos, t_vec2i size,
+	t_gui_interface *interface);
 
 #endif

@@ -33,6 +33,8 @@ typedef union   u_val
 	int         i;
 	float		f;
 	char        *s;
+	t_node		*l;
+	void		*null;
 }               t_val;
 
 typedef struct  s_data
@@ -85,6 +87,35 @@ t_res		datas_del_and_quit(t_data *self);
 t_result data_set(t_data *self, char *key, t_data_type type, t_val val);
 
 t_data	*new_data_set(char *key, t_data_type type, t_val val);
+
+/*
+** Data string array
+*/
+t_result data_add_child_string(t_data *array, char *string);
+
+t_result data_add_2child_string(t_data *array, char *s1, char *s2);
+
+t_result data_add_3child_string(t_data *array, char *s1, char *s2, char *s3);
+
+t_data *data_array_s(char *array_name, char *s1);
+
+t_data *data_array_s2(char *array_name, char *s1, char *s2);
+
+t_data *data_array_s3(char *array_name, char *s1, char *s2, char *s3);
+
+/*
+** DATA FIND
+*/
+
+t_data	*data_find_by_key(t_data *tree, char *key);
+
+/*
+** DATA DUP
+*/
+
+t_data		*data_duplicate(t_data *src);
+
+t_result	data_add_child_duplicata(t_data *parent, t_data *child);
 
 /* 
 	TEST DATA
