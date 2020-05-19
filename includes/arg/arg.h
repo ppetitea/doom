@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/29 22:07:29 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/05/09 21:54:24 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/05/19 22:40:51 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "log/log.h"
 # include "data/data.h"
 # include "containers/node.h"
+# include "containers/list.h"
 
 typedef	union	u_argv
 {
@@ -39,6 +40,40 @@ typedef enum	e_arg_type
 	ARG_LIST,
 }				t_arg_type;
 
+/*
+** arguments list without deep nodes
+*/
+typedef struct	s_arg_list
+{
+	t_list_head	node;
+	t_arg_type	type;
+	t_argv		value;
+}				t_arg_list;
+
+t_bool		is_arg_list_type_valid(t_arg_type type);
+
+t_bool		is_arg_match(t_arg_list *node, t_arg_type type, t_argv value);
+
+t_result	init_arg_list(t_arg_list *self);
+
+t_arg_list	*init_new_arg_list();
+
+t_result	del_arg_list(t_arg_list *self);
+
+t_result	del_new_arg_list(t_arg_list *self);
+
+t_result	set_arg_list(t_arg_list *self, t_arg_type type, t_argv value);
+
+t_arg_list	*set_new_arg_list(t_arg_type type, t_argv value);
+
+t_arg_list	*list_add_new_arg_list(t_list_head *list, t_arg_type type,
+	t_argv value);
+
+t_arg_list	*arg_list_find(t_list_head *list, t_arg_type type, t_argv value);
+
+/*
+** arguments list with deep nodes
+*/
 typedef struct	s_arg
 {
 	t_node		node;

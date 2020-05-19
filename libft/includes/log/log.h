@@ -29,6 +29,8 @@ typedef struct	s_res
 	int			err;
 	int			warn;
 	void		*null;
+	int			true;
+	int			false;
 }				t_res;
 
 typedef struct	s_log

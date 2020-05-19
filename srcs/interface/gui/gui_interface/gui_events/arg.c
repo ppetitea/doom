@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/05 16:35:23 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/05/06 22:19:27 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/05/19 22:40:53 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,138 @@
 #include <stdio.h> //				NORME ERROR
 
 /*
-** ARG FOREACH
+** arguments'list
 */
 
+/*
+** test argument properties
+*/
+t_bool		is_arg_list_type_valid(t_arg_type type)
+{
+	if (type != ARG_INT && type != ARG_FLOAT && type != ARG_CHAR &&
+		type != ARG_STRING && type != ARG_POINTER && type != ARG_REF)
+		return (FALSE);
+	return (TRUE);
+}
+
+t_bool		is_arg_match(t_arg_list *node, t_arg_type type, t_argv value)
+{
+	if (node == NULL)
+		return (console(FATAL, __func__, __LINE__, "null pointer").false);
+	if (!is_arg_list_type_valid(type))
+		return (console(FATAL, __func__, __LINE__, "wrong arg type").false);
+	if (node->type != type)
+		return (FALSE);
+	else if (type == ARG_INT && node->value.i == value.i)
+		return (TRUE);
+	else if (type == ARG_FLOAT && node->value.f == value.f)
+		return (TRUE);
+	else if (type == ARG_CHAR && node->value.c == value.c)
+		return (TRUE);
+	else if (type == ARG_STRING && !ft_strcmp(node->value.s, value.s))
+		return (TRUE);
+	else if (type == ARG_POINTER && node->value.p == value.p)
+		return (TRUE);
+	else if (type == ARG_REF && node->value.ref == value.ref)
+		return (TRUE);
+	return (FALSE);
+}
+
+t_result init_arg_list(t_arg_list *self)
+{
+	if (!init_list_head(&self->node))
+		return (console(FATAL, __func__, __LINE__, "init_list fail").err);
+	self->type = ARG_POINTER;
+	self->value.p = NULL;
+	return (OK);
+};
+
+t_arg_list *init_new_arg_list()
+{
+	t_arg_list *self;
+
+	if (!(self = malloc(sizeof(t_arg_list))))
+		return (console(FATAL, __func__, __LINE__, "init_list_head fail").null);
+	init_arg_list(self);
+	return (self);
+}
+
+t_result del_arg_list(t_arg_list *self)
+{
+	if (!self)
+		return (console(FATAL, __func__, __LINE__, "null pointer").err);
+	if (self->type == ARG_STRING && self->value.s)
+		free(self->value.s);
+	else if (self->type == ARG_POINTER && self->value.p)
+		free(self->value.p);
+	list_del_entry(&self->node);
+	return (OK);
+}
+
+t_result del_new_arg_list(t_arg_list *self)
+{
+	if (!del_arg_list(self))
+		return (console(FATAL, __func__, __LINE__, "del_arg_list fail").err);
+	free(self);
+	return (OK);
+}
+
+t_result set_arg_list(t_arg_list *self, t_arg_type type, t_argv value)
+{
+	if (!self)
+		return (console(FATAL, __func__, __LINE__, "null pointer").err);
+	if (type != ARG_INT && type != ARG_FLOAT && type != ARG_CHAR &&
+		type != ARG_STRING && type != ARG_POINTER && type != ARG_REF)
+		return (console(FATAL, __func__, __LINE__, "wrong arg type").err);
+	self->type = type;
+	self->value = value;
+	return (OK);
+}
+
+t_arg_list *set_new_arg_list(t_arg_type type, t_argv value)
+{
+	t_arg_list *self;
+
+	if (!(self = init_new_arg_list()))
+		return (console(FATAL, __func__, __LINE__, "init_arg_list fail").null);
+	if (!set_arg_list(self, type, value) && del_arg_list)
+		return (console(FATAL, __func__, __LINE__, "set_arg_list fail").null);
+	return (self);
+}
+
+t_arg_list *list_add_new_arg_list(t_list_head *list, t_arg_type type,
+	t_argv value)
+{
+	t_arg_list *self;
+
+	if (!list)
+		return (console(FATAL, __func__, __LINE__, "null pointer").null);
+	if (!is_arg_list_type_valid(type))
+		return (console(FATAL, __func__, __LINE__, "wrong type").null);
+	if (!(self = set_new_arg_list(type, value)))
+		return (console(FATAL, __func__, __LINE__, "set_arg_list fail").null);
+	list_add_entry(&self->node, list);
+	return (self);
+}
+
+t_arg_list	*arg_list_find(t_list_head *list, t_arg_type type, t_argv value)
+{
+	t_arg_list	*arg_item;
+	t_list_head *curr;
+
+	curr = list;
+	while ((curr = curr->next) != list)
+	{
+		arg_item = (t_arg_list*)curr;
+		if (is_arg_match(arg_item, type, value))
+			return (arg_item);
+	}
+	return (NULL);
+}
+
+/*
+** ARG FOREACH
+*/
 t_result	arg_foreach_prev(t_arg *self, t_result (*fn)(t_arg*))
 {
 	t_node	*curr;

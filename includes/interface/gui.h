@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/12 16:43:29 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/05/18 10:06:05 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/05/19 22:40:48 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,7 +208,6 @@ typedef struct	s_gui
 	t_bgra		bg_color;
 	t_filter	filter;
 	t_list_head	listeners;
-
 	t_mouse_obs	hover_start;
 	t_mouse_obs	hover_end;
 	t_mouse_obs	left_up;

@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/05 17:30:14 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/04/16 19:15:26 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/05/19 21:58:26 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ t_res	response()
 	res.warn = WARNING;
 	res.err = ERROR;
 	res.null = NULL;
+	res.true = TRUE;
+	res.false = FALSE;
 	return (res);
 }
 
