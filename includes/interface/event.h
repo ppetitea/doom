@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/18 19:04:52 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/05/19 22:55:45 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/05/29 00:26:35 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,21 +25,88 @@
 # include "SDL_surface.h"
 # include "data/data.h"
 
+/*
+** L'event est passe a tout l'arbre de composants des feuilles a la racine
+** comparer avec les event enregistre dans chaque component
+*/
+/*
+**  Faire en sorte de ne pas allouer de memoire dynamiquement au milieu du programme ~ je sais pas trop je me tate pour cette regle ~ je pense que c'est trop restrictif
+**  Faire en sorte qu'un component puisse recevoir un event sur le "flux input"
+** 
+**  Faire en sorte qu'un button de type radio peu envoyer un event sur le "flux radio"
+**  auxquels sont abonne tous les button de type radio
+** 
+**  Faire en sorte que un component parent puisse envoyer un event
+**  a tous ses enfants
+**  a tous ses enfants de profondeur 2
+**  a tous ses enfants jusqu'a la profondeur 3
+** 
+**  Drag un component du clic gauche et le drop du clic droit
+** 
+** 
+** Chaque event est fournit a l'ensemble de l'arbre si la function handle_event() return CONTINUE
+** 
+** 
+** 
+** 
+** 
+*/
+
+
+/*	Observables
+** 
+** l'interface observe/s'abonne aux observable de type
+		- input (mouse, keyboard)
+		- component
+** Les components observent/s'abonnent aux observables de l'interface
+** 
+** 
+*/
+
+/*
+** @streams = ARG_STRING -> char* || ARG_INT -> t_event_stream_type
+** l'event transmis n'est qu'un etat ou un flag(ENUM)
+** Il n'y a pas d'action enregistre dans l'event || pitetre que ce serait interessant dans certains cas
+** dans le cas de la souris et du clavier lesw events ne sont destroy qu'a la fin du programme
+** 
+*/
+typedef struct	s_event
+{
+	t_list_head			node;
+	char				*name;
+	void				*source_ref;
+	t_arg_list			args;
+	t_arg_list			streams;
+	t_result			(*destroy)(struct s_event*);
+}				t_event;
+
+typedef enum	e_event_source_type
+{
+	E_SRC_COMPONENT,
+	E_SRC_MOUSE,
+	E_SRC_KEYS,
+	E_SRC_LOGGER,
+}				t_event_source_type;
+
+typedef struct	s_event_source
+{
+	t_list_head			node;
+	t_event_source_type	type;
+	void				*source_ref;
+	t_list_head 		*sources_list_ref;
+	t_bool				subscribed;
+	t_result			(*subscribe)(t_list_head*, t_list_head*);
+	t_result			(*unsubscribe)(t_list_head*);
+	t_list_head			queu;
+}				t_event_source;
+
+
 typedef enum	e_mouse_button
 {
 	MOUSE_LEFT,
 	MOUSE_RIGHT,
 	MOUSE_WHEEL,
 }				t_mouse_button;
-
-typedef enum	e_mouse_e_type
-{
-	MOUSE_UP,
-	MOUSE_DOWN,
-	MOUSE_MOTION,
-	MOUSE_WHEEL_NORMAL,
-	MOUSE_WHEEL_FLIP,
-}				t_mouse_e_type;
 
 /*
 ** mouse state
@@ -56,18 +123,35 @@ typedef struct	s_mouse_state
 	t_bool			is_clic;
 	t_bool			is_drag;
 	t_mouse_button	button;
-	t_mouse_e_type	type;
 }				t_mouse_state;
 
+/*
+** si pas d'event fourni par sdl 
+** 		events.queu = empty  
+** 		source.unsubscribe()
+** les events sont inscrit a events.queu <=> ils sont fournis par la sdl
+*/ 
 typedef struct	s_mouse
 {
 	t_mouse_state	last;
 	t_mouse_state	curr;
+	t_event			mouse_up;
+	t_event			mouse_down;
+	t_event			mouse_wheel;
+	t_event			mouse_motion;
+	t_event_source	events; 
 }				t_mouse;
 
 /*
 ** key state
 ** followed by component to up to date its own state
+** plus besoin de stocker les hold key il suffit que l'observer check:
+	for (down of keys.curr.down)
+	{
+		if (keys_list_contain(keys.curr.down, down) &&
+			keys_list_contain(keys.last.down, down))
+			trigger_action()
+	}, key.curr)
 */
 typedef struct	s_keys_state
 {
@@ -75,43 +159,61 @@ typedef struct	s_keys_state
 	t_list_head		down;
 }				t_keys_state;
 
+/*
+** si pas d'event fourni par sdl 
+** 		events.queu = empty  
+** 		source.unsubscribe()
+** les events sont inscrit a events.queu <=> ils sont fournis par la sdl
+*/ 
 typedef struct	s_keys
 {
 	t_keys_state	last;
 	t_keys_state	curr;
+	t_event			key_up;
+	t_event			key_down;
+	t_event_source	events; 
 }				t_keys;
 
-/*
-** L'event est passe a tout l'arbre de composants des feuilles a la racine
-** comparer avec les event enregistre dans chaque component
+/* if event.stream has type == CUSTOM
+** 		use stream name
+**
+**	exemple streamName = "game"
+**	exemple streamName = "player"
+**	exemple streamName = "destructibles"
 */
-typedef struct	s_event
+typedef enum	e_event_stream_type
 {
-	t_mouse			mouse;
-	t_keys			keys;
-}				t_event;
+	E_STREAM_INTERFACE,
+	E_STREAM_GUI_TREE,
+	E_STREAM_RADIO,
+	E_STREAM_ERROR,
+	E_STREAM_WARNINGS,
+	E_STREAM_INFO,
+	E_STREAM_DEBUG,
+	E_STREAM_CUSTOM,
+}				t_event_stream_type;
+
+typedef struct	s_event_stream
+{
+	t_list_head			node;
+	t_event_stream_type	type;
+	char				*name;
+	t_list_head			observers;
+}				t_event_stream;
 
 /*
-**  Faire en sorte qu'un component puisse recevoir un event sur le "flux input"
-** 
-**  Faire en sorte qu'un button de type radio peu envoyer un event sur le "flux radio"
-**  auxquels sont abonne tous les button de type radio
-** 
-**  Faire en sorte que un component parent puisse envoyer un event
-**  a tous ses enfants
-**  a tous ses enfants de profondeur 2
-**  a tous ses enfants jusqu'a la profondeur 3
-** 
-**  Drag un component du clic gauche et le drop du clic droit
-** 
+** lorsqu'une source creer possede un evenement dans sa liste
+** elle s'inscrit a la liste des sources de l'event_interface
+** l'interface parcours la liste des events des sources inscrites
+** puis l'interface transmet chaque evenements au canaux correspondants 
 */
 
-typedef struct	s_component_event
+typedef struct	s_event_interface
 {
-	t_list_head		node;
-	char			*target;
-	t_list_head		actions;
-}				t_component_event;
+	t_list_head sources;
+	t_list_head streams;
+}				t_event_interface;
+
 
 /*
 **	Component drag event
@@ -120,52 +222,88 @@ typedef struct	s_component_event
 **		component->is_drag = true;
 */
 
+/*
+** INTERNAL COMMUNICATION ?
+*/
 typedef struct	s_component_state
 {
+	// t_time		time;
+	int			z_index;
 	t_pos2i		pos;
 	t_vec2i		size;
 	t_bgra		bg_color;
 	t_bgra		color;
-	t_bool		is_up_to_date;
+	t_bool		is_layer_up_to_date;
 	t_bool		is_visible;
 	t_bool		is_hover;
 	t_bool		is_focus;
 	t_pos2i		mouse_offset;
 	t_bool		is_drag;
+	char		*bg_image;
+	char		*font_family;
+	char		*text;
+	t_list_head	filters;
 }				t_component_state;
+
+/*
+** t_result	(*fn)(t_arg_list *args, t_component *self);
+*/
+typedef struct	s_cpt_state_observer
+{
+	t_list_head	node;
+	t_result	(*fn)();
+	t_arg_list	args;
+}				t_cpt_state_observer;
+
+
+/* 
+** t_bool	(*condition)(t_arg_list *args, t_event *event);
+*/
+typedef struct	s_condition
+{
+	t_list_head	node;
+	t_bool		(*fn)();
+	t_arg_list	args;
+}				t_condition;
+
+/* 
+** t_bool	(*action)(t_arg_list *args, t_event *event, void *observer_ref);
+**
+** l'event transmis n'est qu'un etat ou un flag(ENUM)
+*/
+typedef struct	s_event_action
+{
+	t_list_head	node;
+	t_result	(*fn)(t_arg_list *args, t_event *event, void *observer_ref);
+	t_arg_list	args;
+	t_list_head	conditions;
+}				t_event_action;
+
+typedef struct	s_stream_observer
+{
+	t_list_head			node;
+	t_event_stream 		*stream_ref;
+	t_bool				subscribed;
+	t_result			(*subscribe)(t_list_head*, t_list_head*);
+	t_result			(*unsubscribe)(t_list_head*);
+	void				*observer_ref;
+	t_list_head			actions; // les actions sont stocker dans l'observer
+}				t_stream_observer;
 
 typedef struct	s_component
 {
 	t_node				node;
 	char				*id;
-	t_list_head			radio;
-	char				*bg_image;
-	char				*font_family;
+	t_arg_list			radio;
 	TTF_Font			*font;
-	char				*text;
 	SDL_Surface			*text_surface;
 	t_layer				layer;
-	t_filter			filter;
 	t_component_state	last;
 	t_component_state	curr;
-	t_list_head			listeners;
-	int					z_index;
+	t_bool				up_to_date;
+	t_list_head			state_observers;
+	t_list_head			stream_observers;// follow event streams
+	t_event_source		events;
 }				t_component;
-
-typedef struct	s_listener
-{
-	t_list_head		node;
-	char			*name;
-	t_list_head		*list;
-	t_bool			is_listen;
-	void			*gui;
-	t_list_head		conditions;
-	t_mouse			mouse;
-	t_keys			keys;
-	t_list_head		actions;
-}				t_listener;
-
-t_bool		condition(t_listener *listener, t_event *event);
-
 
 #endif
