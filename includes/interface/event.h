@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/18 19:04:52 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/05/29 00:26:35 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/05/29 12:58:46 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,36 +69,117 @@
 ** Il n'y a pas d'action enregistre dans l'event || pitetre que ce serait interessant dans certains cas
 ** dans le cas de la souris et du clavier lesw events ne sont destroy qu'a la fin du programme
 ** 
+** 
+** event.name = "radio_component_uncheck"
+**	t_bool	event_name_match(t_arg_list args, t_event *event, void *observer_ref)		// CONDITION
+**	{
+**		t_argv name;
+**		
+**		name = get_arg(args, 0);
+**		if (event.name == name.s) // "radio_component_uncheck"
+**			return (TRUE);
+**		return (FALSE);
+**	}
+**
+**	t_result	component_uncheck(t_arg_list *args, t_event *event, void *observer_ref)	// ACTION
+**	{
+**		t_component *component;
+**		
+**		component = (t_component*)observer_ref;
+**		component->curr.isChecked = FALSE;
+**		component->up_to_date = FALSE;
+**		return (OK);
+**	}
+** 
+** 
+**	event.name = "mouse_motion"
+**	t_bool	event_name_match(t_arg_list args, t_event *event, void *observer_ref)		// CONDITION
+**	{
+**		t_argv		name;
+**		
+**		name = get_arg(args, 0);
+**		if (event.name == name.s) // "mouse_motion"
+**			return (TRUE);
+**		return (FALSE);
+**	}
+**
+**	t_result	component_set_mouse_offset(t_arg_list *args, t_event *event, void *observer_ref)	// ACTION
+**	{
+**		t_component *component;
+**		t_mouse		*mouse;
+**
+**		component = (t_component*)observer_ref;
+**		mouse = (t_mouse*)event->observable_ref;
+**		component->curr.mouse_offset = vec2i_sub(mouse.pos, component->curr.pos);
+**		component->up_to_date = FALSE;
+**		return (OK);
+**	}
+**
+**	t_bool	event_name_match(t_arg_list args, t_event *event, void *observer_ref)		// CONDITION
+**	{
+**		t_argv		name;
+**		
+**		name = get_arg(args, 0);
+**		if (event.name == name.s) // "mouse_motion"
+**			return (TRUE);
+**		return (FALSE);
+**	}
+**
+**	t_bool	component_is_hover(t_arg_list args, t_event *event, void *observer_ref)		// CONDITION
+**	{
+**		t_component *component;
+**		t_mouse		*mouse;
+**
+**		component = (t_component*)observer_ref;
+**		mouse = (t_mouse*)event->observable_ref;
+**		if (is_vec2i_embedded(mouse->pos, component->curr.pos, component->curr.size)
+**			return (TRUE);
+**		return (FALSE);
+**	}
+**
+**	t_result	component_set_hover_on(t_arg_list *args, t_event *event, void *observer_ref)	// ACTION
+**	{
+**		t_component *component;
+**		
+**		component = (t_component*)observer_ref;
+**		component->curr.isHover = TRUE;
+**		return (OK);
+**	}
+** 
+** 	les states_observers check a chaque iteration tous les changements
+** 
 */
+
 typedef struct	s_event
 {
 	t_list_head			node;
 	char				*name;
-	void				*source_ref;
+	void				*observable_ref;
 	t_arg_list			args;
 	t_arg_list			streams;
 	t_result			(*destroy)(struct s_event*);
 }				t_event;
 
-typedef enum	e_event_source_type
+typedef enum	e_observable_type
 {
-	E_SRC_COMPONENT,
-	E_SRC_MOUSE,
-	E_SRC_KEYS,
-	E_SRC_LOGGER,
-}				t_event_source_type;
+	OBSERVABLE_MOUSE,
+	OBSERVABLE_KEYS,
+	OBSERVABLE_INTERFACE,
+	OBSERVABLE_COMPONENT,
+	OBSERVABLE_LOGGER,
+}				t_observable_type;
 
-typedef struct	s_event_source
+typedef struct	s_observable
 {
 	t_list_head			node;
-	t_event_source_type	type;
-	void				*source_ref;
-	t_list_head 		*sources_list_ref;
+	t_observable_type	type;
+	void				*observable_ref;
+	t_list_head 		*observables_ref;
 	t_bool				subscribed;
 	t_result			(*subscribe)(t_list_head*, t_list_head*);
 	t_result			(*unsubscribe)(t_list_head*);
 	t_list_head			queu;
-}				t_event_source;
+}				t_observable;
 
 
 typedef enum	e_mouse_button
@@ -139,7 +220,7 @@ typedef struct	s_mouse
 	t_event			mouse_down;
 	t_event			mouse_wheel;
 	t_event			mouse_motion;
-	t_event_source	events; 
+	t_observable	events; 
 }				t_mouse;
 
 /*
@@ -171,7 +252,7 @@ typedef struct	s_keys
 	t_keys_state	curr;
 	t_event			key_up;
 	t_event			key_down;
-	t_event_source	events; 
+	t_observable	events; 
 }				t_keys;
 
 /* if event.stream has type == CUSTOM
@@ -183,8 +264,10 @@ typedef struct	s_keys
 */
 typedef enum	e_event_stream_type
 {
+	E_STREAM_COMPONENT_TREE,
 	E_STREAM_INTERFACE,
-	E_STREAM_GUI_TREE,
+	E_STREAM_MOUSE,
+	E_STREAM_KEYS,
 	E_STREAM_RADIO,
 	E_STREAM_ERROR,
 	E_STREAM_WARNINGS,
@@ -196,6 +279,7 @@ typedef enum	e_event_stream_type
 typedef struct	s_event_stream
 {
 	t_list_head			node;
+	t_node				*tree; // le flux peux s'addresser autant a une liste qu'a un arbre
 	t_event_stream_type	type;
 	char				*name;
 	t_list_head			observers;
@@ -214,6 +298,40 @@ typedef struct	s_event_interface
 	t_list_head streams;
 }				t_event_interface;
 
+
+/* 
+**	t_bool	condition(t_arg_list args, t_event *event, void *observer_ref)
+*/
+typedef struct	s_condition
+{
+	t_list_head	node;
+	t_bool		(*fn)();
+	t_arg_list	args;
+}				t_condition;
+
+/* 
+**	t_result	action(t_arg_list *args, t_event *event, void *observer_ref)
+**
+** l'event transmis n'est qu'un etat ou un flag(ENUM)
+*/
+typedef struct	s_event_observer
+{
+	t_list_head	node;
+	t_result	(*fn)(t_arg_list *args, t_event *event, void *observer_ref);
+	t_arg_list	args;
+	t_list_head	conditions;
+}				t_event_observer;
+
+typedef struct	s_stream_observer
+{
+	t_list_head			node;
+	t_event_stream 		*stream_ref;
+	t_bool				subscribed;
+	t_result			(*subscribe)(t_list_head*, t_list_head*);
+	t_result			(*unsubscribe)(t_list_head*);
+	void				*observer_ref;
+	t_list_head			event_observers;
+}				t_stream_observer;
 
 /*
 **	Component drag event
@@ -238,6 +356,7 @@ typedef struct	s_component_state
 	t_bool		is_hover;
 	t_bool		is_focus;
 	t_pos2i		mouse_offset;
+	t_pos2i		drag_offset;
 	t_bool		is_drag;
 	char		*bg_image;
 	char		*font_family;
@@ -255,41 +374,6 @@ typedef struct	s_cpt_state_observer
 	t_arg_list	args;
 }				t_cpt_state_observer;
 
-
-/* 
-** t_bool	(*condition)(t_arg_list *args, t_event *event);
-*/
-typedef struct	s_condition
-{
-	t_list_head	node;
-	t_bool		(*fn)();
-	t_arg_list	args;
-}				t_condition;
-
-/* 
-** t_bool	(*action)(t_arg_list *args, t_event *event, void *observer_ref);
-**
-** l'event transmis n'est qu'un etat ou un flag(ENUM)
-*/
-typedef struct	s_event_action
-{
-	t_list_head	node;
-	t_result	(*fn)(t_arg_list *args, t_event *event, void *observer_ref);
-	t_arg_list	args;
-	t_list_head	conditions;
-}				t_event_action;
-
-typedef struct	s_stream_observer
-{
-	t_list_head			node;
-	t_event_stream 		*stream_ref;
-	t_bool				subscribed;
-	t_result			(*subscribe)(t_list_head*, t_list_head*);
-	t_result			(*unsubscribe)(t_list_head*);
-	void				*observer_ref;
-	t_list_head			actions; // les actions sont stocker dans l'observer
-}				t_stream_observer;
-
 typedef struct	s_component
 {
 	t_node				node;
@@ -303,7 +387,26 @@ typedef struct	s_component
 	t_bool				up_to_date;
 	t_list_head			state_observers;
 	t_list_head			stream_observers;// follow event streams
-	t_event_source		events;
+	t_observable		events;
 }				t_component;
+
+typedef struct	s_scene
+{
+	t_list_head	node;
+	char		*name;
+	t_node		components_tree;
+}				t_scene;
+
+
+/*
+** l'interface est abonnee a E_STREAM_MOUSE et diffuse les events (mouse) a chaque component par son
+** stream_observer de type E_STREAM_COMPONENT_TREE
+*/
+typedef struct	s_interface
+{
+	t_list_head	scenes;
+	t_scene		*curr;
+	t_list_head	stream_observers;// follow event streams 
+}				t_interface;
 
 #endif
