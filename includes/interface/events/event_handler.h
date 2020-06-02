@@ -9,7 +9,8 @@ typedef struct	s_condition
 {
 	t_list_head	node;
 	t_bool		(*fn)();
-	t_arg_list	args;
+	t_list_head	args;
+	t_result	(*destroy)(struct s_condition*);
 }				t_condition;
 
 /* 
@@ -20,9 +21,10 @@ typedef struct	s_condition
 typedef struct	s_event_handler
 {
 	t_list_head	node;
-	t_result	(*fn)(t_arg_list *args, t_event *event, void *observer_ref);
-	t_arg_list	args;
+	t_result	(*fn)(t_list_head *args, t_event *event, void *observer_ref);
+	t_list_head	args;
 	t_list_head	conditions;
+	t_result	(*destroy)(struct s_event_handler*);
 }				t_event_handler;
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/31 17:43:32 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/06/01 11:44:35 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/06/02 11:16:07 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,13 +142,9 @@ t_result del_new_keys(t_keys *self)
 
 t_result init_keys(t_keys *self)
 {
-	if (!init_list_head(&self->curr.up))
+	if (!init_list_head(&self->curr))
 		return (console(FATAL, __func__, __LINE__, "init_list_head fail").err);
-	if (!init_list_head(&self->curr.down))
-		return (console(FATAL, __func__, __LINE__, "init_list_head fail").err);
-	if (!init_list_head(&self->last.up))
-		return (console(FATAL, __func__, __LINE__, "init_list_head fail").err);
-	if (!init_list_head(&self->last.down))
+	if (!init_list_head(&self->last))
 		return (console(FATAL, __func__, __LINE__, "init_list_head fail").err);
 	if (!init_observable(&self->events))
 		return (console(FATAL, __func__, __LINE__, "init_observable fail").err);
@@ -167,3 +163,8 @@ t_keys *init_new_keys()
 	return (self);
 }
 
+t_keys	*get_keys()
+{
+	// get interface && return keys
+	// move this function in interface.c file
+}

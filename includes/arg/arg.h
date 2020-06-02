@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/29 22:07:29 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/05/27 11:21:17 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/06/02 11:43:05 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,14 @@ typedef struct	s_arg_list
 	t_list_head	node;
 	t_arg_type	type;
 	t_argv		value;
+	t_result	(*destroy)(struct s_arg_list*);
 }				t_arg_list;
+
+t_result	del_arg_list(t_arg_list *self);
+
+t_result	del_new_arg_list(t_arg_list *self);
+
+t_result	del_args_list(t_list_head *list);
 
 t_bool		is_arg_list_type_valid(t_arg_type type);
 
@@ -57,10 +64,6 @@ t_bool		is_arg_match(t_arg_list *node, t_arg_type type, t_argv value);
 t_result	init_arg_list(t_arg_list *self);
 
 t_arg_list	*init_new_arg_list();
-
-t_result	del_arg_list(t_arg_list *self);
-
-t_result	del_new_arg_list(t_arg_list *self);
 
 t_result	set_arg_list(t_arg_list *self, t_arg_type type, t_argv value);
 

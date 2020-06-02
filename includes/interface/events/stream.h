@@ -23,12 +23,11 @@
 // 	E_STREAM_CUSTOM,
 // }				t_event_stream_type;
 
-typedef struct	s_event_stream
-{
-	t_list_head			node;
-	char				*name;
-	t_list_head			observers;
-}				t_event_stream;
+/*
+** Modifier t_result			(*unsubscribe)(t_list_head*);
+** Par t_result					(*unsubscribe)(struct s_stream_observer*);
+**	Pour pouvoir set suscribed a false en plus de supprimer le noeud
+*/
 
 typedef struct	s_stream_observer
 {
@@ -41,5 +40,15 @@ typedef struct	s_stream_observer
 	t_list_head			event_handlers;
 	t_result			(*destroy)(struct s_stream_observer*);
 }				t_stream_observer;
+
+
+typedef struct	s_event_stream
+{
+	t_list_head			node;
+	char				*name;
+	t_list_head			observers;
+	t_result			(*destroy)(struct s_event_stream*);
+}				t_event_stream;
+
 
 #endif

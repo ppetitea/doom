@@ -26,17 +26,20 @@ typedef struct	s_key
 			trigger_action()
 	}, key.curr)
 */
-typedef struct	s_keys_state
-{
-	t_list_head		up;
-	t_list_head		down;
-}				t_keys_state;
 
 /*
 ** si pas d'event fourni par sdl 
 ** 		events.queu = empty  
 ** 		source.unsubscribe()
 ** les events sont inscrit a events.queu <=> ils sont fournis par la sdl
+**
+** Lorsque tous les events lies au clavier ont ete geres
+**	On destroy chaque noeud de last
+**	On swap keys.curr dans keys.last
+**	L'en tete de liste keys.curr est maintenant vide pret a recevoir de new events
+**
+**	keys.last et keys.curr designent respectivement les dernierres et actuelles touches enfonces
+**
 */
 typedef struct	s_keys
 {
@@ -46,6 +49,6 @@ typedef struct	s_keys
 	t_result		(*destroy)(struct s_keys*);
 }				t_keys;
 
-/////////////EST-CE QU'IL Y A BESOIN DE list_up ?
+/////////////EST-CE QU'IL Y A BESOIN DE list_up ? bah non 
 
 #endif
