@@ -48,4 +48,28 @@ typedef struct	s_mouse
 	t_result		(*destroy)(struct s_mouse*);
 }				t_mouse;
 
+t_result init_mouse_state(t_mouse_state *self)
+{
+	self->x = 0;
+	self->y = 0;
+	self->wheel = 0.0f;
+	self->velocity = ft_vec2f(0, 0);
+	self->is_press = FALSE;
+	self->is_move = FALSE;
+	self->is_clic = FALSE;
+	self->is_drag = FALSE;
+	self->button = MOUSE_NONE;
+	return (OK);
+};
+
+t_result del_mouse(t_mouse *self);
+
+t_result del_new_mouse(t_mouse *self);
+
+t_result init_mouse(t_mouse *self);
+
+t_mouse *init_new_mouse();
+
+t_result set_mouse_pos(t_mouse *self, int x, int y);
+
 #endif

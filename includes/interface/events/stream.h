@@ -41,6 +41,16 @@ typedef struct	s_stream_observer
 	t_result			(*destroy)(struct s_stream_observer*);
 }				t_stream_observer;
 
+t_result del_stream_observer(t_stream_observer *self);
+
+t_result del_new_stream_observer(t_stream_observer *self);
+
+t_result del_stream_observer_list(t_list_head *list);
+
+t_result init_stream_observer(t_stream_observer *self);
+
+t_stream_observer *init_new_stream_observer();
+
 
 typedef struct	s_event_stream
 {
@@ -50,5 +60,14 @@ typedef struct	s_event_stream
 	t_result			(*destroy)(struct s_event_stream*);
 }				t_event_stream;
 
+t_result del_event_stream(t_event_stream *self);
+
+t_result del_new_event_stream(t_event_stream *self);
+
+t_result del_event_stream_list(t_list_head *list);
+
+t_result init_event_stream(t_event_stream *self);
+
+t_event_stream *init_new_event_stream();
 
 #endif

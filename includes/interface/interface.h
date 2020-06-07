@@ -9,6 +9,7 @@ typedef struct	s_scene
 {
 	t_list_head	node;
 	t_component	tree;
+	t_result	(*destroy)(struct s_scene*);
 }				t_scene;
 
 /*
@@ -27,6 +28,7 @@ typedef struct	s_interface
 	t_list_head		observables;
 	t_list_head		streams;
 	t_list_head		stream_observers;
+	t_result	(*destroy)(struct s_interface*);
 }				t_interface;
 
 #endif

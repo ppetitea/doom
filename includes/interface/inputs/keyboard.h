@@ -15,6 +15,25 @@ typedef struct	s_key
 	SDL_Keycode	code;
 	t_result	(*destroy)(struct s_key*);
 }				t_key;
+
+t_result del_key(t_key *self);
+
+t_result del_new_key(t_key *self);
+
+t_result del_key_list(t_list_head *key_list);
+
+t_result del_key_list_by_code(t_list_head *list, SDL_Keycode code);
+
+t_result add_new_key(t_list_head *list, SDL_Keycode code);
+
+t_result init_key(t_key *self);
+
+t_key *init_new_key();
+
+t_result	set_key(t_key *self, SDL_Keycode code);
+
+t_key *set_new_key(SDL_Keycode code);
+
 /*
 ** key state
 ** followed by component to up to date its own state
@@ -49,6 +68,12 @@ typedef struct	s_keys
 	t_result		(*destroy)(struct s_keys*);
 }				t_keys;
 
-/////////////EST-CE QU'IL Y A BESOIN DE list_up ? bah non 
+t_result del_keys(t_keys *self);
+
+t_result del_new_keys(t_keys *self);
+
+t_result init_keys(t_keys *self);
+
+t_keys *init_new_keys();
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/02 11:30:48 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/06/02 11:43:03 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/06/06 18:34:46 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,6 @@ t_condition *init_new_condition()
 // 	return (self);
 // }
 
-
 t_result del_event_handler(t_event_handler *self)
 {
 	if (!self)
@@ -109,6 +108,23 @@ t_result del_new_event_handler(t_event_handler *self)
 	if (!del_event_handler(self))
 		return (console(FATAL, __func__, __LINE__, "del_event_handler fail").err);
 	free(self);
+	return (OK);
+}
+
+t_result del_event_handler_list(t_list_head *list)
+{
+	t_list_head		*curr;
+	t_list_head		*next;
+	t_event_handler	*event_handler;
+
+	curr = list;
+	next = curr->next;
+	while ((curr = next) != list)
+	{
+		next = next-> next;
+		event_handler = (t_event_handler*)curr;
+		event_handler->destroy(event_handler);
+	}
 	return (OK);
 }
 

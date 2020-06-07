@@ -6,7 +6,7 @@
 /*   By: ppetitea <ppetitea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/31 17:43:32 by ppetitea          #+#    #+#             */
-/*   Updated: 2020/06/02 11:16:07 by ppetitea         ###   ########.fr       */
+/*   Updated: 2020/06/05 18:54:55 by ppetitea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ t_result del_key_list(t_list_head *key_list)
 	return (OK);
 }
 
-t_result del_new_key(t_list_head *list, SDL_Keycode code)
+t_result del_key_list_by_code(t_list_head *list, SDL_Keycode code)
 {
 	t_key		*key;
 	t_list_head	*curr;
@@ -124,10 +124,8 @@ t_result del_keys(t_keys *self)
 {
 	if (!self)
 		return (console(FATAL, __func__, __LINE__, "null pointer").err);
-	del_key_list(&self->curr.up);
-	del_key_list(&self->curr.down);
-	del_key_list(&self->last.up);
-	del_key_list(&self->last.down);
+	del_key_list(&self->curr);
+	del_key_list(&self->last);
 	self->events.destroy(&self->events);
 	return (OK);
 }
@@ -161,10 +159,4 @@ t_keys *init_new_keys()
 	init_keys(self);
 	self->destroy = del_new_keys;
 	return (self);
-}
-
-t_keys	*get_keys()
-{
-	// get interface && return keys
-	// move this function in interface.c file
 }
