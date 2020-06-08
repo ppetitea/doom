@@ -13,6 +13,7 @@
 // typedef enum	e_event_stream_type
 // {
 // 	E_STREAM_INTERFACE,
+// 	E_STREAM_TIME,
 // 	E_STREAM_MOUSE,
 // 	E_STREAM_KEYS,
 // 	E_STREAM_RADIO,
@@ -51,6 +52,8 @@ t_result init_stream_observer(t_stream_observer *self);
 
 t_stream_observer *init_new_stream_observer();
 
+
+// stream.name: "interface" || "mouse" || "keys" || "time" || "radio"
 
 typedef struct	s_event_stream
 {

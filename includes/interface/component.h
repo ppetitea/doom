@@ -50,7 +50,7 @@ t_component_state *init_new_component_state();
 typedef struct	s_component_observer
 {
 	t_list_head	node;
-	t_result	(*fn)();
+	t_result	(*fn)(t_arg_list *args, t_component *self);
 	t_list_head	args;
 	t_result	(*destroy)(struct s_component_observer*);
 }				t_component_observer;

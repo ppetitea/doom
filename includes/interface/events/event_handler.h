@@ -8,7 +8,7 @@
 typedef struct	s_condition
 {
 	t_list_head	node;
-	t_bool		(*fn)();
+	t_bool		(*fn)(t_arg_list *args, t_event *event, void *observer_ref);
 	t_list_head	args;
 	t_result	(*destroy)(struct s_condition*);
 }				t_condition;
